@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>Dungeons!</title>
+	<link rel="stylesheet" type="text/css" href="static/style.css">
+	<script src="static/terminal.js"></script>
+	<script src="static/network.js"></script>
+</head>
+<body>
+
+	<br/>
+
+	<pre id="screen" style="margin:auto; padding: 20px; width: 690px;"></pre>
+
+	<script>
+		const term = new Terminal('terminal');
+		term.setHeight("600px");
+		term.setWidth('690px');
+		term.setBackgroundColor('black');
+		term.setTextColor('orange');
+		term.blinkingCursor(false);
+		document.getElementById('screen').appendChild(term.html);
+
+		connectToServer(term, 'designer', 'start')
+
+	</script>
+
+</body>
+</html>

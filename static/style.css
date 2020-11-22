@@ -1,0 +1,11 @@
+html,
+body {
+    background-color: #333333;
+}
+
+.Terminal {
+    font-family: 'Lucida Console', Courier, monospace;
+    font-size: 0.875em; /* 14px/16=0.875em */
+    border-radius: 15px;
+    padding: 20px;
+}
