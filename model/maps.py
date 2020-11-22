@@ -1,28 +1,28 @@
 map_0 = {
     "number": 0,
     "type": "map",
-    "name": "Ground Level",
+    "name": "Ground Level Map",
     "cost": 50
 }
 
 map_1 = {
     "number": 1,
     "type": "map",
-    "name": "Level 1",
+    "name": "Level 1 Map",
     "cost": 100
 }
 
 map_2 = {
     "number": 2,
     "type": "map",
-    "name": "Level 2",
+    "name": "Level 2 Map",
     "cost": 200
 }
 
 map_3 = {
     "number": 3,
     "type": "map",
-    "name": "Level 3",
+    "name": "Level 3 Map",
     "cost": 400
 }
 

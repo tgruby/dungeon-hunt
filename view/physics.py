@@ -135,7 +135,6 @@ class PointOfView:
         self.current_level_map = self.dungeon.levels[dungeon_id]["map"]
         self.current_direction = direction
         self.our_hero = our_hero
-        self.dungeon.print_level(dungeon_id)
 
         # We assume on instantiation that we came "down" into the dungeon.
         # So we need to find the up door in this dungeon by scanning the 2d array
@@ -270,7 +269,6 @@ class PointOfView:
             self.current_level_id = self.current_level_id + 1
             self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
             self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
-            self.dungeon.print_level(self.current_level_id)
             # We just came "down" into the next dungeon.  So we need to find the up_ladder in this dungeon and start
             # there.
             for i in range(len(self.current_level)):
@@ -295,7 +293,6 @@ class PointOfView:
             else:
                 self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
                 self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
-                self.dungeon.print_level(self.current_level_id)
                 # We just came "up" into the next dungeon.  So we need to find the down_ladder in this dungeon and start
                 # there.
                 for i in range(len(self.current_level)):

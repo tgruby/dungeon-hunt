@@ -56,7 +56,7 @@ warrior = {
     "image": None,
     "hit_points": 20,
     "experience_points": 0,
-    "gold": random.randint(10, 2000),
+    "gold": random.randint(10, 30),
     "equipped_weapon": items.dagger,
     "equipped_armor": None,
     "equipped_shield": None,
