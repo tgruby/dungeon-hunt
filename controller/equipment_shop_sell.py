@@ -1,5 +1,4 @@
 import sys
-import db
 import view.screen
 from view import screen, images
 from controller import router, town
@@ -41,7 +40,7 @@ def process(our_hero, action):
 
 def sell_items(our_hero, action):
     item_number_picked = int(action)
-    items_list = view.screen.collapse_inventory_items(our_hero)
+    items_list = filtered_sell_list(our_hero)
     if item_number_picked > len(items_list)-1 or item_number_picked < 0:
         message = "You do not have an item of that number!"
     else:
@@ -71,7 +70,7 @@ def sell_items(our_hero, action):
 
 
 def draw_sell_list(our_hero):
-    items = view.screen.collapse_inventory_items(our_hero)
+    items = filtered_sell_list(our_hero)
     response = view.screen.medium_border + '\n'
     response += "  # | Items            | Type   | Value " + '\n'
     response += view.screen.medium_border + '\n'
@@ -82,3 +81,14 @@ def draw_sell_list(our_hero):
                     + view.screen.front_padding(str(round(item[3] / 2)), 4) + '\n'
     response += view.screen.medium_border + '\n'
     return response
+
+
+# Create a Filtered list of only items we can sell in the enchantment shop
+def filtered_sell_list(our_hero):
+    filtered_list = []
+    items_list = view.screen.collapse_inventory_items(our_hero)
+    for item in items_list:
+        if item[2] == 'armor' or item[2] == 'shield' or item[2] == 'weapon':
+            filtered_list.append(item)
+
+    return filtered_list

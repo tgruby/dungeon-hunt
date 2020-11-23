@@ -131,7 +131,7 @@ def show_map(our_hero):
         if "number" in i:
             if i["number"] == dungeon_id and i["type"] == "map":
                 return our_hero.view.current_level_map
-    return "You have no map for Dungeon " + str(our_hero.view.current_level_id)
+    return "You have no map for Level " + str(our_hero.view.current_level_id)
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.

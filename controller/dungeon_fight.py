@@ -3,7 +3,7 @@ import random
 
 import view.screen
 from view import screen, images
-from controller import router, dungeon
+from controller import router, dungeon, town
 
 
 # This function controls fighting with a monster
@@ -29,7 +29,7 @@ def process(our_hero, action):
         if our_hero.monster.is_alive():
             message = message + '\n ' + our_hero.monster.attack(our_hero)
             if not our_hero.is_alive():
-                message = message + '\n ' + "You have been Slain! ... or have you?  You wake up and the %s is gone, with most of your gold.  You somehow crawl out of the dungeon..." % our_hero.monster.name
+                message = message + '\n ' + "You have been knocked out! You wake up and the %s is gone, with most of your gold.  You somehow crawl out of the dungeon..." % our_hero.monster.name
                 return hero_is_slain(our_hero, message)
             return screen.paint(
                 view.screen.get_stats(our_hero),
@@ -68,8 +68,8 @@ def process(our_hero, action):
         # The monster gets one last parting shot as you flee.
         message = our_hero.monster.attack(our_hero)
         if not our_hero.is_alive():
-            message = message + " You have been Slain! Better luck in your next life!"
-            hero_is_slain(our_hero)
+            message = message + " You stumble backwards, falling to the ground and everything goes black!"
+            hero_is_slain(our_hero, message)
         message += '\n ' + "You run as fast as your little legs will carry you and get away..."
         our_hero.monster = None
 
@@ -92,12 +92,13 @@ def process(our_hero, action):
 
 # routine to run if your hero is slain
 def hero_is_slain(our_hero, message):
+    router.current_controller = town
     # Too Cruel, and less fun. Reset the character to a beat up state back in the town.
     # common.delete_hero()  # Delete our Hero file so we have to create a new hero
     # common.delete_dungeons()  # Reset the dungeons so we have to learn new dungeons with our new hero
     our_hero.hit_points = 4
     if our_hero.gold > 10:
-        our_hero.gold = 4
+        our_hero.gold = our_hero.goal / 2
     return screen.paint(
         view.screen.get_stats(our_hero),
         "restart the game",
