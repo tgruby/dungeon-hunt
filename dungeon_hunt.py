@@ -2,9 +2,8 @@ from flask import Flask, render_template, jsonify
 import os
 from controller import router, dungeon_design_router
 
-# TODO: Add ability to play sounds.
 # TODO: change Traps to be generated 1/4th of the time instead of treasures.  Have the ability to avoid traps.
-# TODO: Simplify: remove scrolls, turn magic shop into potion shop... possibly add strength and resistance potions.
+# TODO: possibly add strength and resistance potions.
 # TODO: Add ability to have different players play at the same time (different heros, different dungeons)
 # TODO: End Game when killed or hit dragon (put person on leaderboard).
 # TODO: Add scoring: 20 points for killing a monster (x level), 10 for finding treasures.

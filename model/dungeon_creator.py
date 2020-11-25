@@ -97,8 +97,8 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         else:
             buff.append(s[index])
 
-    add_doors_and_treasure_chests(maze)
-    add_traps_and_monsters(maze)
+    add_doors_traps_and_treasures(maze)
+    add_monsters(maze)
 
     mmap = ""
     for (a, b) in zip(hor2, ver2):
@@ -123,7 +123,7 @@ scan_for_door = [
 
 
 # Find dead-ends and put a door in front of them, and a chest in them.
-def add_doors_and_treasure_chests(maze_array):
+def add_doors_traps_and_treasures(maze_array):
     print("Maze Size: x=%d, y=%d" % (len(maze_array[0]), len(maze_array)))
 
     # walk through every cell in the matrix.
@@ -146,17 +146,21 @@ def add_doors_and_treasure_chests(maze_array):
                     door_y = scan_y
             if opening_count == 1:
                 print("Placing Door: x=%d, y=%d" % (door_x, door_y))
-                print("Placing Chest: x=%d, y=%d" % (x, y))
                 maze_array[door_y][door_x] = 'D'
-                maze_array[y][x] = '$'
+                is_trap = random.randint(0, 3)  # 25% chance it is a trap instead of treasure
+                if is_trap == 0:
+                    print("Placing Trap: x=%d, y=%d" % (x, y))
+                    maze_array[y][x] = 'T'
+                else:
+                    print("Placing Chest or Trap: x=%d, y=%d" % (x, y))
+                    maze_array[y][x] = '$'
 
 
 # Randomly add traps and monsters.
-def add_traps_and_monsters(maze_array):
+def add_monsters(maze_array):
     # walk through every cell in the matrix.
     # Look empty spaces, if empty, randomly decide to put a trap or monster.
     # 10% chance for monster, 5% chance for trap.  You cannot have a trap and a monster on the same space.
-
     for y in range(1, len(maze_array)-1):
         for x in range(1, len(maze_array[0])-1):
             p = maze_array[y][x]
@@ -166,10 +170,6 @@ def add_traps_and_monsters(maze_array):
                     print("Placing Monster: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = 'M'
                     continue
-                is_trap = random.randint(0, 19)
-                if is_trap == 0:
-                    print("Placing Trap: x=%d, y=%d" % (x, y))
-                    maze_array[y][x] = 'T'
 
 
 def is_wall(position):
