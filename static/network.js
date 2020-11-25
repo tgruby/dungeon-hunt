@@ -1,4 +1,3 @@
-
 // Basic function to send a command and get the response.
 function connectToServer(term, url_modifier, action) {
     if (action === "") action = "<>";
@@ -13,8 +12,7 @@ function connectToServer(term, url_modifier, action) {
                 term.print(data.canvas[i]);
             }
             if (data.sound) {
-                var snd = document.getElementById(data.sound);
-                snd.play()
+                document.getElementById(data.sound).play();
             }
 
             term.input('', function (input) {

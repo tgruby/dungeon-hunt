@@ -3,7 +3,7 @@ import view.screen
 from view import screen, images
 from controller import dungeon, cartography_shop, equipment_shop, temple, enchantment_shop, router
 
-commands = "(E)quipment, (M)agic, (C)artographer, (T)emple, (D)ungeon"
+commands = "(E)quipment, (P)otions, (C)artographer, (T)emple, (D)ungeon"
 message = "Enter a shop... or the dungeon if you dare!"
 image = images.small_village
 
@@ -36,7 +36,7 @@ def process(our_hero, action):
         return cartography_shop.enter(our_hero)
 
     # Visit the Magic shop
-    if action.lower() == "m":
+    if action.lower() == "p":
         return enchantment_shop.enter(our_hero)
 
     # Go into the Temple
