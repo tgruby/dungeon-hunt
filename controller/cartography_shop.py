@@ -1,5 +1,4 @@
 import sys
-import db
 import view.screen
 from model import maps
 from view import screen, images
@@ -17,11 +16,12 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_map_list()
+        draw_map_list(),
+        None
     )
 
 
@@ -58,11 +58,12 @@ def purchase_a_map(our_hero, action):
         message = "You need to specify a number."
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_map_list()
+        draw_map_list(),
+        None
     )
 
 

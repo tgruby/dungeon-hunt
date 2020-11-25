@@ -1,5 +1,4 @@
 import sys
-import db
 import view.screen
 from model import items
 from view import screen, images
@@ -17,11 +16,12 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_buy_list()
+        draw_buy_list(),
+        None
     )
 
 
@@ -67,11 +67,12 @@ def purchase_an_item(our_hero, action):
         message = "There is no weapon of that number!"
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_buy_list()
+        draw_buy_list(),
+        None
     )
 
 

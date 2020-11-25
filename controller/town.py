@@ -1,5 +1,4 @@
 import sys
-import db
 import view.screen
 from view import screen, images
 from controller import dungeon, cartography_shop, equipment_shop, temple, enchantment_shop, router
@@ -17,11 +16,12 @@ def enter(our_hero):
     # the temple, or the dungeon.  This means a hero in the dungeon that doesn't come back doesn't get updated.
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        view.screen.list_inventory(our_hero)
+        view.screen.list_inventory(our_hero),
+        None
     )
 
 

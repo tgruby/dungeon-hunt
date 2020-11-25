@@ -3,7 +3,6 @@
 import sys
 import random
 
-import view.screen
 from model import items, monsters
 from view import physics, screen, images
 from controller import router, dungeon_inventory, dungeon_fight, town
@@ -21,11 +20,12 @@ def enter(our_hero):
     our_hero.view = physics.PointOfView(0, physics.PointOfView.east, our_hero)
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         our_hero.view.generate_perspective(),
-        show_map(our_hero)
+        show_map(our_hero),
+        None
     )
 
 
@@ -36,22 +36,24 @@ def process(our_hero, action):
     if action.lower() == "a":
         msg = our_hero.view.turn_left()
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             commands,
             msg,
             our_hero.view.generate_perspective(),
-            show_map(our_hero)
+            show_map(our_hero),
+            None
         )
 
     # Turn Right
     if action.lower() == "d":
         msg: object = our_hero.view.turn_right()
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             commands,
             msg,
             our_hero.view.generate_perspective(),
-            show_map(our_hero)
+            show_map(our_hero),
+            None
         )
 
     # Step Forward
@@ -87,11 +89,12 @@ def process(our_hero, action):
 
         # Step forward
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             commands,
             msg,
             our_hero.view.generate_perspective(),
-            show_map(our_hero)
+            show_map(our_hero),
+            'bup'
         )
 
     # Look in backpack at the hero's inventory
@@ -100,11 +103,12 @@ def process(our_hero, action):
 
     # If the command is nonsense, just repeat current screen.
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         "...",
         our_hero.view.generate_perspective(),
-        show_map(our_hero)
+        show_map(our_hero),
+        None
     )
 
 
@@ -116,11 +120,12 @@ def fight_monster(our_hero):
         our_hero.monster = monster
         return dungeon_fight.enter(our_hero)
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         "You see a monster's body crumpled against the wall...",
         our_hero.view.generate_perspective(),
-        show_map(our_hero)
+        show_map(our_hero),
+        None
     )
 
 
@@ -153,26 +158,29 @@ def found_treasure(our_hero):
             msg += " You find a %s in the chest!" % weapon["name"]
         cmd = "Press Enter to continue..."
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             cmd,
             msg,
             our_hero.view.generate_perspective(),
-            images.treasure_chest
+            images.treasure_chest,
+            None
         )
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         "You see an empty treasure chest...",
         our_hero.view.generate_perspective(),
-        show_map(our_hero)
+        show_map(our_hero),
+        None
     )
 
 
 def stepped_on_trap(our_hero):
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         "You Stepped on a Trap!!!",
         our_hero.view.generate_perspective(),
-        show_map(our_hero)
+        show_map(our_hero),
+        None
     )

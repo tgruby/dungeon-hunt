@@ -10,6 +10,12 @@
 </head>
 <body>
 
+	<audio id="bup">
+		<source src="static/snds/bup.ogg" type="audio/ogg">
+		<source src="static/snds/bup.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+	</audio>
+
 	<br/>
 
 	<pre id="screen" style="margin:auto; padding: 20px; width: 690px;"></pre>
@@ -23,7 +29,7 @@
 		term.blinkingCursor(false);
 		document.getElementById('screen').appendChild(term.html);
 
-		connectToServer(term, 'game', 'start')
+		connectToServer(term, 'game', 'start');
 
 	</script>
 

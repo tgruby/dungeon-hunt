@@ -1,7 +1,6 @@
 import sys
 import random
 
-import view.screen
 from view import screen, images
 from controller import router, dungeon, town
 
@@ -12,11 +11,12 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         "(F)ight, (R)un away!",
         "A " + our_hero.monster.name + " stands before you, blocking your path!",
         our_hero.view.generate_perspective(),
-        our_hero.monster.image
+        our_hero.monster.image,
+        None
     )
 
 
@@ -32,11 +32,12 @@ def process(our_hero, action):
                 message = message + '\n ' + "You have been knocked out! You wake up and the %s is gone, with most of your gold.  You somehow crawl out of the dungeon..." % our_hero.monster.name
                 return hero_is_slain(our_hero, message)
             return screen.paint(
-                view.screen.get_stats(our_hero),
+                our_hero,
                 "(F)ight, (R)un away!",
                 message,
                 our_hero.view.generate_perspective(),
-                our_hero.monster.image
+                our_hero.monster.image,
+                None
             )
         else:
             # Monster has been killed
@@ -56,11 +57,12 @@ def process(our_hero, action):
 
             router.current_controller = dungeon
             return screen.paint(
-                view.screen.get_stats(our_hero),
+                our_hero,
                 commands,
                 message,
                 our_hero.view.generate_perspective(),
-                images.treasure_chest
+                images.treasure_chest,
+                None
             )
 
     # Run Away
@@ -74,19 +76,21 @@ def process(our_hero, action):
         our_hero.monster = None
 
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             "(F)ight, (R)un away!",
             message,
             our_hero.view.generate_perspective(),
-            "You got away!"
+            "You got away!",
+            None
         )
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         "(F)ight, (R)un away!",
         message,
         our_hero.view.generate_perspective(),
-        our_hero.monster.image
+        our_hero.monster.image,
+        None
     )
 
 
@@ -100,11 +104,12 @@ def hero_is_slain(our_hero, message):
     if our_hero.gold > 10:
         our_hero.gold = our_hero.goal / 2
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         "restart the game",
         message,
         our_hero.view.generate_perspective(),
-        images.death
+        images.death,
+        None
     )
 
 

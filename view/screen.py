@@ -10,8 +10,8 @@ center_pane_height = 20
 
 
 # Function to draw the screen given all the panel inputs
-def paint(stats, commands, messages, left_pane_content, right_pane_content):
-    canvas = [border("Stats"), v_border + center_text(stats, ' ', 78) + v_border, h_border]
+def paint(our_hero, commands, messages, left_pane_content, right_pane_content, sound_file_name):
+    canvas = [border("Stats"), v_border + center_text(get_stats(our_hero), ' ', 78) + v_border, h_border]
     # Stats
     lines = create_center_pane(left_pane_content, right_pane_content)
     for line in lines:
@@ -27,7 +27,13 @@ def paint(stats, commands, messages, left_pane_content, right_pane_content):
     # Commands
     canvas.append(v_border + center_text(commands, ' ', 78) + v_border)
     canvas.append(h_border)
-    return canvas
+
+    response = {
+        "canvas": canvas,
+        "sound": sound_file_name
+    }
+
+    return response
 
 
 # Function to build a border with a title that fits to a given length

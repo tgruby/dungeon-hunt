@@ -1,5 +1,4 @@
 import sys
-import db
 import view.screen
 from view import screen, images
 from model import enchantments
@@ -19,11 +18,12 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_purchase_list()
+        draw_purchase_list(),
+        None
     )
 
 
@@ -60,11 +60,12 @@ def purchase_items(our_hero, action):
         message = "There is no item with that number!"
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_purchase_list()
+        draw_purchase_list(),
+        None
     )
 
 

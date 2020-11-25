@@ -1,5 +1,4 @@
 import sys
-import db
 import random
 
 import view.screen
@@ -17,11 +16,12 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        view.screen.list_inventory(our_hero)
+        view.screen.list_inventory(our_hero),
+        None
     )
 
 
@@ -44,11 +44,12 @@ def use_item(our_hero, action):
     items_list = view.screen.collapse_inventory_items(our_hero)
     if item_number_picked > len(items_list):
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             commands,
             "You do not have an item of that number!",
             image,
-            view.screen.list_inventory(our_hero)
+            view.screen.list_inventory(our_hero),
+            None
         )
     selected_item = items_list[item_number_picked - 1][4]
     if selected_item["type"] == "weapon":
@@ -75,9 +76,10 @@ def use_item(our_hero, action):
         message = "You cannot equip that item!"
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        view.screen.list_inventory(our_hero)
+        view.screen.list_inventory(our_hero),
+        None
     )

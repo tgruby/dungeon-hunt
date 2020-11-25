@@ -1,5 +1,4 @@
 import sys
-import db
 import view.screen
 from view import screen, images
 from controller import router, town
@@ -15,11 +14,12 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        view.screen.get_stats(our_hero),
+        our_hero,
         commands,
         message,
         image,
-        draw_healing_list(our_hero)
+        draw_healing_list(our_hero),
+        None
     )
 
 
@@ -39,11 +39,12 @@ def process(our_hero, action):
             message = "You are healthy! You don't need healing!"
 
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             commands,
             message,
             image,
-            draw_healing_list(our_hero)
+            draw_healing_list(our_hero),
+            None
         )
 
     # Half Healing
@@ -59,11 +60,12 @@ def process(our_hero, action):
             message = "You are healthy! You don't need healing!"
 
         return screen.paint(
-            view.screen.get_stats(our_hero),
+            our_hero,
             commands,
             message,
             image,
-            draw_healing_list(our_hero)
+            draw_healing_list(our_hero),
+            None
         )
 
     # Leave and go back to the town

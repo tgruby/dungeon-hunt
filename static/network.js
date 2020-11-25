@@ -9,9 +9,14 @@ function connectToServer(term, url_modifier, action) {
         .then((resp) => resp.json()) // Transform the data into json
         .then(function(data) {
             term.clear()
-            for (let i = 0; i < data.length; i++) {
-                term.print(data[i]);
+            for (let i = 0; i < data.canvas.length; i++) {
+                term.print(data.canvas[i]);
             }
+            if (data.sound) {
+                var snd = document.getElementById(data.sound);
+                snd.play()
+            }
+
             term.input('', function (input) {
                 connectToServer(term, url_modifier, input)
             })
