@@ -3,7 +3,7 @@
 import sys
 import random
 
-from model import items, monsters
+from model import items, monsters, traps
 from view import physics, screen, images
 from controller import router, dungeon_inventory, dungeon_fight, town
 
@@ -176,11 +176,23 @@ def found_treasure(our_hero):
 
 
 def stepped_on_trap(our_hero):
-    return screen.paint(
-        our_hero,
-        commands,
-        "You Stepped on a Trap!!!",
-        our_hero.view.generate_perspective(),
-        show_map(our_hero),
-        None
-    )
+    if not our_hero.view.dungeon.is_challenge_completed(our_hero):
+        our_hero.view.dungeon.complete_challenge(our_hero)
+        trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
+        return screen.paint(
+            our_hero,
+            commands,
+            trap.triggered(our_hero),
+            our_hero.view.generate_perspective(),
+            trap.image,
+            None
+        )
+    else:
+        return screen.paint(
+            our_hero,
+            commands,
+            "You see a mace hanging from the ceiling...",
+            our_hero.view.generate_perspective(),
+            show_map(our_hero),
+            None
+        )

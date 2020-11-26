@@ -2,7 +2,6 @@ from flask import Flask, render_template, jsonify
 import os
 from controller import router, dungeon_design_router
 
-# TODO: change Traps to be generated 1/4th of the time instead of treasures.  Have the ability to avoid traps.
 # TODO: possibly add strength and resistance potions.
 # TODO: Add ability to have different players play at the same time (different heros, different dungeons)
 # TODO: End Game when killed or hit dragon (put person on leaderboard).
@@ -28,6 +27,12 @@ def root():
 @app.route('/game/action/<action>')
 def process_action(action):
     return jsonify(router.process(action)), 200
+
+
+# Receive a game play command from the browser and respond with a json object representing each panel.
+@app.route('/game/action/')
+def process_no_action(action):
+    return jsonify(router.process(None)), 200
 
 
 # Receive a command from the browser and respond with a json object representing each panel.
