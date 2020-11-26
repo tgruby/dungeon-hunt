@@ -2,12 +2,11 @@ from flask import Flask, render_template, jsonify
 import os
 from controller import router, dungeon_design_router
 
-# TODO: possibly add strength and resistance potions.
 # TODO: Add ability to have different players play at the same time (different heros, different dungeons)
 # TODO: End Game when killed or hit dragon (put person on leaderboard).
 # TODO: Add scoring: 20 points for killing a monster (x level), 10 for finding treasures.
 # TODO: Create Leaderboard (5 deep).
-
+# TODO: possibly add strength and resistance potions.
 
 # Set the directory where we store web resources
 app = Flask(__name__, static_url_path='/static', instance_relative_config=True)
@@ -33,18 +32,6 @@ def process_action(action):
 @app.route('/game/action/')
 def process_no_action(action):
     return jsonify(router.process(None)), 200
-
-
-# Receive a command from the browser and respond with a json object representing each panel.
-@app.route('/designer')
-def designer():
-    return render_template('designer.html')
-
-
-# Receive a command from the browser and respond with a json object representing each panel.
-@app.route('/designer/action/<action>')
-def designer_action(action):
-    return jsonify(dungeon_design_router.process(action)), 200
 
 
 if __name__ == '__main__':
