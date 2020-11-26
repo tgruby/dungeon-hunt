@@ -94,7 +94,7 @@ def process(our_hero, action):
             msg,
             our_hero.view.generate_perspective(),
             show_map(our_hero),
-            'bup'
+            'foot step'
         )
 
     # Look in backpack at the hero's inventory
