@@ -1,16 +1,12 @@
+from flask import Flask, render_template, jsonify
 import os
 from controller import router
-from flask import Flask, render_template, jsonify
 
 # TODO: Add ability to have different players play at the same time (different heros, different dungeons)
 # TODO: End Game when killed or hit dragon (put person on leaderboard).
 # TODO: Add scoring: 20 points for killing a monster (x level), 10 for finding treasures.
 # TODO: Create Leaderboard (5 deep).
 # TODO: possibly add strength and resistance potions.
-# TODO: should you be able to buy a teleport out of the dungeon?
-# TODO: don't know what is a shield, armor, or weapon.
-# TODO: descriptions for more things?
-# TODO: just jam f to fight.  but would like to read more? have a time lag during fighting?
 
 # Set the directory where we store web resources
 app = Flask(__name__, static_url_path='/static', instance_relative_config=True)
