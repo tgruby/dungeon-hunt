@@ -1,6 +1,3 @@
-import logging
-
-log = logging.getLogger('dragonsville')
 
 
 # Class object to represent any active monster
