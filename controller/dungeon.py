@@ -4,7 +4,7 @@ import sys
 import random
 
 from model import items, monsters, traps
-from view import physics, screen, images
+from view import screen, images
 from controller import router, dungeon_inventory, dungeon_fight, town
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
@@ -16,8 +16,6 @@ message = "You crawl into the dark cave at the side of the mountain and enter th
 def enter(our_hero):
     print("dungeon.enter")
     router.current_controller = sys.modules[__name__]
-    # Instantiate a point of view object.  This will help us render the view of your character
-    our_hero.view = physics.PointOfView(0, physics.PointOfView.east, our_hero)
 
     return screen.paint(
         our_hero,
@@ -62,7 +60,7 @@ def process(our_hero, action):
 
         if our_hero.view.current_level_id < 0:
             # we have left the dungeon_0, return
-            our_hero.view = None
+            our_hero.view.set_starting_position()
             return town.enter(our_hero)
 
         stepped_on = our_hero.view.get_position_info()

@@ -69,9 +69,10 @@ var Terminal = (function () {
 					} else callback(inputValue)
 				}
 			} else {
-				// Added for my game only!
+				// Added for DoT game only!
 				keyChar = String.fromCharCode(e.keyCode)
-					isNumeric = /[0-9.]/.test(keyChar)
+                isNumeric = /[0-9.]/.test(keyChar)
+                // isAlpha = /[^A-Za-z\s]/.test(keyChar)
 				if (!isNumeric) {
 					callback(keyChar)
 				}

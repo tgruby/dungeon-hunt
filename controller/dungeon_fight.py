@@ -1,8 +1,8 @@
+import db
 import sys
 import random
-
 from view import screen, images
-from controller import router, dungeon, town
+from controller import router, dungeon, init_game
 
 
 # This function controls fighting with a monster
@@ -96,13 +96,14 @@ def process(our_hero, action):
 
 # routine to run if your hero is slain
 def hero_is_slain(our_hero, message):
-    router.current_controller = town
-    # Too Cruel, and less fun. Reset the character to a beat up state back in the town.
-    # common.delete_hero()  # Delete our Hero file so we have to create a new hero
-    # common.delete_dungeons()  # Reset the dungeons so we have to learn new dungeons with our new hero
-    our_hero.hit_points = 4
-    if our_hero.gold > 10:
-        our_hero.gold = our_hero.goal / 2
+    router.current_controller = init_game
+    # End the Game, save the character to the leaderboard (if they are good enough).
+    lb = db.load_leaderboard()
+    lb.add_leader(our_hero)
+    db.save_leaderboard(lb)
+    # Delete our Hero file so we have to create a new hero
+    db.delete_hero(our_hero.game_token)
+
     return screen.paint(
         our_hero,
         "restart the game",

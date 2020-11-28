@@ -4,7 +4,8 @@ from view import screen, images
 from controller import dungeon, cartography_shop, equipment_shop, temple, enchantment_shop, router
 
 commands = "(E)quipment, (P)otions, (C)artographer, (T)emple, (D)ungeon"
-message = "Enter a shop... or the dungeon if you dare!"
+message = "Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
+          "entrance is carved into the side of the mountain nearby. "
 image = images.small_village
 
 

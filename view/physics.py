@@ -1,8 +1,12 @@
 import logging
-import db
+from model import dungeon, dungeon_creator
 from view import screen, perspectives
 
 log = logging.getLogger('dragonsville')
+
+
+def change_char(s, p, r):
+    return s[:p] + r + s[p + 1:]
 
 
 # This class is used to contain all the logic to manage the point of view of the hero as she moves through the maze.
@@ -124,20 +128,21 @@ class PointOfView:
     current_level_map = None
     current_x = 0
     current_y = 0
-    current_direction = north
+    current_direction = east
 
     dungeon = None
 
-    def __init__(self, dungeon_id, direction, our_hero):
-        self.dungeon = db.load_dungeon()
-        self.current_level_id = dungeon_id
-        self.current_level = self.dungeon.levels[dungeon_id]["maze"]
-        self.current_level_map = self.dungeon.levels[dungeon_id]["map"]
-        self.current_direction = direction
-        self.our_hero = our_hero
+    def __init__(self):
+        self.dungeon = dungeon.Dungeon(dungeon_creator.generate_dungeon_levels())
+        self.set_starting_position()
 
-        # We assume on instantiation that we came "down" into the dungeon.
-        # So we need to find the up door in this dungeon by scanning the 2d array
+    # When entering the dungeon, we come "down" into the dungeon.
+    # So we need to find the up door in this dungeon by scanning the 2d array
+    def set_starting_position(self):
+        self.current_level_id = 0
+        self.current_direction = self.east
+        self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
+        self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
         for i in range(len(self.current_level) - 1):
             for j in range(len(self.current_level[0]) - 1):
                 if self.current_level[i][j] == self.doorway_up:
@@ -314,13 +319,10 @@ class PointOfView:
         # Get Vertical Row (y) where we stand
         row_string = map_array[self.current_y]
         # replace our x location with a '*'
-        row_string = self.change_char(row_string, self.current_x * 2, '*')
+        row_string = change_char(row_string, self.current_x * 2, '*')
         map_array[self.current_y] = row_string
         dungeon_name = 'Level ' + str(self.current_level_id)
         new_map = screen.center_text(dungeon_name, ' ', len(map_array[0])) + '\n'
         for line in map_array:
             new_map += line + '\n'
         self.current_level_map = new_map
-
-    def change_char(self, s, p, r):
-        return s[:p] + r + s[p + 1:]

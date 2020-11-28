@@ -9,7 +9,7 @@ right_pane_width = 53
 center_pane_height = 20
 
 
-# Function to draw the screen given all the panel inputs
+# Function to draw the screen given the five panel inputs
 def paint(our_hero, commands, messages, left_pane_content, right_pane_content, sound_file_name):
     canvas = [border("Stats"), v_border + center_text(get_stats(our_hero), ' ', 78) + v_border, h_border]
     # Stats
@@ -30,7 +30,40 @@ def paint(our_hero, commands, messages, left_pane_content, right_pane_content, s
 
     response = {
         "canvas": canvas,
-        "sound": sound_file_name
+        "sound": sound_file_name,
+        "game_token": our_hero.game_token
+    }
+
+    return response
+
+
+# Function to draw the screen given four virt. panel inputs
+def intro_paint(title_image, contents, commands, sound_file_name):
+    canvas = []
+
+    formatted_image = square_image(title_image, 5, 80)
+    for line in formatted_image:
+        canvas.append(line)
+
+    canvas.append(' ')
+    canvas.append(h_border)
+    canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
+
+    # Wrap long of narratives
+    wrapper = textwrap.TextWrapper(width=75)
+    word_list = wrapper.wrap(text=contents)
+    # Print each line
+    for element in word_list:
+        canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
+    # command
+    canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
+    canvas.append(h_border)
+    canvas.append(front_padding(commands, 80))
+
+    response = {
+        "canvas": canvas,
+        "sound": sound_file_name,
+        "game_token": None
     }
 
     return response
@@ -143,7 +176,7 @@ def crop_image(image, height, width):
         delta = len(height_cropped_image[0]) - width
         crop = round(delta / 2)
         for line in height_cropped_image:
-            width_cropped_image.append(line[crop:(len(line)-crop-1)])
+            width_cropped_image.append(line[crop:(len(line) - crop - 1)])
     else:
         width_cropped_image = height_cropped_image
 

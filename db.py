@@ -1,46 +1,39 @@
 import os
 import pickle
-from model import characters, dungeon, dungeon_creator
+from model import leaderboard
+
+
+def init_db():
+    try:
+        os.mkdir('data')
+    except OSError as error:
+        print(error)
 
 
 # This function saves our hero as he/she exists right now.
-def save_hero(our_hero):
-    save('our_hero', our_hero)
+def save_hero(game_token, hero):
+    save('data/game_' + game_token, hero)
 
 
 # This helper function is to save our hero to a "pickle" file, python's standard way to save objects to a file.
-def load_hero():
-    hero = load('our_hero')
-    if hero is None:
-        # We failed to load the hero from the file.  In this case, just create a new hero.
-        hero = characters.Character(characters.warrior)
-        hero.name = "Our Hero"
-    return hero
+def load_hero(game_token):
+    return load('data/game_' + game_token)
 
 
 # This function will be called when our hero is killed.  That means you can't play him/her again after death!
-def delete_hero():
-    delete("our_hero")
+def delete_hero(game_token):
+    delete('data/game_' + game_token)
 
 
-# This helper function is to open dungeons to a "pickle" file, python's standard way to save objects to a file.
-def load_dungeon():
-    d = load('dungeon')
-    if d is None:
-        # We failed to load from the file. In this case, just create new dungeons.
-        d = dungeon.Dungeon(dungeon_creator.generate_dungeon_levels())
-        save_dungeon(d)
-    return d
+# This function saves our hero as he/she exists right now.
+def save_leaderboard(leader_board):
+    save('data/leaderboard', leader_board)
 
 
-# This function saves our dungeons as it exists right now.
-def save_dungeon(d):
-    save('dungeon', d)
-
-
-# This function will be called when our hero is killed.  That means you can't play the same dungeons again after death!
-def delete_dungeon():
-    delete("dungeon")
+def load_leaderboard():
+    lb = load('data/leaderboard')
+    if lb is None:
+        return leaderboard.Leaderboard()
 
 
 # This function saves our hero as he/she exists right now.
@@ -56,7 +49,7 @@ def load(name):
     try:
         # Open a File
         with open(name + '.pkl', 'rb') as load_file:
-            # Load object from the file (instead of creating a new one.
+            # Load object from the file
             my_object = pickle.load(load_file)
             # After the object is read from file, return it
             return my_object
@@ -64,6 +57,6 @@ def load(name):
         return None
 
 
-# This function will be called when our hero is killed.  That means you can't play him/her again after death!
+# This function will be called when the hero is killed.  That means you can't play him/her again after death!
 def delete(name):
     os.remove(name + '.pkl')

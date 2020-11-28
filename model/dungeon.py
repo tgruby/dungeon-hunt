@@ -1,6 +1,4 @@
-import uuid
 from typing import List
-import db
 
 
 class Dungeon:
@@ -8,7 +6,6 @@ class Dungeon:
     completed_challenges: List[str] = []
 
     def __init__(self, levels):
-        self.dungeon = uuid.uuid4()
         self.levels = levels
 
     def complete_challenge(self, our_hero):
@@ -16,7 +13,6 @@ class Dungeon:
         x = our_hero.view.current_x
         y = our_hero.view.current_y
         self.completed_challenges.append(hash_challenge_location(level, x, y))
-        db.save_dungeon(self)
 
     def is_challenge_completed(self, our_hero):
         level = our_hero.view.current_level_id

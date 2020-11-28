@@ -1,4 +1,5 @@
 import random
+from view import physics
 from model import items
 
 
@@ -6,8 +7,9 @@ class Character:
     # Global Class Variables
 
     # Character Constructor (for our hero)
-    def __init__(self, character_definition):
-        self.name = character_definition["name"]
+    def __init__(self, game_token, name, character_definition):
+        self.game_token = game_token
+        self.name = name
         self.image = character_definition["image"]
         self.type = character_definition["type"]
         self.race = character_definition["race"]
@@ -20,7 +22,8 @@ class Character:
         self.equipped_armor = character_definition["equipped_armor"]
         self.equipped_shield = character_definition["equipped_shield"]
         self.inventory = character_definition["inventory"]
-        self.view = None
+        # Instantiate a point of view object.  This will help us render the view of the character
+        self.view = physics.PointOfView()
         self.monster = None
 
     # Return True if the character is alive, False if not.
