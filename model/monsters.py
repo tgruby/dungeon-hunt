@@ -48,7 +48,7 @@ def get_a_monster_for_dungeon(dungeon_id):
         return None
     dungeon_monsters = []
 
-    # Build a list of monsters that we could find in this dungeon
+    # Build a list of monsters that we could find in this dungeon level
     monster_leveling = 10 + (dungeon_id * 10)
     log.info("Monster Leveling %d for Dungeon %d" % (monster_leveling, dungeon_id))
     for index in range(len(all_monsters)):

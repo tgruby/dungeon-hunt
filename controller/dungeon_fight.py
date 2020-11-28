@@ -10,14 +10,7 @@ def enter(our_hero):
     print("dungeon_fight.enter")
     router.current_controller = sys.modules[__name__]
 
-    return screen.paint(
-        our_hero,
-        "(F)ight, (R)un away!",
-        "A " + our_hero.monster.name + " stands before you, blocking your path!",
-        our_hero.view.generate_perspective(),
-        our_hero.monster.image,
-        None
-    )
+    return default_screen(our_hero)
 
 
 # This Function is to attack the monster. This includes the loop to continue to attack until someone dies, or our hero
@@ -29,8 +22,7 @@ def process(our_hero, action):
         if our_hero.monster.is_alive():
             message = message + '\n ' + our_hero.monster.attack(our_hero)
             if not our_hero.is_alive():
-                message = message + '\n ' + "You have been knocked out! You wake up and the %s is gone, with most of your gold.  You somehow crawl out of the dungeon..." % our_hero.monster.name
-                return hero_is_slain(our_hero, message)
+                return hero_is_slain(our_hero)
             return screen.paint(
                 our_hero,
                 "(F)ight, (R)un away!",
@@ -70,8 +62,8 @@ def process(our_hero, action):
         # The monster gets one last parting shot as you flee.
         message = our_hero.monster.attack(our_hero)
         if not our_hero.is_alive():
-            message = message + " You stumble backwards, falling to the ground and everything goes black!"
-            hero_is_slain(our_hero, message)
+            return hero_is_slain(our_hero)
+
         message += '\n ' + "You run as fast as your little legs will carry you and get away..."
         our_hero.monster = None
 
@@ -84,18 +76,11 @@ def process(our_hero, action):
             None
         )
 
-    return screen.paint(
-        our_hero,
-        "(F)ight, (R)un away!",
-        message,
-        our_hero.view.generate_perspective(),
-        our_hero.monster.image,
-        None
-    )
+    return default_screen(our_hero)
 
 
 # routine to run if your hero is slain
-def hero_is_slain(our_hero, message):
+def hero_is_slain(our_hero):
     router.current_controller = init_game
     # End the Game, save the character to the leaderboard (if they are good enough).
     lb = db.load_leaderboard()
@@ -107,7 +92,7 @@ def hero_is_slain(our_hero, message):
     return screen.paint(
         our_hero,
         "restart the game",
-        message,
+        "You have been slain!",
         our_hero.view.generate_perspective(),
         images.death,
         None
@@ -121,3 +106,14 @@ def dragon_killed(our_hero):
                            "to the profitable gold mines they once were.  You are made king over all the " \
                            "local lands and reign for \n" \
                            "many peaceful years.  Congratulations!!!"
+
+
+def default_screen(our_hero):
+    return screen.paint(
+        our_hero,
+        "(F)ight, (R)un away!",
+        "A " + our_hero.monster.name + " stands before you, blocking your path!",
+        our_hero.view.generate_perspective(),
+        our_hero.monster.image,
+        None
+    )

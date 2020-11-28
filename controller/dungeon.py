@@ -189,7 +189,7 @@ def stepped_on_trap(our_hero):
         return screen.paint(
             our_hero,
             commands,
-            "You see a mace hanging from the ceiling...",
+            "You see a morning star hanging from the ceiling...",
             our_hero.view.generate_perspective(),
             show_map(our_hero),
             None
