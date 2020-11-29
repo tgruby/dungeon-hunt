@@ -13,6 +13,7 @@ def init_db():
 # This function saves our hero as he/she exists right now.
 def save_hero(game_token, hero):
     save('data/game_' + game_token, hero)
+    print("Saved Game: " + game_token)
 
 
 # This helper function is to save our hero to a "pickle" file, python's standard way to save objects to a file.
@@ -33,7 +34,8 @@ def save_leaderboard(leader_board):
 def load_leaderboard():
     lb = load('data/leaderboard')
     if lb is None:
-        return leaderboard.Leaderboard()
+        lb = leaderboard.Leaderboard()
+    return lb
 
 
 # This function saves our hero as he/she exists right now.

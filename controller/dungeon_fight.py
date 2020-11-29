@@ -88,10 +88,11 @@ def hero_is_slain(our_hero):
     db.save_leaderboard(lb)
     # Delete our Hero file so we have to create a new hero
     db.delete_hero(our_hero.game_token)
+    our_hero.game_token = None
 
     return screen.paint(
         our_hero,
-        "restart the game",
+        "press Spacebar to start a new game",
         "You have been slain!",
         our_hero.view.generate_perspective(),
         images.death,

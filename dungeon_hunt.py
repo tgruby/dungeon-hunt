@@ -28,17 +28,17 @@ def root():
 
 
 # Receive a game play command from the browser and respond with a json object representing each panel.
-@app.route('/api/v1/game/splash-screen')
+@app.route('/api/v1/splash-screen')
 def splash_screen():
     # If someone is starting the game, specialized logic for game start since a hero and dungeon need to be created.
     return jsonify(init_game.show_splash()), 200
 
 
 # Receive a game play command from the browser and respond with a json object representing each panel.
-@app.route('/api/v1/game/start')
-def process_start_game():
+@app.route('/api/v1/start/action/<action>')
+def process_start_game(action):
     # If someone is starting the game, specialized logic for game start since a hero and dungeon need to be created.
-    return jsonify(init_game.process()), 200
+    return jsonify(init_game.process(action)), 200
 
 
 # Receive a blank game command... respond with a response.
