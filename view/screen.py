@@ -38,7 +38,7 @@ def paint(our_hero, commands, messages, left_pane_content, right_pane_content, s
 
 
 # Function to draw the screen given four virt. panel inputs
-def intro_paint(title_image, contents, commands, sound_file_name):
+def intro_paint(title_image, contents, contents_image, commands, sound_file_name):
     canvas = []
 
     formatted_image = square_image(title_image, 5, 80)
@@ -49,12 +49,19 @@ def intro_paint(title_image, contents, commands, sound_file_name):
     canvas.append(h_border)
     canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
 
-    # Wrap long of narratives
-    wrapper = textwrap.TextWrapper(width=75)
-    word_list = wrapper.wrap(text=contents)
-    # Print each line
-    for element in word_list:
-        canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
+    if contents is not None:
+        # Wrap long of narratives
+        wrapper = textwrap.TextWrapper(width=75)
+        word_list = wrapper.wrap(text=contents)
+        # Print each line
+        for element in word_list:
+            canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
+
+    if contents_image is not None:
+        formatted_content = square_image(contents_image, 5, 70)
+        for line in formatted_content:
+            canvas.append(v_border + '  ' + back_padding(line, 76) + v_border)
+
     # command
     canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
     canvas.append(h_border)

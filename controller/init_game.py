@@ -22,6 +22,8 @@ def process(action):
         hero = characters.Character(game_token, "Hero", characters.warrior)
         db.save_hero(game_token, hero)
         return town.enter(hero)
+    elif action.lower() == 'l':
+        return draw_leaderboard()
     else:
         return intro_screen()
 
@@ -30,23 +32,30 @@ def intro_screen():
     return screen.intro_paint(
         images.title_1,
         "The town of Thordale's renowned catacombs have been laid waste by a treacherous red dragon.  The catacombs "
-        "had served as a place for both the town dead, as well as their tresured secrets from the days of where the "
+        "had served as a place for both the town dead, as well as their treasured secrets from the days of where the "
         "dwarfs gold flowed through the mountain. As the dragon has made it's home in the catacombs, it has slowly "
         "filled with wild animals and more evil monsters.  Recently, monsters have been leaving the dungeon at night "
         "to attack town people.  The town is desperate for someone to save them from this deadly decline.  Will you "
         "be their hero?",
-        'Press S to start play...',
+        None,
+        'Press L to see the Leaderboard, and S to start play...',
         None
     )
 
 
-# def draw_leaderboard():
-#     lb = db.load_leaderboard()
-#     response = view.screen.medium_border + '\n'
-#     response += " Name              | Score " + '\n'
-#     response += view.screen.medium_border + '\n'
-#     for i in lb.top_ten:
-#         response += " " + view.screen.back_padding(i.name, 17) + " | " \
-#                     + str(i.experience_points) + '\n'
-#     response += view.screen.medium_border + '\n'
-#     return response
+def draw_leaderboard():
+    lb = db.load_leaderboard()
+    response = "  Rank | Name                       | Score " + '\n'
+    response += screen.medium_border + '\n'
+    for i in lb.top_ten:
+        response += " " + screen.back_padding(i.name, 17) + " | " \
+                    + str(i.experience_points) + '\n'
+
+    return screen.intro_paint(
+        images.title_1,
+        None,
+        response,
+        'Press S to start play...',
+        None
+    )
+
