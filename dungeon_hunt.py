@@ -35,6 +35,13 @@ def splash_screen():
 
 
 # Receive a game play command from the browser and respond with a json object representing each panel.
+@app.route('/api/v1/start/action/')
+def undefined_start_game_request():
+    # If someone is starting the game, specialized logic for game start since a hero and dungeon need to be created.
+    return jsonify(init_game.process(' ')), 200
+
+
+# Receive a game play command from the browser and respond with a json object representing each panel.
 @app.route('/api/v1/start/action/<action>')
 def process_start_game(action):
     # If someone is starting the game, specialized logic for game start since a hero and dungeon need to be created.

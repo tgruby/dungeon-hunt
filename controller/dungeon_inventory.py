@@ -16,12 +16,13 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        view.screen.list_inventory(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=view.screen.list_inventory(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -44,12 +45,13 @@ def use_item(our_hero, action):
     items_list = view.screen.collapse_inventory_items(our_hero)
     if item_number_picked > len(items_list):
         return screen.paint(
-            our_hero,
-            commands,
-            "You do not have an item of that number!",
-            image,
-            view.screen.list_inventory(our_hero),
-            None
+            hero=our_hero,
+            commands=commands,
+            messages="You do not have an item of that number!",
+            left_pane_content=image,
+            right_pane_content=view.screen.list_inventory(our_hero),
+            sound=None,
+            sleep=250
         )
     selected_item = items_list[item_number_picked - 1][4]
     if selected_item["type"] == "weapon":
@@ -76,10 +78,11 @@ def use_item(our_hero, action):
         message = "You cannot equip that item!"
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        view.screen.list_inventory(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=view.screen.list_inventory(our_hero),
+        sound=None,
+        sleep=250
     )

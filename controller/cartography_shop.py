@@ -16,12 +16,13 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_map_list(),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_map_list(),
+        sound=None,
+        sleep=250
     )
 
 
@@ -58,12 +59,13 @@ def purchase_a_map(our_hero, action):
         message = "You need to specify a number."
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_map_list(),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_map_list(),
+        sound=None,
+        sleep=250
     )
 
 

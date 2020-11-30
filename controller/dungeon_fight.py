@@ -16,7 +16,6 @@ def enter(our_hero):
 # This Function is to attack the monster. This includes the loop to continue to attack until someone dies, or our hero
 # runs away.
 def process(our_hero, action):
-    message = ""
     if action.lower() == "f":
         message = our_hero.attack_the_monster()
         if our_hero.monster.is_alive():
@@ -24,12 +23,13 @@ def process(our_hero, action):
             if not our_hero.is_alive():
                 return hero_is_slain(our_hero)
             return screen.paint(
-                our_hero,
-                "(F)ight, (R)un away!",
-                message,
-                our_hero.view.generate_perspective(),
-                our_hero.monster.image,
-                None
+                hero=our_hero,
+                commands="(F)ight, (R)un away!",
+                messages=message,
+                left_pane_content=our_hero.view.generate_perspective(),
+                right_pane_content=our_hero.monster.image,
+                sound=None,
+                sleep=250
             )
         else:
             # Monster has been killed
@@ -49,12 +49,13 @@ def process(our_hero, action):
 
             router.current_controller = dungeon
             return screen.paint(
-                our_hero,
-                commands,
-                message,
-                our_hero.view.generate_perspective(),
-                images.treasure_chest,
-                None
+                hero=our_hero,
+                commands=commands,
+                messages=message,
+                left_pane_content=our_hero.view.generate_perspective(),
+                right_pane_content=images.treasure_chest,
+                sound=None,
+                sleep=2000
             )
 
     # Run Away
@@ -68,12 +69,13 @@ def process(our_hero, action):
         our_hero.monster = None
 
         return screen.paint(
-            our_hero,
-            "(F)ight, (R)un away!",
-            message,
-            our_hero.view.generate_perspective(),
-            "You got away!",
-            None
+            hero=our_hero,
+            commands="(F)ight, (R)un away!",
+            messages=message,
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content="You got away!",
+            sound=None,
+            sleep=2000
         )
 
     return default_screen(our_hero)
@@ -91,14 +93,16 @@ def hero_is_slain(our_hero):
     our_hero.game_token = None
 
     return screen.paint(
-        our_hero,
-        "Refresh your browser to start a new game",
-        "You have been slain! You scored " + our_hero.experience_points + "points.  We will soon add a leaderboard "
-                                                                          "and if you are good enough, your scores "
-                                                                          "will be added.",
-        our_hero.view.generate_perspective(),
-        images.death,
-        None
+        hero=our_hero,
+        commands="Refresh your browser to start a new game",
+        messages="You have been slain! You scored " + str(our_hero.experience_points) + "points.  We will soon add a "
+                                                                                   "leaderboard and if you are good "
+                                                                                   "enough, your scores will be "
+                                                                                   "added.",
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=images.death,
+        sound=None,
+        sleep=2000
     )
 
 
@@ -113,10 +117,11 @@ def dragon_killed(our_hero):
 
 def default_screen(our_hero):
     return screen.paint(
-        our_hero,
-        "(F)ight, (R)un away!",
-        "A " + our_hero.monster.name + " stands before you, blocking your path!",
-        our_hero.view.generate_perspective(),
-        our_hero.monster.image,
-        None
+        hero=our_hero,
+        commands="(F)ight, (R)un away!",
+        messages="A " + our_hero.monster.name + " stands before you, blocking your path!",
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=our_hero.monster.image,
+        sound=None,
+        sleep=250
     )

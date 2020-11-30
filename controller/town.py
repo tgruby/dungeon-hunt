@@ -4,7 +4,7 @@ from view import screen, images
 from controller import dungeon, cartography_shop, equipment_shop, temple, enchantment_shop, router
 
 commands = "(E)quipment, (P)otions, (C)artographer, (T)emple, (D)ungeon"
-message = "Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
+msg = "Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
           "entrance is carved into the side of the mountain nearby. "
 image = images.small_village
 
@@ -17,12 +17,13 @@ def enter(our_hero):
     # the temple, or the dungeon.  This means a hero in the dungeon that doesn't come back doesn't get updated.
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        view.screen.list_inventory(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=msg,
+        left_pane_content=image,
+        right_pane_content=view.screen.list_inventory(our_hero),
+        sound=None,
+        sleep=250
     )
 
 

@@ -18,12 +18,13 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        our_hero.view.generate_perspective(),
-        show_map(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=show_map(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -34,24 +35,26 @@ def process(our_hero, action):
     if action.lower() == "a":
         msg = our_hero.view.turn_left()
         return screen.paint(
-            our_hero,
-            commands,
-            msg,
-            our_hero.view.generate_perspective(),
-            show_map(our_hero),
-            None
+            hero=our_hero,
+            commands=commands,
+            messages=msg,
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=show_map(our_hero),
+            sound=None,
+            sleep=250
         )
 
     # Turn Right
     if action.lower() == "d":
         msg: object = our_hero.view.turn_right()
         return screen.paint(
-            our_hero,
-            commands,
-            msg,
-            our_hero.view.generate_perspective(),
-            show_map(our_hero),
-            None
+            hero=our_hero,
+            commands=commands,
+            messages=msg,
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=show_map(our_hero),
+            sound=None,
+            sleep=250
         )
 
     # Step Forward
@@ -87,12 +90,13 @@ def process(our_hero, action):
 
         # Step forward
         return screen.paint(
-            our_hero,
-            commands,
-            msg,
-            our_hero.view.generate_perspective(),
-            show_map(our_hero),
-            'footstep'
+            hero=our_hero,
+            commands=commands,
+            messages=msg,
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=show_map(our_hero),
+            sound='footstep',
+            sleep=250
         )
 
     # Look in backpack at the hero's inventory
@@ -101,12 +105,13 @@ def process(our_hero, action):
 
     # If the command is nonsense, just repeat current screen.
     return screen.paint(
-        our_hero,
-        commands,
-        "...",
-        our_hero.view.generate_perspective(),
-        show_map(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages="Huh?",
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=show_map(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -118,12 +123,13 @@ def fight_monster(our_hero):
         our_hero.monster = monster
         return dungeon_fight.enter(our_hero)
     return screen.paint(
-        our_hero,
-        commands,
-        "You see a monster's body crumpled against the wall...",
-        our_hero.view.generate_perspective(),
-        show_map(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages="You see a monster's body crumpled against the wall...",
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=show_map(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -156,20 +162,22 @@ def found_treasure(our_hero):
             msg += " You find a %s in the chest!" % weapon["name"]
         cmd = "Press Enter to continue..."
         return screen.paint(
-            our_hero,
-            cmd,
-            msg,
-            our_hero.view.generate_perspective(),
-            images.treasure_chest,
-            None
+            hero=our_hero,
+            commands=cmd,
+            messages=msg,
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=images.treasure_chest,
+            sound=None,
+            sleep=2000
         )
     return screen.paint(
-        our_hero,
-        commands,
-        "You see an empty treasure chest...",
-        our_hero.view.generate_perspective(),
-        show_map(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages="You see an empty treasure chest...",
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=show_map(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -178,19 +186,21 @@ def stepped_on_trap(our_hero):
         our_hero.view.dungeon.complete_challenge(our_hero)
         trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
         return screen.paint(
-            our_hero,
-            commands,
-            trap.triggered(our_hero),
-            our_hero.view.generate_perspective(),
-            trap.image,
-            None
+            hero=our_hero,
+            commands=commands,
+            messages=trap.triggered(our_hero),
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=trap.image,
+            sound=None,
+            sleep=2000
         )
     else:
         return screen.paint(
-            our_hero,
-            commands,
-            "You see a morning star hanging from the ceiling...",
-            our_hero.view.generate_perspective(),
-            show_map(our_hero),
-            None
+            hero=our_hero,
+            commands=commands,
+            messages="You see a morning star hanging from the ceiling...",
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=show_map(our_hero),
+            sound=None,
+            sleep=250
         )

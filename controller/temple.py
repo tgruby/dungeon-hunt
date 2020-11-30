@@ -14,12 +14,13 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_healing_list(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_healing_list(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -39,12 +40,13 @@ def process(our_hero, action):
             message = "You are healthy! You don't need healing!"
 
         return screen.paint(
-            our_hero,
-            commands,
-            message,
-            image,
-            draw_healing_list(our_hero),
-            None
+            hero=our_hero,
+            commands=commands,
+            messages=message,
+            left_pane_content=image,
+            right_pane_content=draw_healing_list(our_hero),
+            sound=None,
+            sleep=250
         )
 
     # Half Healing
@@ -60,12 +62,13 @@ def process(our_hero, action):
             message = "You are healthy! You don't need healing!"
 
         return screen.paint(
-            our_hero,
-            commands,
-            message,
-            image,
-            draw_healing_list(our_hero),
-            None
+            hero=our_hero,
+            commands=commands,
+            messages=message,
+            left_pane_content=image,
+            right_pane_content=draw_healing_list(our_hero),
+            sound=None,
+            sleep=250
         )
 
     # Leave and go back to the town

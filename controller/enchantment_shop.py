@@ -18,12 +18,13 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_purchase_list(),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_purchase_list(),
+        sound=None,
+        sleep=250
     )
 
 
@@ -60,12 +61,13 @@ def purchase_items(our_hero, action):
         message = "There is no item with that number!"
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_purchase_list(),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_purchase_list(),
+        sound=None,
+        sleep=250
     )
 
 

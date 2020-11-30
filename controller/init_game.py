@@ -39,23 +39,25 @@ def intro_screen():
         "be their hero?",
         None,
         'Press L to see the Leaderboard, and S to start play...',
+        None,
         None
     )
 
 
 def draw_leaderboard():
     lb = db.load_leaderboard()
+    print("LB Count: " + str(len(lb.top_ten)))
     response = "  Rank | Name                       | Score " + '\n'
     response += screen.medium_border + '\n'
     for i in lb.top_ten:
-        response += " " + screen.back_padding(i.name, 17) + " | " \
-                    + str(i.experience_points) + '\n'
+        response += "       | " + screen.back_padding(i.name, 26) + " | " + str(i.experience_points) + '\n'
 
     return screen.intro_paint(
         images.title_1,
         None,
         response,
         'Press S to start play...',
+        None,
         None
     )
 

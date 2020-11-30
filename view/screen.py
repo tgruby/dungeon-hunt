@@ -10,8 +10,8 @@ center_pane_height = 20
 
 
 # Function to draw the screen given the five panel inputs
-def paint(our_hero, commands, messages, left_pane_content, right_pane_content, sound_file_name):
-    canvas = [border("Stats"), v_border + center_text(get_stats(our_hero), ' ', 78) + v_border, h_border]
+def paint(hero, commands, messages, left_pane_content, right_pane_content, sound, sleep):
+    canvas = [border("Stats"), v_border + center_text(get_stats(hero), ' ', 78) + v_border, h_border]
     # Stats
     lines = create_center_pane(left_pane_content, right_pane_content)
     for line in lines:
@@ -30,15 +30,16 @@ def paint(our_hero, commands, messages, left_pane_content, right_pane_content, s
 
     response = {
         "canvas": canvas,
-        "sound": sound_file_name,
-        "game_token": our_hero.game_token
+        "sound": sound,
+        "sleep": sleep,
+        "game_token": hero.game_token
     }
 
     return response
 
 
 # Function to draw the screen given four virt. panel inputs
-def intro_paint(title_image, contents, contents_image, commands, sound_file_name):
+def intro_paint(title_image, contents, contents_image, commands, sound, sleep):
     canvas = []
 
     formatted_image = square_image(title_image, 5, 80)
@@ -69,7 +70,8 @@ def intro_paint(title_image, contents, contents_image, commands, sound_file_name
 
     response = {
         "canvas": canvas,
-        "sound": sound_file_name,
+        "sound": sound,
+        "sleep": sleep,
         "game_token": None
     }
 

@@ -15,12 +15,13 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_sell_list(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_sell_list(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -62,12 +63,13 @@ def sell_items(our_hero, action):
             message = "You cannot sell that item here!"
 
     return screen.paint(
-        our_hero,
-        commands,
-        message,
-        image,
-        draw_sell_list(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=message,
+        left_pane_content=image,
+        right_pane_content=draw_sell_list(our_hero),
+        sound=None,
+        sleep=250
     )
 
 

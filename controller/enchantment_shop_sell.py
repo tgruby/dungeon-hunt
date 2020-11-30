@@ -13,13 +13,14 @@ def enter(our_hero):
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
-        our_hero,
-        commands,
-        "Wonderful, we have been running low on hard to get items for our spells and potions!  What are you willing "
+        hero=our_hero,
+        commands=commands,
+        messages="Wonderful, we have been running low on hard to get items for our spells and potions!  What are you willing "
         "to part with? ",
-        image,
-        draw_sell_list(our_hero),
-        None
+        left_pane_content=image,
+        right_pane_content=draw_sell_list(our_hero),
+        sound=None,
+        sleep=250
     )
 
 
@@ -57,12 +58,13 @@ def sell_items(our_hero, action):
             msg = "You cannot sell that item here!"
 
     return screen.paint(
-        our_hero,
-        commands,
-        msg,
-        image,
-        draw_sell_list(our_hero),
-        None
+        hero=our_hero,
+        commands=commands,
+        messages=msg,
+        left_pane_content=image,
+        right_pane_content=draw_sell_list(our_hero),
+        sound=None,
+        sleep=250
     )
 
 

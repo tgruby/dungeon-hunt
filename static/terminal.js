@@ -74,6 +74,10 @@ var Terminal = (function () {
                 isNumeric = /[0-9.]/.test(keyChar)
                 // isAlpha = /[^A-Za-z\s]/.test(keyChar)
 				if (!isNumeric) {
+				    terminalObj._input.style.display = 'none'
+                    var inputValue = inputField.value
+                    if (shouldDisplayInput) terminalObj.print(inputValue)
+                    terminalObj.html.removeChild(inputField)
 					callback(keyChar)
 				}
 			}
