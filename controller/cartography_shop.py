@@ -22,7 +22,7 @@ def enter(our_hero):
         left_pane_content=image,
         right_pane_content=draw_map_list(),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -65,7 +65,7 @@ def purchase_a_map(our_hero, action):
         left_pane_content=image,
         right_pane_content=draw_map_list(),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 

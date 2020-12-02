@@ -24,7 +24,7 @@ def enter(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -41,7 +41,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound=None,
-            sleep=250
+            sleep=100
         )
 
     # Turn Right
@@ -54,7 +54,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound=None,
-            sleep=250
+            sleep=100
         )
 
     # Step Forward
@@ -96,7 +96,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound='footstep',
-            sleep=250
+            sleep=100
         )
 
     # Look in backpack at the hero's inventory
@@ -111,7 +111,7 @@ def process(our_hero, action):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -129,7 +129,7 @@ def fight_monster(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -160,7 +160,7 @@ def found_treasure(our_hero):
             weapon = items.equipment_list[random.randint(0, len(items.equipment_list) - 1)]
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
-        cmd = "Press Enter to continue..."
+        cmd = "Press any key to continue..."
         return screen.paint(
             hero=our_hero,
             commands=cmd,
@@ -177,7 +177,7 @@ def found_treasure(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -185,6 +185,7 @@ def stepped_on_trap(our_hero):
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
         our_hero.view.dungeon.complete_challenge(our_hero)
         trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
+        # TODO: What if this kills the hero
         return screen.paint(
             hero=our_hero,
             commands=commands,
@@ -202,5 +203,5 @@ def stepped_on_trap(our_hero):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound=None,
-            sleep=250
+            sleep=100
         )

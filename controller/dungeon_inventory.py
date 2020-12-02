@@ -22,7 +22,7 @@ def enter(our_hero):
         left_pane_content=image,
         right_pane_content=view.screen.list_inventory(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -51,7 +51,7 @@ def use_item(our_hero, action):
             left_pane_content=image,
             right_pane_content=view.screen.list_inventory(our_hero),
             sound=None,
-            sleep=250
+            sleep=100
         )
     selected_item = items_list[item_number_picked - 1][4]
     if selected_item["type"] == "weapon":
@@ -84,5 +84,5 @@ def use_item(our_hero, action):
         left_pane_content=image,
         right_pane_content=view.screen.list_inventory(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )

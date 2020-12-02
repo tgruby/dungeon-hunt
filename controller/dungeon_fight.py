@@ -29,7 +29,7 @@ def process(our_hero, action):
                 left_pane_content=our_hero.view.generate_perspective(),
                 right_pane_content=our_hero.monster.image,
                 sound=None,
-                sleep=250
+                sleep=100
             )
         else:
             # Monster has been killed
@@ -44,7 +44,7 @@ def process(our_hero, action):
                 our_hero.inventory.append(our_hero.monster.weapon)
                 message = message + " The monster has dropped " + our_hero.monster.weapon["name"] + "!"
             message = message + " Digging through the %s remains you found %d gold!" % (our_hero.monster.name, our_hero.monster.gold)
-            commands = "Press Enter to continue..."
+            commands = "Press any key to continue..."
             our_hero.monster = None
 
             router.current_controller = dungeon
@@ -95,7 +95,7 @@ def hero_is_slain(our_hero):
     return screen.paint(
         hero=our_hero,
         commands="Refresh your browser to start a new game",
-        messages="You have been slain! You scored " + str(our_hero.experience_points) + "points.  We will soon add a "
+        messages="You have been slain! You scored " + str(our_hero.experience_points) + " points.  We will soon add a "
                                                                                    "leaderboard and if you are good "
                                                                                    "enough, your scores will be "
                                                                                    "added.",
@@ -123,5 +123,5 @@ def default_screen(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=our_hero.monster.image,
         sound=None,
-        sleep=250
+        sleep=100
     )

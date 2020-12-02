@@ -20,7 +20,7 @@ def enter(our_hero):
         left_pane_content=image,
         right_pane_content=draw_healing_list(our_hero),
         sound=None,
-        sleep=250
+        sleep=100
     )
 
 
@@ -46,7 +46,7 @@ def process(our_hero, action):
             left_pane_content=image,
             right_pane_content=draw_healing_list(our_hero),
             sound=None,
-            sleep=250
+            sleep=100
         )
 
     # Half Healing
@@ -68,7 +68,7 @@ def process(our_hero, action):
             left_pane_content=image,
             right_pane_content=draw_healing_list(our_hero),
             sound=None,
-            sleep=250
+            sleep=100
         )
 
     # Leave and go back to the town
