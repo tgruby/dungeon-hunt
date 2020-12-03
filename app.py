@@ -60,9 +60,10 @@ def process_no_action(token):
 def process_action(token, action):
     return jsonify(router.process(token, action)), 200
 
+
 # Receive a game play command and respond with a json object representing each panel.
 @app.route('/api/v1/gamertag/<tag>')
-def process_action(tag, action):
+def process_gamertag(tag):
     session['gamertag'] = tag
     return jsonify('{ok}'), 200
 
