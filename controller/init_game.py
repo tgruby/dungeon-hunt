@@ -32,10 +32,10 @@ def intro_screen():
     return screen.intro_paint(
         images.title_1,
         "The town of Thordale's renowned catacombs have been laid waste by a treacherous red dragon.  The catacombs "
-        "had served as a place for both the town dead, as well as their treasured secrets from the days of where the "
-        "dwarfs gold flowed through the mountain. As the dragon has made it's home in the catacombs, it has slowly "
-        "filled with wild animals and more evil monsters.  Recently, monsters have been leaving the dungeon at night "
-        "to attack town people.  The town is desperate for someone to save them from this deadly decline.  Will you "
+        "had served as a place for both the town dead as well as their treasured secrets from the days of old where "
+        "dwarf gold flowed out of the mountain. As the dragon has made it's home in the catacombs, it has slowly "
+        "filled with wild animals and more evil things.  Recently, monsters have been leaving the dungeon at night "
+        "to drag away town people.  The town is desperate for someone to save them from this deadly decline.  Will you "
         "be their hero?",
         None,
         'Press L to see the Leaderboard, and S to start play...',

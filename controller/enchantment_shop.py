@@ -24,7 +24,7 @@ def enter(our_hero):
         left_pane_content=image,
         right_pane_content=draw_purchase_list(),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 
@@ -67,7 +67,7 @@ def purchase_items(our_hero, action):
         left_pane_content=image,
         right_pane_content=draw_purchase_list(),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 

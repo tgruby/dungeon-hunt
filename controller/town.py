@@ -23,7 +23,7 @@ def enter(our_hero):
         left_pane_content=image,
         right_pane_content=view.screen.list_inventory(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 

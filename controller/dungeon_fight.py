@@ -29,7 +29,7 @@ def process(our_hero, action):
                 left_pane_content=our_hero.view.generate_perspective(),
                 right_pane_content=our_hero.monster.image,
                 sound=None,
-                sleep=100
+                sleep=0
             )
         else:
             # Monster has been killed
@@ -55,7 +55,7 @@ def process(our_hero, action):
                 left_pane_content=our_hero.view.generate_perspective(),
                 right_pane_content=images.treasure_chest,
                 sound=None,
-                sleep=2000
+                sleep=00
             )
 
     # Run Away
@@ -75,7 +75,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content="You got away!",
             sound=None,
-            sleep=2000
+            sleep=00
         )
 
     return default_screen(our_hero)
@@ -102,7 +102,7 @@ def hero_is_slain(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=images.death,
         sound=None,
-        sleep=2000
+        sleep=00
     )
 
 
@@ -123,5 +123,5 @@ def default_screen(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=our_hero.monster.image,
         sound=None,
-        sleep=100
+        sleep=0
     )

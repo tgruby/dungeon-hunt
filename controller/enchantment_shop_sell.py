@@ -20,7 +20,7 @@ def enter(our_hero):
         left_pane_content=image,
         right_pane_content=draw_sell_list(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 
@@ -64,7 +64,7 @@ def sell_items(our_hero, action):
         left_pane_content=image,
         right_pane_content=draw_sell_list(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 

@@ -2,6 +2,7 @@ import os
 from controller import router, init_game
 from flask import Flask, render_template, jsonify
 
+# TODO: Add gamertag into session
 # TODO: fix death.  should end game and go to leaderboard.
 # TODO: folks miss stuff when fighting... they just jam f to fight.  have a time lag during fighting? or switch to c. for continue...
 # TODO: Add ability to have different players play at the same time (different heros, different dungeons)

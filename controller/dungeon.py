@@ -24,7 +24,7 @@ def enter(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 
@@ -41,7 +41,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound=None,
-            sleep=100
+            sleep=0
         )
 
     # Turn Right
@@ -54,7 +54,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound=None,
-            sleep=100
+            sleep=0
         )
 
     # Step Forward
@@ -96,7 +96,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound='footstep',
-            sleep=100
+            sleep=0
         )
 
     # Look in backpack at the hero's inventory
@@ -111,7 +111,7 @@ def process(our_hero, action):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 
@@ -129,7 +129,7 @@ def fight_monster(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 
@@ -168,7 +168,7 @@ def found_treasure(our_hero):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=images.treasure_chest,
             sound=None,
-            sleep=2000
+            sleep=00
         )
     return screen.paint(
         hero=our_hero,
@@ -177,7 +177,7 @@ def found_treasure(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=show_map(our_hero),
         sound=None,
-        sleep=100
+        sleep=0
     )
 
 
@@ -193,7 +193,7 @@ def stepped_on_trap(our_hero):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=trap.image,
             sound=None,
-            sleep=2000
+            sleep=00
         )
     else:
         return screen.paint(
@@ -203,5 +203,5 @@ def stepped_on_trap(our_hero):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=show_map(our_hero),
             sound=None,
-            sleep=100
+            sleep=0
         )
