@@ -7,11 +7,11 @@ function connectToServer(term, url) {
         method: 'Get',
         headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
     })
-        .then((resp) => resp.json()) // Transform the data into json
-        .then(function(data) {
-            processResponse(term, data.game_token, data.canvas, data.sound, data.sleep)
-        })
-        .catch((error) => console.error("DoT Error: " + error.message))
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) {
+        processResponse(term, data.game_token, data.canvas, data.sound, data.sleep)
+    })
+    .catch((error) => console.error("DoT Error: " + error.message))
 }
 
 async function processResponse(term, token, canvas, sound, sleep) {
@@ -35,5 +35,20 @@ function constructUrl(gameToken, action) {
         return '/api/v1/start/action/' + action
     } else {
         return '/api/v1/game/' + gameToken + '/action/' + action
+    }
+}
+
+function sendGamertag() {
+    var tag = document.getElementById("gamertag").value;
+    if (tag.trim().length > 0) {
+        fetch('/api/v1/gamertag/' + tag, {
+            method: 'Get',
+            headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+        })
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+            //ignore response
+        })
+        .catch((error) => console.error("DoT Error: " + error.message))
     }
 }

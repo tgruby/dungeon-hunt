@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
 
-    <title>Dungeon of Thordale</title>
+    <title>Dungeon of Thordon</title>
 	<link rel="stylesheet" type="text/css" href="static/style.css">
 	<script src="static/terminal.js"></script>
 	<script src="static/network.js"></script>
@@ -18,8 +18,7 @@
 	<div style="margin:auto; padding: 20px; width: 660px;">
 		<form action="/api/v1/set-gamertag" method="get">
 			<label for="gamertag">Gamertag:</label>
-			<input type="text" id="gamertag" name="gamertag">
-			<input type="submit" value="Set">
+			<input type="text" id="gamertag" name="gamertag" onkeyup="sendGamertag">
 		</form>
 	</div>
 

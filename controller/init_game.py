@@ -31,7 +31,7 @@ def process(action):
 def intro_screen():
     return screen.intro_paint(
         images.title_1,
-        "The town of Thordale's renowned catacombs have been laid waste by a treacherous red dragon.  The catacombs "
+        "The town of Thordon renowned catacombs have been laid waste by a treacherous red dragon.  The catacombs "
         "had served as a place for both the town dead as well as their treasured secrets from the days of old where "
         "dwarf gold flowed out of the mountain. As the dragon has made it's home in the catacombs, it has slowly "
         "filled with wild animals and more evil things.  Recently, monsters have been leaving the dungeon at night "

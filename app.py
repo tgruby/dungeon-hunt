@@ -1,6 +1,6 @@
 import os
 from controller import router, init_game
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, session
 
 # TODO: Add gamertag into session
 # TODO: fix death.  should end game and go to leaderboard.
@@ -59,6 +59,12 @@ def process_no_action(token):
 @app.route('/api/v1/game/<token>/action/<action>')
 def process_action(token, action):
     return jsonify(router.process(token, action)), 200
+
+# Receive a game play command and respond with a json object representing each panel.
+@app.route('/api/v1/gamertag/<tag>')
+def process_action(tag, action):
+    session['gamertag'] = tag
+    return jsonify('{ok}'), 200
 
 
 if __name__ == '__main__':
