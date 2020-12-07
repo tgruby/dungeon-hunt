@@ -2,7 +2,7 @@
 
 var Terminal = (function () {
 	// PROMPT_TYPE
-	var PROMPT_INPUT = 1, PROMPT_PASSWORD = 2, PROMPT_CONFIRM = 3
+	var PROMPT_INPUT = 1, PROMPT_PASSWORD = 2, PROMPT_CONFIRM = 3, AUTO_PROMPT = 4
 
 	var fireCursorInterval = function (inputField, terminalObj) {
 		var cursor = terminalObj._cursor
@@ -68,8 +68,8 @@ var Terminal = (function () {
 						callback(inputValue.toUpperCase()[0] === 'Y')
 					} else callback(inputValue)
 				}
-			} else {
-				// Added for DoT game only!
+			} else if (PROMPT_TYPE === AUTO_PROMPT) {
+				// Added for DoT game only! If Alpha character pressed, send right away.
 				keyChar = String.fromCharCode(e.keyCode)
                 isNumeric = /[0-9.]/.test(keyChar)
                 // isAlpha = /[^A-Za-z\s]/.test(keyChar)
@@ -120,6 +120,10 @@ var Terminal = (function () {
 
 		this.confirm = function (message, callback) {
 			promptInput(this, message, PROMPT_CONFIRM, callback)
+		}
+
+		this.key = function (message, callback) {
+			promptInput(this, message, AUTO_PROMPT, callback)
 		}
 
 		this.clear = function () {

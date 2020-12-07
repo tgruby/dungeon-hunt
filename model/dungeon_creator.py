@@ -124,7 +124,7 @@ scan_for_door = [
 
 # Find dead-ends and put a door in front of them, and a chest in them.
 def add_doors_traps_and_treasures(maze_array):
-    print("Maze Size: x=%d, y=%d" % (len(maze_array[0]), len(maze_array)))
+    # print("Maze Size: x=%d, y=%d" % (len(maze_array[0]), len(maze_array)))
 
     # walk through every cell in the matrix.
     # Look at cells surrounding the current location: if there is only one hallway, then we have found a dead-end.
@@ -145,14 +145,14 @@ def add_doors_traps_and_treasures(maze_array):
                     door_x = scan_x
                     door_y = scan_y
             if opening_count == 1:
-                print("Placing Door: x=%d, y=%d" % (door_x, door_y))
+                # print("Placing Door: x=%d, y=%d" % (door_x, door_y))
                 maze_array[door_y][door_x] = 'D'
                 is_trap = random.randint(0, 3)  # 25% chance it is a trap instead of treasure
                 if is_trap == 0:
-                    print("Placing Trap: x=%d, y=%d" % (x, y))
+                    # print("Placing Trap: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = 'T'
                 else:
-                    print("Placing Chest or Trap: x=%d, y=%d" % (x, y))
+                    # print("Placing Chest or Trap: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = '$'
 
 
@@ -167,7 +167,7 @@ def add_monsters(maze_array):
             if is_opening(p):
                 is_monster = random.randint(0, 9)
                 if is_monster == 0:
-                    print("Placing Monster: x=%d, y=%d" % (x, y))
+                    # print("Placing Monster: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = 'M'
                     continue
 

@@ -11,7 +11,6 @@ image = images.small_village
 
 # Function to navigate the town
 def enter(our_hero):
-    print("town.enter")
     router.current_controller = sys.modules[__name__]
     # Save our hero every time he/she enters the town.  This will capture coming back from the weapons shop,
     # the temple, or the dungeon.  This means a hero in the dungeon that doesn't come back doesn't get updated.

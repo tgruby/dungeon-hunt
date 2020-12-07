@@ -14,7 +14,6 @@ message = "You crawl into the dark cave at the side of the mountain and enter th
 # This Function is to walk through the dungeon and display the results of moving through the dungeon on the screen. This
 # continues to loop until we leave the dungeon.
 def enter(our_hero):
-    print("dungeon.enter")
     router.current_controller = sys.modules[__name__]
 
     return screen.paint(
@@ -29,8 +28,6 @@ def enter(our_hero):
 
 
 def process(our_hero, action):
-    print("dungeon.process: " + action)
-
     # Turn Left
     if action.lower() == "a":
         msg = our_hero.view.turn_left()
@@ -168,7 +165,7 @@ def found_treasure(our_hero):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=images.treasure_chest,
             sound=None,
-            sleep=00
+            sleep=500
         )
     return screen.paint(
         hero=our_hero,
@@ -193,7 +190,7 @@ def stepped_on_trap(our_hero):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=trap.image,
             sound=None,
-            sleep=00
+            sleep=500
         )
     else:
         return screen.paint(

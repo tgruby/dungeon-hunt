@@ -2,7 +2,7 @@ import db
 import sys
 import random
 from view import screen, images
-from controller import router, dungeon, init_game
+from controller import router, dungeon, town
 
 
 # This function controls fighting with a monster
@@ -55,7 +55,7 @@ def process(our_hero, action):
                 left_pane_content=our_hero.view.generate_perspective(),
                 right_pane_content=images.treasure_chest,
                 sound=None,
-                sleep=00
+                sleep=500
             )
 
     # Run Away
@@ -75,7 +75,7 @@ def process(our_hero, action):
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content="You got away!",
             sound=None,
-            sleep=00
+            sleep=500
         )
 
     return default_screen(our_hero)
@@ -83,7 +83,7 @@ def process(our_hero, action):
 
 # routine to run if your hero is slain
 def hero_is_slain(our_hero):
-    router.current_controller = init_game
+    router.current_controller = town
     # End the Game, save the character to the leaderboard (if they are good enough).
     lb = db.load_leaderboard()
     lb.add_leader(our_hero)
@@ -102,7 +102,7 @@ def hero_is_slain(our_hero):
         left_pane_content=our_hero.view.generate_perspective(),
         right_pane_content=images.death,
         sound=None,
-        sleep=00
+        sleep=1000
     )
 
 
