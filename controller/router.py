@@ -14,12 +14,16 @@ def process(token, action):
 
     # Load our hero into memory.
     our_hero = db.load_hero(token)
+    if our_hero is None:
+        return None
+
     if action is None:
         updated_screen = current_controller.enter(our_hero)
     else:
         updated_screen = current_controller.process(our_hero, action)
     # After every move is processed, save the state of our hero.
-    db.save_hero(token, our_hero)
+    if our_hero.game_token is not None:
+        db.save_hero(token, our_hero)
 
     if updated_screen is None:
         # set update_screen to an error message if blank response

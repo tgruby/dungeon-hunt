@@ -2,6 +2,7 @@
 # interactions between the user and the computer.  This is where we will put all of our controller code.
 import sys
 import random
+import db
 
 from model import items, monsters, traps
 from view import screen, images
@@ -183,6 +184,27 @@ def stepped_on_trap(our_hero):
         our_hero.view.dungeon.complete_challenge(our_hero)
         trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
         # TODO: What if this kills the hero
+        if not our_hero.is_alive():
+            router.current_controller = town
+            # End the Game, save the character to the leaderboard (if they are good enough).
+            lb = db.load_leaderboard()
+            lb.add_leader(our_hero)
+            db.save_leaderboard(lb)
+            # Delete our Hero file so we have to create a new hero
+            db.delete_hero(our_hero.game_token)
+            our_hero.game_token = None
+
+            return screen.paint(
+                hero=our_hero,
+                commands='Press any key...',
+                messages=trap.triggered(our_hero) + " You have been killed!",
+                left_pane_content=images.death,
+                right_pane_content=trap.image,
+                sound=None,
+                sleep=1000
+            )
+
+
         return screen.paint(
             hero=our_hero,
             commands=commands,

@@ -17,6 +17,8 @@ def save_hero(game_token, hero):
 
 # This helper function is to save our hero to a "pickle" file, python's standard way to save objects to a file.
 def load_hero(game_token):
+    if game_token is None:
+        return None
     return load('data/game_' + game_token)
 
 

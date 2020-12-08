@@ -33,6 +33,7 @@ def paint(hero, commands, messages, left_pane_content, right_pane_content, sound
         "sound": sound,
         "sleep": sleep,
         "game_token": hero.game_token
+        # Add interaction_type = key_press | enter_press
     }
 
     return response

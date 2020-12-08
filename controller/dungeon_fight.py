@@ -95,12 +95,9 @@ def hero_is_slain(our_hero):
     return screen.paint(
         hero=our_hero,
         commands="Refresh your browser to start a new game",
-        messages="You have been slain! You scored " + str(our_hero.experience_points) + " points.  We will soon add a "
-                                                                                   "leaderboard and if you are good "
-                                                                                   "enough, your scores will be "
-                                                                                   "added.",
-        left_pane_content=our_hero.view.generate_perspective(),
-        right_pane_content=images.death,
+        messages="You have been slain! You scored " + str(our_hero.experience_points) + " points. ",
+        left_pane_content=images.death,
+        right_pane_content=our_hero.monster.image,
         sound=None,
         sleep=1000
     )
