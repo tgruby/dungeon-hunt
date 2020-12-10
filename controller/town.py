@@ -1,7 +1,6 @@
-import sys
 import view.screen
 from view import screen, images
-from controller import dungeon, cartography_shop, equipment_shop, temple, enchantment_shop, router
+from controller import dungeon, cartography_shop, equipment_shop, temple, enchantment_shop
 
 commands = "(E)quipment, (P)otions, (C)artographer, (T)emple, (D)ungeon"
 msg = "Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
@@ -9,44 +8,48 @@ msg = "Town Center: There are a number of shops where you can buy supplies for y
 image = images.small_village
 
 
-# Function to navigate the town
-def enter(our_hero):
-    router.current_controller = sys.modules[__name__]
-    # Save our hero every time he/she enters the town.  This will capture coming back from the weapons shop,
-    # the temple, or the dungeon.  This means a hero in the dungeon that doesn't come back doesn't get updated.
+def process(game, action):
+    if action is None:
+        return paint(game.character)
 
-    return screen.paint(
-        hero=our_hero,
-        commands=commands,
-        messages=msg,
-        left_pane_content=image,
-        right_pane_content=view.screen.list_inventory(our_hero),
-        sound=None,
-        sleep=0
-    )
-
-
-def process(our_hero, action):
-    print("town.process: " + action)
     # Visit the Shop to buy stuff
     if action.lower() == "e":
-        return equipment_shop.enter(our_hero)
+        game.current_controller = 'equipment_shop'
+        return equipment_shop.process(game, None)
 
     # Go into the Map Shop
     if action.lower() == "c":
-        return cartography_shop.enter(our_hero)
+        game.current_controller = 'cartography_shop'
+        return cartography_shop.process(game, None)
 
     # Visit the Magic shop
     if action.lower() == "p":
-        return enchantment_shop.enter(our_hero)
+        game.current_controller = 'enchantment_shop'
+        return enchantment_shop.process(game, None)
 
     # Go into the Temple
     if action.lower() == "t":
-        return temple.enter(our_hero)
+        game.current_controller = 'temple'
+        return temple.process(game, None)
 
     # Enter Dungeon
     if action.lower() == "d":
-        return dungeon.enter(our_hero)
+        game.current_controller = 'dungeon'
+        return dungeon.process(game, None)
 
+    # Something else?
+    return paint(game.character)
+
+
+def paint(hero):
     # Print the Town Page if we don't know what the action is.
-    return enter(our_hero)
+    return screen.paint_two_panes(
+        hero=hero,
+        commands=commands,
+        messages=msg,
+        left_pane_content=image,
+        right_pane_content=view.screen.list_inventory(hero),
+        sound=None,
+        delay=0,
+        interaction_type='enter_press'
+    )

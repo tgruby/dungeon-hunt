@@ -1,6 +1,6 @@
 import os
 import pickle
-from model import leaderboard
+from model import leaderboard, games
 
 
 def init_db():
@@ -10,33 +10,32 @@ def init_db():
         print(error)
 
 
-# This function saves our hero as he/she exists right now.
-def save_hero(game_token, hero):
-    save('data/game_' + game_token, hero)
-
-
-# This helper function is to save our hero to a "pickle" file, python's standard way to save objects to a file.
-def load_hero(game_token):
-    if game_token is None:
-        return None
-    return load('data/game_' + game_token)
-
-
-# This function will be called when our hero is killed.  That means you can't play him/her again after death!
-def delete_hero(game_token):
-    delete('data/game_' + game_token)
-
-
-# This function saves our hero as he/she exists right now.
-def save_leaderboard(leader_board):
-    save('data/leaderboard', leader_board)
-
-
 def load_leaderboard():
     lb = load('data/leaderboard')
     if lb is None:
         lb = leaderboard.Leaderboard([])
     return lb
+
+
+def save_leaderboard(leader_board):
+    save('data/leaderboard', leader_board)
+
+
+def load_game(game_id):
+    g = load('data/game_' + game_id)
+    if g is None:
+        g = games.Game(game_id)
+    return g
+
+
+# This function saves our hero as he/she exists right now.
+def save_game(game_id, game_object):
+    save('data/game_' + game_id, game_object)
+
+
+# This function will be called when our hero is killed.  That means you can't play him/her again after death!
+def delete_game(game_id):
+    delete('data/game_' + game_id)
 
 
 # This function saves our hero as he/she exists right now.
@@ -57,6 +56,7 @@ def load(name):
             # After the object is read from file, return it
             return my_object
     except IOError:
+        print("Can't find file: " + name)
         return None
 
 

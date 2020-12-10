@@ -1,43 +1,43 @@
-import sys
 import view.screen
 from view import screen, images
-from controller import router, enchantment_shop
+from controller import enchantment_shop
 
+messages = "Wonderful, we have been running low on hard to get items for our spells and potions!  What are you willing "
+"to part with? "
 commands = "Enter a (#) to sell an item, or (L)eave"
 image = images.shop
 
 
 # This function controls our interactions at the weapons store
-def enter(our_hero):
-    print("enchantment_shop_sell.enter")
-    router.current_controller = sys.modules[__name__]
-
-    return screen.paint(
+def paint(our_hero, msg):
+    return screen.paint_two_panes(
         hero=our_hero,
         commands=commands,
-        messages="Wonderful, we have been running low on hard to get items for our spells and potions!  What are you willing "
-        "to part with? ",
+        messages=msg,
         left_pane_content=image,
         right_pane_content=draw_sell_list(our_hero),
         sound=None,
-        sleep=0
+        delay=0,
+        interaction_type='enter_press'
     )
 
 
-def process(our_hero, action):
-    print("enchantment_shop_sell.process: " + action)
+def process(game, action):
+    our_hero = game.character
+    if action is None:
+        return paint(our_hero, messages)
 
-    print(" +--> check if leave the shop...")
     # Leave and go back to the enchantment_shop
     if action.lower() == "l":
-        return enchantment_shop.enter(our_hero)
+        game.current_controller = 'enchantment_shop'
+        return enchantment_shop.process(game, None)
 
     print(" +--> check if a digit...")
     if action.isdigit():
         return sell_items(our_hero, action)
 
     print(" +--> wtf, just represent the page...")
-    return enter(our_hero)
+    return paint(our_hero, messages)
 
 
 # This function controls our interactions at the weapons store
@@ -57,15 +57,7 @@ def sell_items(our_hero, action):
         else:
             msg = "You cannot sell that item here!"
 
-    return screen.paint(
-        hero=our_hero,
-        commands=commands,
-        messages=msg,
-        left_pane_content=image,
-        right_pane_content=draw_sell_list(our_hero),
-        sound=None,
-        sleep=0
-    )
+    return paint(our_hero, msg)
 
 
 def draw_sell_list(our_hero):

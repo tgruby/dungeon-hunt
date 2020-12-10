@@ -10,7 +10,16 @@ center_pane_height = 20
 
 
 # Function to draw the screen given the five panel inputs
-def paint(hero, commands, messages, left_pane_content, right_pane_content, sound, sleep):
+def paint_two_panes(
+        hero,
+        commands,
+        messages,
+        left_pane_content,
+        right_pane_content,
+        sound,
+        delay,
+        interaction_type
+):
     canvas = [border("Stats"), v_border + center_text(get_stats(hero), ' ', 78) + v_border, h_border]
     # Stats
     lines = create_center_pane(left_pane_content, right_pane_content)
@@ -29,25 +38,37 @@ def paint(hero, commands, messages, left_pane_content, right_pane_content, sound
     canvas.append(h_border)
 
     response = {
+        # Updated page for the browser to paint,
         "canvas": canvas,
+        # Play a sound for this screen
         "sound": sound,
-        "sleep": sleep,
-        "game_token": hero.game_token
-        # Add interaction_type = key_press | enter_press
+        # Time to wait before allowing the player to make the next move
+        "delay": delay,
+        # whether the next move should happen on any key press or the enter key (key_press | enter_press)
+        "interaction_type": interaction_type,
     }
 
     return response
 
 
 # Function to draw the screen given four virt. panel inputs
-def intro_paint(title_image, contents, contents_image, commands, sound, sleep):
+def paint_one_pane(
+        title_image,
+        contents,
+        contents_image,
+        commands,
+        sound,
+        delay,
+        interaction_type
+):
     canvas = []
 
-    formatted_image = square_image(title_image, 5, 80)
-    for line in formatted_image:
-        canvas.append(line)
+    if title_image is not None:
+        formatted_image = square_image(title_image, 5, 80)
+        for line in formatted_image:
+            canvas.append(line)
+        canvas.append(' ')
 
-    canvas.append(' ')
     canvas.append(h_border)
     canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
 
@@ -67,13 +88,18 @@ def intro_paint(title_image, contents, contents_image, commands, sound, sleep):
     # command
     canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
     canvas.append(h_border)
-    canvas.append(front_padding(commands, 80))
+    if commands is not None:
+        canvas.append(front_padding(commands, 80))
 
     response = {
+        # Updated page for the browser to paint,
         "canvas": canvas,
+        # Play a sound for this screen
         "sound": sound,
-        "sleep": sleep,
-        "game_token": None
+        # Time to wait before allowing the player to make the next move
+        "delay": delay,
+        # whether the next move should happen on any key press or the enter key (key_press | enter_press)
+        "interaction_type": interaction_type
     }
 
     return response
@@ -249,7 +275,7 @@ def get_stats(our_hero):
         return "*** YOU ARE DEAD ***"
     else:
         response = "Hit Points: %d/%d, Level: %d, Gold: %d, Score: %d" % (
-            our_hero.hit_points, our_hero.max_hit_points, our_hero.level, our_hero.gold, our_hero.experience_points)
+            our_hero.hit_points, our_hero.max_hit_points, our_hero.level, our_hero.gold, our_hero.experience_points * 10)
         if our_hero.view:
             response += ", Facing: " + our_hero.view.get_direction()
         return response

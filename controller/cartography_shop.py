@@ -1,8 +1,7 @@
-import sys
 import view.screen
 from model import maps
 from view import screen, images
-from controller import town, router
+from controller import town
 
 commands = "Enter a (#) to purchase an item, (L)eave Shop"
 message = "Welcome to Tina's Cartography, mighty warrior! Would you like to buy a map of the dungeon? They are " \
@@ -11,33 +10,35 @@ image = images.scroll
 
 
 # This function controls our interactions at the weapons store
-def enter(our_hero):
-    print("cartography_shop.enter")
-    router.current_controller = sys.modules[__name__]
-
-    return screen.paint(
-        hero=our_hero,
+def paint(hero):
+    return screen.paint_two_panes(
+        hero=hero,
         commands=commands,
         messages=message,
         left_pane_content=image,
         right_pane_content=draw_map_list(),
         sound=None,
-        sleep=0
+        delay=0,
+        interaction_type='enter_press'
     )
 
 
-def process(our_hero, action):
-    print("cartography_shop.process: " + action)
+def process(game, action):
+    character = game.character
+    if action is None:
+        return paint(character)
+
     # Visit the Shop to buy stuff
     if action.isdigit():
-        return purchase_a_map(our_hero, action)
+        return purchase_a_map(character, action)
 
     # Leave and go back to the town
     if action.lower() == "l":
-        return town.enter(our_hero)
+        game.current_controller = 'town'
+        return town.process(game, None)
 
     # Print the Shop page if we haven't returned yet.
-    return enter(our_hero)
+    return paint(character)
 
 
 def purchase_a_map(our_hero, action):
@@ -46,26 +47,27 @@ def purchase_a_map(our_hero, action):
         if number_picked < len(maps.map_list):
             m = maps.map_list[number_picked]
             if m in our_hero.inventory:
-                message = "You already own that map!"
+                msg = "You already own that map!"
             elif our_hero.gold < m["cost"]:
-                message = "You don't have enough money for that!"
+                msg = "You don't have enough money for that!"
             else:
                 our_hero.gold -= m["cost"]
                 our_hero.inventory.append(m)
-                message = "You have boughten the " + m["name"] + "!"
+                msg = "You have boughten the " + m["name"] + "!"
         else:
-            message = "There is no map for that number!"
+            msg = "There is no map for that number!"
     else:
-        message = "You need to specify a number."
+        msg = "You need to specify a number."
 
-    return screen.paint(
+    return screen.paint_two_panes(
         hero=our_hero,
         commands=commands,
-        messages=message,
+        messages=msg,
         left_pane_content=image,
         right_pane_content=draw_map_list(),
         sound=None,
-        sleep=0
+        delay=0,
+        interaction_type='enter_press'
     )
 
 

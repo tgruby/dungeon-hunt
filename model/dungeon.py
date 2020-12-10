@@ -3,10 +3,9 @@ from typing import List
 
 class Dungeon:
 
-    completed_challenges: List[str] = []
-
     def __init__(self, levels):
         self.levels = levels
+        self.completed_challenges: List[str] = []
 
     def complete_challenge(self, our_hero):
         level = our_hero.view.current_level_id

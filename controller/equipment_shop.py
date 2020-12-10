@@ -1,8 +1,7 @@
-import sys
 import view.screen
 from model import items
 from view import screen, images
-from controller import router, town, equipment_shop_sell
+from controller import town, equipment_shop_sell
 
 commands = "Enter a (#) to purchase an item, (S)ell an item, or (L)eave Shop"
 message = "Welcome to Bill's Equipment Emporium, mighty warrior!  Would you like to upgrade your shoddy " \
@@ -11,39 +10,39 @@ image = images.weapons_shop_logo
 
 
 # This function controls our interactions at the weapons store
-def enter(our_hero):
-    print("equipment_shop.enter")
-    router.current_controller = sys.modules[__name__]
-
-    return screen.paint(
+def paint(our_hero, msg):
+    return screen.paint_two_panes(
         hero=our_hero,
         commands=commands,
-        messages=message,
+        messages=msg,
         left_pane_content=image,
         right_pane_content=draw_buy_list(),
         sound=None,
-        sleep=0
+        delay=0,
+        interaction_type='enter_press'
     )
 
 
-def process(our_hero, action):
-    print("equipment_shop.process: " + action)
+def process(game, action):
+    our_hero = game.character
+    if action is None:
+        return paint(our_hero, message)
 
     # Leave and go back to the town
     if action.lower() == "l":
-        router.current_controller = town
-        return town.enter(our_hero)
+        game.current_controller = 'town'
+        return town.process(game, None)
 
     # If Sell an item, enter another sub-controller
     if action.lower() == 's':
-        router.current_controller = equipment_shop_sell
-        return equipment_shop_sell.enter(our_hero)
+        game.current_controller = 'equipment_shop_sell'
+        return equipment_shop_sell.process(game, None)
 
     if action.isdigit():
         return purchase_an_item(our_hero, action)
 
     # If all else fails, just represent the current page.
-    return enter(our_hero)
+    return paint(our_hero, message)
 
 
 def purchase_an_item(our_hero, action):
@@ -51,9 +50,9 @@ def purchase_an_item(our_hero, action):
     if item_number_picked < len(items.equipment_list):
         item = items.equipment_list[item_number_picked]
         if item in our_hero.inventory:
-            message = "You already own that item!"
+            msg = "You already own that item!"
         elif our_hero.gold < item["cost"]:
-            message = "You don't have enough money for that!"
+            msg = "You don't have enough money for that!"
         else:
             our_hero.gold -= item["cost"]
             if item["type"] == "weapon":
@@ -63,19 +62,11 @@ def purchase_an_item(our_hero, action):
             elif item["type"] == "shield":
                 our_hero.equipped_shield = item
             our_hero.inventory.append(item)
-            message = "You have purchased the %s." % item["name"]
+            msg = "You have purchased the %s." % item["name"]
     else:
-        message = "There is no weapon of that number!"
+        msg = "There is no weapon of that number!"
 
-    return screen.paint(
-        hero=our_hero,
-        commands=commands,
-        messages=message,
-        left_pane_content=image,
-        right_pane_content=draw_buy_list(),
-        sound=None,
-        sleep=0
-    )
+    return paint(our_hero, msg)
 
 
 def draw_buy_list():

@@ -1,7 +1,6 @@
-import sys
 import view.screen
 from view import screen, images
-from controller import router, town
+from controller import town
 
 commands = "(F)ull Healing, (P)artial Healing, (L)eave Temple"
 message = "Welcome to Wudang Five Immortals Temple, weary traveler. How can we help you?"
@@ -9,23 +8,25 @@ image = images.tall_temple
 
 
 #  This function controls the interactions at the temple.
-def enter(our_hero):
-    print("temple.enter")
-    router.current_controller = sys.modules[__name__]
+def paint(our_hero, msg):
 
-    return screen.paint(
+    return screen.paint_two_panes(
         hero=our_hero,
         commands=commands,
-        messages=message,
+        messages=msg,
         left_pane_content=image,
         right_pane_content=draw_healing_list(our_hero),
         sound=None,
-        sleep=0
+        delay=0,
+        interaction_type='enter_press'
     )
 
 
-def process(our_hero, action):
-    print("temple.process: " + action)
+def process(game, action):
+    our_hero = game.character
+
+    if action is None:
+        return paint(our_hero, message)
 
     # Full Healing
     if action.lower() == "f":
@@ -33,21 +34,13 @@ def process(our_hero, action):
             if our_hero.gold >= full_price(our_hero):
                 our_hero.gold = our_hero.gold - full_price(our_hero)
                 our_hero.hit_points = our_hero.max_hit_points
-                message = "The temple priests pray over you and you are fully healed!"
+                msg = "The temple priests pray over you and you are fully healed!"
             else:
-                message = "You do not have enough gold!"
+                msg = "You do not have enough gold!"
         else:
-            message = "You are healthy! You don't need healing!"
+            msg = "You are healthy! You don't need healing!"
 
-        return screen.paint(
-            hero=our_hero,
-            commands=commands,
-            messages=message,
-            left_pane_content=image,
-            right_pane_content=draw_healing_list(our_hero),
-            sound=None,
-            sleep=0
-        )
+        return paint(our_hero, msg)
 
     # Half Healing
     if action.lower() == "p":
@@ -55,28 +48,21 @@ def process(our_hero, action):
             if our_hero.gold >= half_price(our_hero):
                 our_hero.gold -= half_price(our_hero)
                 our_hero.hit_points += half_percent(our_hero)
-                message = "The temple priests pray over you and you feel much better!"
+                msg = "The temple priests pray over you and you feel much better!"
             else:
-                message = "You do not have enough gold!"
+                msg = "You do not have enough gold!"
         else:
-            message = "You are healthy! You don't need healing!"
+            msg = "You are healthy! You don't need healing!"
 
-        return screen.paint(
-            hero=our_hero,
-            commands=commands,
-            messages=message,
-            left_pane_content=image,
-            right_pane_content=draw_healing_list(our_hero),
-            sound=None,
-            sleep=0
-        )
+        return paint(our_hero, msg)
 
     # Leave and go back to the town
     if action.lower() == "l":
-        return town.enter(our_hero)
+        game.current_controller = 'town'
+        return town.process(game, None)
 
     # All else fails, just repost this page
-    return enter(our_hero)
+    return paint(our_hero, message)
 
 
 def full_price(our_hero):

@@ -199,14 +199,11 @@ dragonbane = {
 }
 
 equipment_list = [
-    dragonbane,
     elvin_sword,
     broad_sword,
     battle_axe,
     war_hammer,
-    trident,
     short_sword,
-    club,
     dagger,
     chain_mail_armor,
     leather_armor,

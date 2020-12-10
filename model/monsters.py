@@ -15,7 +15,7 @@ class Monster:
         self.name = monster_definition["name"]
         self.image = monster_definition["image"]
         self.hit_points = random.randint(5, monster_definition["max_hit_points"])
-        self.gold = random.randint(0, monster_definition["max_gold"])
+        self.gold = random.randint(1, monster_definition["max_gold"])
         self.weapon = monster_definition["weapon"]
         self.level = monster_definition["level"]
 
@@ -79,7 +79,7 @@ angry_gnome = {
     "level": 4,
     "image": images.gnome,
     "max_hit_points": 10,
-    "max_gold": random.randint(8, 18),
+    "max_gold": 18,
     "weapon": items.gnome_feet
 }
 
@@ -119,7 +119,7 @@ wolf = {
     "level": 11,
     "image": images.wolf,
     "max_hit_points": 50,
-    "max_gold": 10,
+    "max_gold": 30,
     "weapon": items.wolf_teeth
 }
 
@@ -138,16 +138,16 @@ skeleton = {
     "level": 13,
     "image": images.skeleton,
     "max_hit_points": 75,
-    "max_gold": 50,
+    "max_gold": 100,
     "weapon": items.bony_fingers
 }
 
 vampire_bat = {
     "name": "Vampire Bat",
     "type": "monster",
-    "level": 14,
+    "level": 10,
     "image": images.vampire_bat,
-    "max_hit_points": 60,
+    "max_hit_points": 30,
     "max_gold": 45,
     "weapon": items.bat_fangs
 }
@@ -158,7 +158,7 @@ skeleton_warrior = {
     "level": 23,
     "image": images.skeleton_warrior,
     "max_hit_points": 150,
-    "max_gold": 85,
+    "max_gold": 150,
     "weapon": items.elvin_sword
 }
 
@@ -168,7 +168,7 @@ half_orc = {
     "level": 28,
     "image": images.half_orc,
     "max_hit_points": 200,
-    "max_gold": 200,
+    "max_gold": 300,
     "weapon": items.elvin_sword
 }
 
@@ -178,7 +178,7 @@ banshee = {
     "level": 32,
     "image": images.banshee,
     "max_hit_points": 250,
-    "max_gold": 250,
+    "max_gold": 400,
     "weapon": items.banshee_scream
 }
 
@@ -188,7 +188,7 @@ minotaur = {
     "level": 35,
     "image": images.minotaur,
     "max_hit_points": 350,
-    "max_gold": 350,
+    "max_gold": 600,
     "weapon": items.dragonbane
 }
 
@@ -197,7 +197,7 @@ red_dragon = {
     "type": "monster",
     "level": 99,
     "image": images.dragon,
-    "max_hit_points": 750,
+    "max_hit_points": 500,
     "max_gold": 2000,
     "weapon": items.fireball
 }

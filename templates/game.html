@@ -26,9 +26,7 @@
 		term.blinkingCursor(false);
 		document.getElementById('screen').appendChild(term.html);
 
-		term.input('Enter your Gamer Tag: ', function (input) {
-			collectGamerTag(input);
-		})
+		connect(term, '/api/v1/game/action/start')
 
 	</script>
 

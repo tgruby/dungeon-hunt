@@ -2,21 +2,26 @@ import db
 from view import screen, images
 
 
-def enter():
+def process(game, action):
     db.init_db()
     lb = db.load_leaderboard()
-    response = "  Rank | Name                       | Score " + '\n'
-    response += screen.medium_border + '\n'
+    print("Leaderboard Length: " + str(len(lb.top_ten)))
+    content = "  Rank | Gamer Tag                 | Score " + '\n'
+    content += screen.medium_border + '\n'
     for i in range(len(lb.top_ten)):
-        response += "   " + str(i+1) + "   | " + screen.back_padding(lb.top_ten[i].name, 26) + " | " + \
-                    str(lb.top_ten[i].experience_points) + '\n'
+        content += "   " + str(i+1) + "   | " + screen.back_padding(lb.top_ten[i].gamer_tag, 26) + " | " + \
+                    str(lb.top_ten[i].score) + '\n'
 
-    return screen.intro_paint(
-        images.title_1,
-        None,
-        response,
-        'Press any key to start play...',
-        None,
-        None
+    if action is not None:
+        game.current_controller = 'start_game'
+
+    return screen.paint_one_pane(
+        title_image=images.title_1,
+        contents=None,
+        contents_image=content,
+        commands="Press 'S' to start play...",
+        sound=None,
+        delay=0,
+        interaction_type='key_press'
     )
 

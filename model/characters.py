@@ -7,13 +7,11 @@ class Character:
     # Global Class Variables
 
     # Character Constructor (for our hero)
-    def __init__(self, game_token, name, character_definition):
-        self.game_token = game_token
-        self.name = name
+    def __init__(self, character_definition):
         self.image = character_definition["image"]
         self.type = character_definition["type"]
         self.race = character_definition["race"]
-        self.max_hit_points = random.randint(12, character_definition["hit_points"])
+        self.max_hit_points = character_definition["hit_points"]
         self.hit_points = self.max_hit_points
         self.experience_points = character_definition["experience_points"]
         self.level = 1
@@ -36,7 +34,7 @@ class Character:
             weapon = self.equipped_weapon
             damage = random.randint(0, weapon["damage"])
             self.monster.hit_points -= damage
-            message = weapon["attack_message"] % (self.name, damage)
+            message = weapon["attack_message"] % ('You', damage)
             if not self.monster.is_alive():
                 #  We killed the monster.  Add experience points to our hero
                 self.experience_points += self.monster.level

@@ -1,11 +1,12 @@
 import os
+import db
 import uuid
-from controller import router, leader_board, intro
+from model import games
+from controller import get_gamer_tag
 from flask import Flask, render_template, jsonify, session
 
 # TODO: fix screen refresh and putting character back into the game where they left off.
 # TODO: if character has been killed, fix removing the game-token and forcing back to the start screen.
-
 # TODO: fix death by trap.  should end game and go to leaderboard.
 # TODO: Add ability to have different players play at the same time (different heros, different dungeons)
 # TODO: End Game when killed or hit dragon (put person on leaderboard).
@@ -28,57 +29,43 @@ def root():
     return render_template('game.html')
 
 
-# Receive a game play command and respond with a json object representing each panel.
-@app.route('/api/v1/gamer-tag/<tag>')
-def set_gamer_tag(tag):
-    session['gamer_tag'] = tag
-    return jsonify('{ok}'), 200
-
-
-# Return the Splash Screen, which is the LeaderBoard page.
-@app.route('/api/v1/leader-board')
-def display_leader_board():
-    # If someone is starting the game, specialized logic for game start since a hero and dungeon need to be created.
-    return jsonify(leader_board.enter()), 200
-
-
-# Start the Game.
-@app.route('/api/v1/start')
-def start_game():
-    game_token = str(uuid.uuid4())
-    gamer_tag = session['gamer_tag']
-    session['game_token'] = game_token  # Save game token to session.
-    return jsonify(intro.start_game(gamer_tag, game_token)), 200
-
-
 # Receive a blank game command... respond with a response.
 @app.route('/api/v1/game/action/')
 def process_no_action():
     # process action for this game.
-    game_token = session['game_token']
-    screen = router.process(game_token, None)
-    if screen is None:
-        #  Game has ended, go back to the leaderboard.
-        session['game_token'] = None
-        return jsonify(leader_board.enter()), 200
-
-    # Update game_token in case the game has ended (will be None).
-    session['game_token'] = screen.get('game_token')
-    return jsonify(screen), 200
+    return process_action(None)
 
 
 # Receive a game play command and respond with a json object representing each panel.
 @app.route('/api/v1/game/action/<action>')
 def process_action(action):
-    # process action for this game.
-    game_token = session['game_token']
-    screen = router.process(game_token, action)
-    if screen is None:
-        #  Game has ended, go back to the leaderboard.
-        session['game_token'] = None
-        return jsonify(leader_board.enter()), 200
+    # The first thing we check is if we have a game.  If not, we need to create a new game to track this user's
+    # interaction.
+    if 'game_id' not in session:
+        # Create a new game
+        game = db.load_game(str(uuid.uuid4()))
+        game.current_controller = 'get_gamer_tag'
+        session['game_id'] = game.game_id  # Save game id to session.
+        db.save_game(game.game_id, game)
+        # Now request a gamer tag.
+        return jsonify(get_gamer_tag.process(game, None)), 200
+    else:
+        gid = session['game_id']
+        game = db.load_game(gid)
 
-    return jsonify(screen), 200
+        if game.game_over:
+            # Character has been killed.  Add to leaderboard, cleanup game.
+            lb = db.load_leaderboard()
+            lb.add_leader(game)
+            db.save_leaderboard(lb)
+            db.delete_game(gid)
+            session.clear()
+            return jsonify(get_gamer_tag.process(game, None)), 200
+        else:
+            # Just run the game route.
+            update = games.route(game, action)
+            db.save_game(gid, game)
+            return jsonify(update), 200
 
 
 if __name__ == '__main__':
