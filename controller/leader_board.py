@@ -12,7 +12,9 @@ def process(game, action):
     # getting length of list
     length = len(lb.top_ten)
     for i in range(length):
-        content += "   " + str(i+1) + "   | " + screen.back_padding(lb.top_ten[i].gamer_tag, 26) + " | " + \
+        content += "   " + \
+                    screen.back_padding(str(i+1), 3) + " | " + \
+                    screen.back_padding(lb.top_ten[i].gamer_tag, 26) + " | " + \
                     str(lb.top_ten[i].score) + '\n'
 
     if action is None:

@@ -14,7 +14,7 @@ class Leaderboard:
 
         # now sort the list and truncate if greater than 10
         self.top_ten.sort(key=by_score, reverse=True)
-        truncate_list(self.top_ten, 10)
+        truncate_list(self.top_ten, 15)
 
 
 def truncate_list(sorted_list, limit):
