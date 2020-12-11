@@ -7,7 +7,8 @@ def init_db():
     try:
         os.mkdir('data')
     except OSError as error:
-        print(error)
+        # surpressed due to this is the normal operation. TODO: fix this so we check first before trying to make.
+        pass
 
 
 def load_leaderboard():
