@@ -135,7 +135,7 @@ def found_treasure(game):
             messages=msg,
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=images.treasure_chest,
-            sound=None,
+            sound='open-chest',
             delay=500,
             interaction_type='key_press'
         )
