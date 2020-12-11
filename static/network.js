@@ -30,3 +30,15 @@ async function process(term, canvas, sound, delay, interactionType) {
     }
 }
 
+// Basic function to send a command and get the response.
+function endGame() {
+    fetch('/api/v1/game/end-game', {
+        method: 'Get',
+        headers: {'Content-Type': 'application/json', 'Accept': 'application/json'}
+    })
+        .then((resp) => resp.json()) // Transform the data into json
+        .then(function(data) {
+            // do nothing...
+        })
+        .catch((error) => console.error("DoT Error: " + error.message))
+}

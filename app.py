@@ -59,5 +59,14 @@ def process_action(action):
             return jsonify(update), 200
 
 
+# Receive a game play command and respond with a json object representing each panel.
+@app.route('/api/v1/game/end-game')
+def end_game():
+    gid = session['game_id']
+    db.delete_game(gid)
+    session.clear()
+    return jsonify('{ok}'), 200
+
+
 if __name__ == '__main__':
     app.run()
