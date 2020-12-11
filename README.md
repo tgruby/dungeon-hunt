@@ -1,35 +1,37 @@
-# Dungeon of Thordale!!
-A Python, text-based RPG developed to teach coding to 14 - 18 year olds. 
+# Dungeon of Thordon!!
+A Python, text-based maze-solve developed to teach coding to 14 - 18 year olds. 
 Special thanks to https://www.asciiart.eu/ from where almost all the ascii art has been taken. 
-Also, special thanks to Jacob, Evan, and Emma for the many hours programming fun with their dad. 
+Also, special thanks to Jacob, Evan, and Emma for the many hours programming fun with their dad.
+demo currently hosted here: http://ec2-44-238-145-136.us-west-2.compute.amazonaws.com 
 ```
 <==================================< Stats >===================================>
-|          Health: 67, Gold: 183, Weapon: Short Sword, Facing: South           |
+|      Hit Points: 20/20, Level: 1, Gold: 32, Score: 250, Facing: East         |
 <=====================================<o>======================================>
- |                          |                                                 |
- |                     /    |                                                 |
- |                    /     |                                                 |
- |                   /      |                  Dungeon 0                      |
- |  ____            /       |      +---+---+---+---+---+---+---+---+          |
- |     |\          /|       |      |UP     |                       |          |
- |     | \        / |       |      +   +   +   +---+---+---+---+   +          |
- |     |  \      /  |       |      |   |   |                   |   |          |
- |     |  |     /|  |       |      +   +   +---+   +---+---+---+   +          |
- |     |  |____/ |  |       |      |   |       |   |               |          |
- |     |  | |  | |  |       |      +   +---+---+   +   +---+---+   +          |
- |     |  |_|__| |  |       |      |   |       |   |   |   |       |          |
- |     |  |     \|  |       |      +   +   +   +   +   +   +---+---+          |
- |     |  /      \  |       |      | *     |   |   |   |           |          |
- |     | /        \ |       |      +   +---+   +   +   +---+---+   +          |
- |  ___|/          \|       |      |       |       |            DW |          |
- |                  \       |      +---+---+---+---+---+---+---+---+          |
- |                   \      |                                                 |
- |                    \     |                                                 |
- |                     \    |                                                 |
+ |                        |                                                   |
+ | \                      |                                                   |
+ |  \                     |                                                   |
+ |   \                    |                    Level 0                        |
+ |    \              ____ |      +---+---+---+---+---+---+---+---+            |
+ |    |\           /|     |      |U*                     |       |            |
+ |    | \         / |     |      +   +   +---+---+---+   +   +   +            |
+ |    |  \       /  |     |      |   |   |           |   |   |   |            |
+ |    |  |\      |  |     |      +   +   +   +---+   +   +---+   +            |
+ |    |  | \   __|  |     |      |   |   |   |       |       |   |            |
+ |    |  | |  |  |  |     |      +   +   +   +   +---+   +---+   +            |
+ |    |  | |  |__|  |     |      |   |       |       |   |       |            |
+ |    |  |/      |  |     |      +   +---+---+---+   +   +   +---+            |
+ |    |  /       \  |     |      |   |           |   |   |       |            |
+ |    | /         \ |     |      +   +---+---+   +   +---+---+   +            |
+ |    |/           \|____ |      |               |             DW|            |
+ |    /                   |      +---+---+---+---+---+---+---+---+            |
+ |   /                    |                                                   |
+ |  /                     |                                                   |
+ | /                      |                                                   |
 <================================< Messages >==================================>
-|  You move one space South.                                                   |
+|  You crawl into the dark cave at the side of the mountain and enter the      |
+|  Dungeon!                                                                    |
 <================================< Commands >==================================>
-|        Left (A), Right (D), Forward (W), (U)p, Down (J), (I)nventory         |
-<=====================================<o>======================================>  
+|                Left (A), Right (D), Forward (W), (I)nventory                 |
+<=====================================<o>======================================>
 ```
 Requires Python 3.x and Flask.
