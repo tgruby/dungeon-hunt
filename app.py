@@ -5,15 +5,6 @@ from model import games
 from controller import leader_board
 from flask import Flask, render_template, jsonify, session
 
-# TODO: fix screen refresh and putting character back into the game where they left off.
-# TODO: if character has been killed, fix removing the game-token and forcing back to the start screen.
-# TODO: fix death by trap.  should end game and go to leaderboard.
-# TODO: Add ability to have different players play at the same time (different heros, different dungeons)
-# TODO: End Game when killed or hit dragon (put person on leaderboard).
-# TODO: possibly add strength and resistance potions.
-# TODO: should you be able to buy a teleport out of the dungeon?
-# TODO: don't know what is a shield, armor, or weapon.
-# TODO: descriptions for more things?
 
 # Set the directory where we store web resources
 app = Flask(__name__, static_url_path='/static', instance_relative_config=True)

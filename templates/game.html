@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
 
     <title>Dungeon of Thordon</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="static/style.css">
 	<script src="static/terminal.js"></script>
 	<script src="static/network.js"></script>
@@ -15,16 +16,16 @@
 		Your browser does not support the audio element.
 	</audio>
 
-	<div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; padding: 20px; width: 690px;">
+	<div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; padding: 20px; width: 550px;">
 		DЦИGΞФИ ФF ΓHФЯDФИ
 	</div>
 
-	<pre id="screen" style="margin:auto; padding: 20px; width: 690px;"></pre>
+	<pre id="screen" style="margin:auto; padding: 20px; width: 550px;"></pre>
 
 	<script>
 		const term = new Terminal('terminal');
-		term.setHeight("600px");
-		term.setWidth('690px');
+		term.setHeight("480px");
+		term.setWidth('550px');
 		term.setBackgroundColor('black');
 		term.setTextColor('green');
 		term.blinkingCursor(false);

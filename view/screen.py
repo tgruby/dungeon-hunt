@@ -25,16 +25,20 @@ def paint_two_panes(
     lines = create_center_pane(left_pane_content, right_pane_content)
     for line in lines:
         canvas.append(line)
-    canvas.append(border("Messages"))
-    # protect against too long of messages
-    wrapper = textwrap.TextWrapper(width=75)
-    word_list = wrapper.wrap(text=messages)
-    # Print each line.
-    for element in word_list:
-        canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
-    canvas.append(border("Commands"))
-    # Commands
-    canvas.append(v_border + center_text(commands, ' ', 78) + v_border)
+
+    if messages is not None:
+        canvas.append(border("Messages"))
+        # protect against too long of messages
+        wrapper = textwrap.TextWrapper(width=75)
+        word_list = wrapper.wrap(text=messages)
+        # Print each line.
+        for element in word_list:
+            canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
+
+    if commands is not None:
+        canvas.append(border("Commands"))
+        canvas.append(v_border + center_text(commands, ' ', 78) + v_border)
+
     canvas.append(h_border)
 
     response = {
