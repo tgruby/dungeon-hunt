@@ -1,5 +1,5 @@
 import db
-import uuid
+from controller import start_game
 from view import screen
 
 
@@ -18,19 +18,16 @@ def process(game, action):
                     str(lb.top_ten[i].score) + '\n'
 
     if action is None:
-        return paint(content, None)
+        return paint(content)
 
     if action.lower() == 's':
         # Create a new game
-        game = db.load_game(str(uuid.uuid4()))
-        game.current_controller = 'start_game'
-        db.save_game(game.game_id, game)
-        return paint(content, game.game_id)
+        return start_game.process(None, None)
 
-    return paint(content, None)
+    return paint(content)
 
 
-def paint(scores, game_id):
+def paint(scores):
     return screen.paint_one_pane(
         title_image='H I G H   S C O R E S',
         contents=None,
@@ -39,6 +36,6 @@ def paint(scores, game_id):
         sound=None,
         delay=0,
         interaction_type='key_press',
-        game_id=game_id
+        game_id=None
     )
 

@@ -42,6 +42,11 @@ def process_action(action):
         gid = session['game_id']
         game = db.load_game(gid)
 
+        # Clean up a broken game where there is no game file but there is a session token.
+        if game is None:
+            session.clear()
+            return jsonify(leader_board.process(None, None)), 200
+
         if game.game_over:
             # Character has been killed.  Add to gamer_tag (action) to leaderboard, cleanup game.
             game.gamer_tag = action
@@ -62,11 +67,12 @@ def process_action(action):
 # Receive a game play command and respond with a json object representing each panel.
 @app.route('/api/v1/game/end-game')
 def end_game():
-    session.clear()
-    gid = session['game_id']
-    print('Ending Game: ' + gid)
-    db.delete_game(gid)
-    return jsonify('{ok}'), 200
+        if 'game_id' in session:
+            gid = session['game_id']
+        session.clear()
+        print('Ending Game: ' + gid)
+        db.delete_game(gid)
+        return jsonify('{ok}'), 200
 
 
 if __name__ == '__main__':

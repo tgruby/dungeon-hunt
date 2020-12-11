@@ -1,14 +1,17 @@
+import db
+import uuid
 from view import screen
-from model import characters
+from model import characters, games
 
 
 def process(game, action):
-    # Create game token, the hero, and dungeon to start the game.  Then
+    # Create game, the hero, and dungeon to start the game.  Then
     # set the controller to the town.
     print("creating character!!!")
-    hero = characters.Character(characters.warrior)
-    game.character = hero
+    game = games.Game(str(uuid.uuid4()))
+    game.character = characters.Character(characters.warrior)
     game.current_controller = 'town'
+    db.save_game(game.game_id, game)
     return screen.paint_one_pane(
         title_image=None,
         contents="The town of Thordon's renowned catacombs have been laid waste by a treacherous red dragon.  The "

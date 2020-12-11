@@ -7,7 +7,7 @@ def init_db():
     try:
         os.mkdir('data')
     except OSError as error:
-        # surpressed due to this is the normal operation. TODO: fix this so we check first before trying to make.
+        # supressed due to this is the normal operation. TODO: fix this so we check first before trying to make.
         pass
 
 
@@ -23,10 +23,7 @@ def save_leaderboard(leader_board):
 
 
 def load_game(game_id):
-    g = load('data/game_' + game_id)
-    if g is None:
-        g = games.Game(game_id)
-    return g
+    return load('data/game_' + game_id)
 
 
 # This function saves our hero as he/she exists right now.
@@ -63,4 +60,8 @@ def load(name):
 
 # This function will be called when the hero is killed.  That means you can't play him/her again after death!
 def delete(name):
-    os.remove(name + '.pkl')
+    try:
+        os.remove(name + '.pkl')
+    except OSError as error:
+        print("Unable to Delete File: " + name)
+        pass  # Don't stop the game if we can't delete the file.
