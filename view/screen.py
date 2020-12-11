@@ -4,8 +4,8 @@ medium_border = "<=====================<>====================>"
 short_border = "<========<>========>"
 h_border = "<=====================================<o>======================================>"
 v_border = '|'
-left_pane_width = 22
-right_pane_width = 53
+left_pane_width = 24
+right_pane_width = 51
 center_pane_height = 20
 
 
@@ -59,7 +59,8 @@ def paint_one_pane(
         commands,
         sound,
         delay,
-        interaction_type
+        interaction_type,
+        game_id
 ):
     canvas = []
 
@@ -69,25 +70,21 @@ def paint_one_pane(
             canvas.append(line)
         canvas.append(' ')
 
-    canvas.append(h_border)
-    canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
-
     if contents is not None:
         # Wrap long of narratives
         wrapper = textwrap.TextWrapper(width=75)
         word_list = wrapper.wrap(text=contents)
         # Print each line
         for element in word_list:
-            canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
+            canvas.append(back_padding(element, 80))
 
     if contents_image is not None:
-        formatted_content = square_image(contents_image, 5, 70)
+        formatted_content = square_image(contents_image, 12, 70)
         for line in formatted_content:
-            canvas.append(v_border + '  ' + back_padding(line, 76) + v_border)
+            canvas.append(back_padding(line, 80))
 
     # command
-    canvas.append(v_border + '  ' + back_padding(' ', 76) + v_border)
-    canvas.append(h_border)
+    canvas.append(back_padding(' ', 80))
     if commands is not None:
         canvas.append(front_padding(commands, 80))
 
@@ -99,7 +96,8 @@ def paint_one_pane(
         # Time to wait before allowing the player to make the next move
         "delay": delay,
         # whether the next move should happen on any key press or the enter key (key_press | enter_press)
-        "interaction_type": interaction_type
+        "interaction_type": interaction_type,
+        "game_id": game_id
     }
 
     return response

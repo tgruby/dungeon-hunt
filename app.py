@@ -1,8 +1,8 @@
 import os
 import db
-import uuid
+from datetime import datetime
 from model import games
-from controller import get_gamer_tag
+from controller import leader_board
 from flask import Flask, render_template, jsonify, session
 
 # TODO: fix screen refresh and putting character back into the game where they left off.
@@ -26,7 +26,8 @@ app.config.from_mapping(
 # Return our root page (terminal)
 @app.route('/')
 def root():
-    return render_template('game.html')
+    last_modified = datetime.fromtimestamp(os.stat('app.py').st_mtime)
+    return render_template('game.html', last_updated=last_modified)
 
 
 # Receive a blank game command... respond with a response.
@@ -42,25 +43,24 @@ def process_action(action):
     # The first thing we check is if we have a game.  If not, we need to create a new game to track this user's
     # interaction.
     if 'game_id' not in session:
-        # Create a new game
-        game = db.load_game(str(uuid.uuid4()))
-        game.current_controller = 'get_gamer_tag'
-        session['game_id'] = game.game_id  # Save game id to session.
-        db.save_game(game.game_id, game)
-        # Now request a gamer tag.
-        return jsonify(get_gamer_tag.process(game, None)), 200
+        response = leader_board.process(None, action)
+        if 'game_id' in response and response.get('game_id') is not None:
+            session['game_id'] = response.get('game_id')  # Save game id to session.
+        return jsonify(response), 200
     else:
         gid = session['game_id']
         game = db.load_game(gid)
 
         if game.game_over:
-            # Character has been killed.  Add to leaderboard, cleanup game.
+            # Character has been killed.  Add to gamer_tag (action) to leaderboard, cleanup game.
+            game.gamer_tag = action
+            print('Saving Gamer Tag: ' + action)
             lb = db.load_leaderboard()
             lb.add_leader(game)
             db.save_leaderboard(lb)
             db.delete_game(gid)
             session.clear()
-            return jsonify(get_gamer_tag.process(game, None)), 200
+            return jsonify(leader_board.process(None, None)), 200
         else:
             # Just run the game route.
             update = games.route(game, action)

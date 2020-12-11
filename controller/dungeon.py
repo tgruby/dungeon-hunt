@@ -75,7 +75,7 @@ def process(game, action):
             return fight_monster(game)
 
         # Step forward
-        return paint(our_hero, msg, 'footstep')
+        return paint(our_hero, msg, None)
 
     # Look in backpack at the hero's inventory
     if action.lower() == "i":
@@ -116,8 +116,8 @@ def found_treasure(game):
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
         our_hero.view.dungeon.complete_challenge(our_hero)
         # Save picked_up_treasure to a pkl file so doesn't reset after a restart.
-        max_gold = (our_hero.view.current_level_id + 2) * 30
-        min_gold = (our_hero.view.current_level_id + 1) * 30
+        max_gold = (our_hero.view.current_level_id + 2) * 15
+        min_gold = (our_hero.view.current_level_id + 1) * 5
         treasure = random.randint(min_gold, max_gold)
         our_hero.gold += treasure
         game.score += 10  # Obtain 10 points per treasure
@@ -154,13 +154,13 @@ def stepped_on_trap(game):
             game.game_over = True
             return screen.paint_two_panes(
                 hero=our_hero,
-                commands='Press any key...',
+                commands='Enter your name for the leaderboard...',
                 messages=trap.triggered(our_hero) + " You have been killed!",
-                left_pane_content=images.tombstone_2,
+                left_pane_content=images.tombstone,
                 right_pane_content=trap.image,
                 sound=None,
                 delay=1000,
-                interaction_type='key_press'
+                interaction_type='enter_press'
             )
 
         # return the damage summary you took from the trap

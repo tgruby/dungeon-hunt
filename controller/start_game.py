@@ -11,8 +11,8 @@ def process(game, action):
     game.character = hero
     game.current_controller = 'town'
     return screen.paint_one_pane(
-        title_image=images.title_1,
-        contents="The town of Thordon renowned catacombs have been laid waste by a treacherous red dragon.  The "
+        title_image=None,
+        contents="The town of Thordon's renowned catacombs have been laid waste by a treacherous red dragon.  The "
                  "catacombs "
         "had served as a place for both the town dead as well as their treasured secrets from the days of old where "
         "dwarf gold flowed out of the mountain. As the dragon has made it's home in the catacombs, it has slowly "
@@ -23,5 +23,6 @@ def process(game, action):
         commands='Press any key...',
         sound=None,
         delay=0,
-        interaction_type='key_press'
+        interaction_type='key_press',
+        game_id=game.game_id
     )

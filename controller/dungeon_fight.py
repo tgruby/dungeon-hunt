@@ -71,13 +71,13 @@ def hero_is_slain(game):
 
     return screen.paint_two_panes(
         hero=our_hero,
-        commands="Refresh your browser to start a new game",
+        commands="Enter your name for the leaderboard...",
         messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
-        left_pane_content=images.tombstone_2,
+        left_pane_content=images.tombstone,
         right_pane_content=our_hero.monster.image,
         sound=None,
         delay=1000,
-        interaction_type='key_press'
+        interaction_type='enter_press'
     )
 
 

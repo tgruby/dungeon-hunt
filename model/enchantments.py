@@ -12,14 +12,9 @@ class EnchantedItem:
         self.hit_points = enchantment_type["max_hit_points"]
         self.gold = enchantment_type["cost"]
 
-    # Method to call when the monster attacks a character
-    def use_item(self, our_hero, item, monster):
-        if self.type == "potion":
-            # TODO: Add logic to do damage to the creature and remove the item, return attack message.
-            pass
-
 
 # Dictionaries of all enchantments in the Game
+# TODO: Add a potion to teleport hero back to town
 
 health_potion = {
     "name": "Simple Healing Potion",

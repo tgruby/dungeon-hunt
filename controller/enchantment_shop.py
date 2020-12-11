@@ -8,8 +8,6 @@ message = "Welcome to Janet's Enchantments!  Would you like me to use some of yo
               "'treasures' to make you potent elixir for your journeys?"
 image = images.shop
 
-# TODO: Create more Scrolls for casting spells to affect monsters
-
 
 # This function controls our interactions at the weapons store
 def paint(our_hero, msg):
