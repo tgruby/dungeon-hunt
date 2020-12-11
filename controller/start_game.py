@@ -1,5 +1,4 @@
-from controller import town
-from view import screen, images
+from view import screen
 from model import characters
 
 
