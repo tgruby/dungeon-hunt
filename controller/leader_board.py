@@ -7,7 +7,7 @@ def process(game, action):
     db.init_db()
     lb = db.load_leaderboard()
     print("Leaderboard Length: " + str(len(lb.top_ten)))
-    content = "  Rank | Gamer                     | Score " + '\n'
+    content = "  Rank | Gamer                      | Score " + '\n'
     content += screen.medium_border + '\n'
     # getting length of list
     length = len(lb.top_ten)
