@@ -16,25 +16,25 @@ class EnchantedItem:
 # Dictionaries of all enchantments in the Game
 # TODO: Add a potion to teleport hero back to town
 
-health_potion = {
-    "name": "Simple Healing Potion",
-    "description": "This potion will refresh you, making you feel ready for the next battle.",
+half_health_potion = {
+    "name": "Watered Down Healing Potion",
+    "description": "This potion will refresh you, sort of...",
     "type": "potion",
-    "max_hit_points": 25,
+    "max_hit_points": .5,
     "affects": "character",
     "cost": 25
 }
 
-gandalfs_granola = {
-    "name": "Gandalf's Healing Granola",
-    "description": "This Granola bar will make you feel young again, like Gandolf!",
+full_health_potion = {
+    "name": "Good Stuff Healing Potion",
+    "description": "This potion will fully restore you, like a young Gandolf!",
     "type": "potion",
-    "max_hit_points": 100,
+    "max_hit_points": 1,
     "affects": "character",
-    "cost": 75
+    "cost": 50
 }
 
 all_enchantments = [
-    health_potion,
-    gandalfs_granola
+    half_health_potion,
+    full_health_potion
 ]

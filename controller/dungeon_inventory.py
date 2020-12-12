@@ -1,5 +1,3 @@
-import random
-
 import view.screen
 from view import screen, images
 from controller import dungeon
@@ -59,7 +57,7 @@ def use_item(our_hero, action):
         if our_hero.hit_points == our_hero.max_hit_points:
             msg = "You don't need that right now."
         else:
-            healing = random.randint(4, selected_item["max_hit_points"])
+            healing = selected_item["max_hit_points"] * (our_hero.max_hit_points - our_hero.hit_points)
             if our_hero.hit_points + healing > our_hero.max_hit_points:
                 our_hero.hit_points = our_hero.max_hit_points
             else:
