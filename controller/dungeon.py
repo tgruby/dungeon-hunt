@@ -2,7 +2,7 @@
 # interactions between the user and the computer.  This is where we will put all of our controller code.
 import random
 
-from model import items, monsters, traps
+from model import items, monsters, traps, maps
 from view import screen, images
 from controller import dungeon_inventory, dungeon_fight, town
 
@@ -128,6 +128,15 @@ def found_treasure(game):
             weapon = items.equipment_list[random.randint(0, len(items.equipment_list) - 1)]
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
+        drop_map = random.randint(0, 9)  # 10%
+        if drop_map == 0:
+            #  Drop the first map user doesn't have.  If they have all 4, don't drop.
+            for m in maps.map_list:
+                if m not in our_hero.inventory:
+                    our_hero.inventory.append(m)
+                    msg += " You find a map in the chest!"
+                    break
+
         cmd = "Press any key to continue..."
         return screen.paint_two_panes(
             hero=our_hero,

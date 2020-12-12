@@ -1,6 +1,6 @@
 import view.screen
 from view import screen, images
-from controller import town
+from controller import equipment_shop
 
 commands = "Enter a (#) to sell an item, or (L)eave."
 message = "Wonderful, we have been running low on good hardware!  What are you " \
@@ -29,8 +29,8 @@ def process(game, action):
 
     # Leave and go back to the town
     if action.lower() == "l":
-        game.current_controller = 'town'
-        return town.process(game, None)
+        game.current_controller = 'equipment_shop'
+        return equipment_shop.process(game, None)
 
     # If Sell an item, enter another sub-controller
     if action.isdigit():

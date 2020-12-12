@@ -217,3 +217,38 @@ all_monsters = [
     banshee,
     minotaur
 ]
+
+level_0 = [
+    giant_rat,
+    giant_ant,
+    giant_spider,
+    badger
+]
+
+level_1 = [
+    wolf,
+    angry_gnome,
+    badger,
+    vampire_bat,
+    goblin,
+]
+
+level_2 = [
+    wolf,
+    angry_gnome,
+    skeleton,
+    vampire_bat,
+    goblin,
+    skeleton_warrior,
+]
+
+level_3 = [
+    angry_gnome,
+    skeleton,
+    vampire_bat,
+    goblin,
+    skeleton_warrior,
+    half_orc,
+    banshee,
+    minotaur
+]
