@@ -31,13 +31,14 @@ def process(game, action):
         return dungeon.process(game, None)
 
     if action.isdigit():
-        return use_item(our_hero, action)
+        return use_item(game, action)
 
     # If unknown action, show page again.
     return paint(our_hero, message)
 
 
-def use_item(our_hero, action):
+def use_item(game, action):
+    our_hero = game.character
     item_number_picked = int(action)
     # Collapse Inventory Items returns a 2D Array with each element listed as [count, name, type, object]
     items_list = view.screen.collapse_inventory_items(our_hero)
@@ -54,16 +55,21 @@ def use_item(our_hero, action):
         our_hero.equipped_shield = selected_item
         msg = "You have equipped the %s." % selected_item["name"]
     elif selected_item["type"] == "potion":
-        if our_hero.hit_points == our_hero.max_hit_points:
-            msg = "You don't need that right now."
-        else:
-            healing = selected_item["max_hit_points"] * (our_hero.max_hit_points - our_hero.hit_points)
-            if our_hero.hit_points + healing > our_hero.max_hit_points:
-                our_hero.hit_points = our_hero.max_hit_points
+        if selected_item["id"] == 'half_heal' or selected_item["id"] == 'full_heal':
+            if our_hero.hit_points == our_hero.max_hit_points:
+                msg = "You don't need that right now."
             else:
-                our_hero.hit_points += healing
+                if selected_item["id"] == 'half_heal':
+                    healing = (our_hero.max_hit_points - our_hero.hit_points) / 2
+                    our_hero.hit_points += healing
+                elif selected_item["id"] == 'full_heal':
+                    our_hero.hit_points = our_hero.max_hit_points
+                our_hero.inventory.remove(selected_item)
+                msg = "You drank the %s and a warm fuzzy feeling comes over you." % selected_item["name"]
+        elif selected_item["id"] == 'teleport':
+            game.current_controller = 'enchantment_shop'
             our_hero.inventory.remove(selected_item)
-            msg = "You drank the %s and a warm fuzzy feeling comes over you." % selected_item["name"]
+            msg = "You drank the %s and your vision begins to swim and you pass out! You awake in town." % selected_item["name"]
     else:
         msg = "You cannot equip that item!"
 

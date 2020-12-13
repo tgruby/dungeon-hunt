@@ -38,7 +38,8 @@ function endGame() {
     })
         .then((resp) => resp.json()) // Transform the data into json
         .then(function(data) {
-            // do nothing...
+            // do nothing with the response...
+            location.reload(true);
         })
         .catch((error) => console.error("DoT Error: " + error.message))
 }

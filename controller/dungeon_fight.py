@@ -56,7 +56,7 @@ def process(game, action):
 
         message += '\n ' + "You run as fast as your little legs will carry you and... Get away!"
         our_hero.monster = None
-
+        # TODO: Need to move the character one step forward or they will be re-attacked by the monster.
         game.current_controller = 'dungeon'
         return paint(our_hero, message)
 

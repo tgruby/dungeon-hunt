@@ -17,6 +17,7 @@ class EnchantedItem:
 # TODO: Add a potion to teleport hero back to town
 
 half_health_potion = {
+    "id": 'half_heal',
     "name": "Watered Down Healing Potion",
     "description": "This potion will refresh you, sort of...",
     "type": "potion",
@@ -26,6 +27,7 @@ half_health_potion = {
 }
 
 full_health_potion = {
+    "id": 'full_heal',
     "name": "Good Stuff Healing Potion",
     "description": "This potion will fully restore you, like a young Gandolf!",
     "type": "potion",
@@ -34,7 +36,19 @@ full_health_potion = {
     "cost": 50
 }
 
+teleport_potion = {
+    "id": 'teleport',
+    "name": "Teleport Potion",
+    "description": "This potion will get you out of a deep jam if stuck in the catacombs and bring you home it is "
+                   "bound to the enchantment shop!",
+    "type": "potion",
+    "max_hit_points": 1,
+    "affects": "character",
+    "cost": 50
+}
+
 all_enchantments = [
     half_health_potion,
-    full_health_potion
+    full_health_potion,
+    teleport_potion
 ]
