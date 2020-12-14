@@ -83,20 +83,19 @@ def process(game, action):
         return dungeon_inventory.process(game, None)
 
     # If the command is nonsense, just repeat current screen.
-    return paint(our_hero, "Huh?", None)
+    return paint(our_hero, None, None)
 
 
 # spawn a monster and go to battle!
 def fight_monster(game):
     our_hero = game.character
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
-        our_hero.view.dungeon.complete_challenge(our_hero)
         monster = monsters.get_a_monster_for_dungeon(our_hero.view.current_level_id)
         our_hero.monster = monster
         game.current_controller = 'dungeon_fight'
         return dungeon_fight.process(game, None)
     # else we have already fought this monster...
-    return paint(our_hero, "You see a monster's body crumpled against the wall...", None)
+    return paint(our_hero, "You see a body crumpled against the wall...", None)
 
 
 # Show the map if our hero has a map for this dungeon
@@ -114,7 +113,7 @@ def found_treasure(game):
     our_hero = game.character
 
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
-        our_hero.view.dungeon.complete_challenge(our_hero)
+        our_hero.view.dungeon.complete_challenge(our_hero, 'treasure')
         # Save picked_up_treasure to a pkl file so doesn't reset after a restart.
         max_gold = (our_hero.view.current_level_id + 2) * 15
         min_gold = (our_hero.view.current_level_id + 1) * 5
@@ -155,7 +154,7 @@ def found_treasure(game):
 def stepped_on_trap(game):
     our_hero = game.character
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
-        our_hero.view.dungeon.complete_challenge(our_hero)
+        our_hero.view.dungeon.complete_challenge(our_hero, 'trap')
         trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
 
         if not our_hero.is_alive():
@@ -184,4 +183,4 @@ def stepped_on_trap(game):
             interaction_type='key_press'
         )
     else:
-        return paint(our_hero, "You see a morning star hanging from the ceiling...", None)
+        return paint(our_hero, "A morning star is hanging from the ceiling...", None)

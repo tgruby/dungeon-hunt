@@ -20,19 +20,24 @@
 		Your browser does not support the audio element.
 	</audio>
 
-	<div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; padding: 20px; width: 550px;">
+	<div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 550px;">
 		DЦИGΞФИ ФF ΓHФЯDФИ
 	</div>
+    <br/>
+	<pre id="screen" style="margin:auto; width: 550px;"></pre>
 
-	<pre id="screen" style="margin:auto; padding: 20px; width: 550px;"></pre>
-
-    <div style="text-align:right; margin:auto; width: 550px;">
-        <input type="button" value="Kill Game" onclick="endGame();" > v[{{ last_updated }} UTC]
+    <div style="margin:auto;padding: 2px; width: 550px;">
+        <div class="left">
+            <button class="button green-button" onclick="endGame();">Kill Game</button>
+        </div>
+        <div class="right">
+            v[{{ last_updated }} UTC]
+        </div>
     </div>
 
 	<script>
 		const term = new Terminal('terminal');
-		term.setHeight("480px");
+		term.setHeight("420px");
 		term.setWidth('550px');
 		term.setBackgroundColor('black');
 		term.setTextColor('green');

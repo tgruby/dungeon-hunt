@@ -19,7 +19,7 @@ def process(game, action):
             return paint(our_hero, message)
         else:
             # Monster has been killed
-            our_hero.view.dungeon.complete_challenge(our_hero)
+            our_hero.view.dungeon.complete_challenge(our_hero, 'monster')
             # Grab Gold
             our_hero.gold += our_hero.monster.gold
             game.score += our_hero.monster.level * 10  # Increase Score for killing monsters.
@@ -56,7 +56,8 @@ def process(game, action):
 
         message += '\n ' + "You run as fast as your little legs will carry you and... Get away!"
         our_hero.monster = None
-        # TODO: Need to move the character one step forward or they will be re-attacked by the monster.
+        # TODO: Get the hero lost. Randomly put them somewhere else in the dungeon level with an open space.
+
         game.current_controller = 'dungeon'
         return paint(our_hero, message)
 

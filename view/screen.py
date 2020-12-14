@@ -22,18 +22,9 @@ def paint_two_panes(
 ):
     canvas = [border("Stats"), v_border + center_text(get_stats(hero), ' ', 78) + v_border, h_border]
     # Stats
-    lines = create_center_pane(left_pane_content, right_pane_content)
+    lines = create_center_pane(left_pane_content, right_pane_content, messages)
     for line in lines:
         canvas.append(line)
-
-    if messages is not None:
-        canvas.append(border("Messages"))
-        # protect against too long of messages
-        wrapper = textwrap.TextWrapper(width=75)
-        word_list = wrapper.wrap(text=messages)
-        # Print each line.
-        for element in word_list:
-            canvas.append(v_border + '  ' + back_padding(element, 76) + v_border)
 
     if commands is not None:
         canvas.append(border("Commands"))
@@ -129,7 +120,7 @@ def center_text(text, space, length):
 
 
 # Create the center pane, taking the left and right image and returning an array with both together.
-def create_center_pane(left_image, right_image):
+def create_center_pane(left_image, right_image, messages):
     if left_image is None:
         left_image = ''
     if right_image is None:
@@ -138,8 +129,20 @@ def create_center_pane(left_image, right_image):
     # Left Image should be fit into a h=20, w=24 space
     left_pane_content = square_image(left_image, 20, left_pane_width)
 
-    # Right Image should be fit into a h=20, w=47 space
-    right_pane_content = square_image(right_image, 20, right_pane_width)
+    if messages is None:
+        # Right Image should be fit into a h=20, w=47 space
+        right_pane_content = square_image(right_image, 20, right_pane_width)
+
+    else:
+        wrapper = textwrap.TextWrapper(width=49)
+        word_list = wrapper.wrap(text=messages)
+        # Right Image should be fit into a h=20, w=47 space
+        right_pane_content = square_image(right_image, 20-(len(word_list)+1), right_pane_width)
+        right_pane_content.append('======================< Info >=====================')
+        # protect against too long of messages
+        # Print each line.
+        for element in word_list:
+            right_pane_content.append(' ' + back_padding(element, 49) + ' ')
 
     # Put the images together
     buff = []

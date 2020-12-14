@@ -274,6 +274,11 @@ class PointOfView:
             self.current_level_id = self.current_level_id + 1
             self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
             self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
+            # # TODO: Check of we need to skip this level.
+            # level_challenge_count = self.dungeon.levels[self.current_level_id]["challenge_count"]
+            # if level_challenge_count < 1:
+            #     # We can skip this level
+            #     return self.climb_down()
             # We just came "down" into the next dungeon.  So we need to find the up_ladder in this dungeon and start
             # there.
             for i in range(len(self.current_level)):
@@ -289,7 +294,7 @@ class PointOfView:
             return "You can't do that here!"
 
     def climb_up(self):
-        # First check if they are on a down_ladder
+        # First check if they are on a up_ladder
         if self.current_level[self.current_y][self.current_x] == self.doorway_up:
             self.current_level_id = self.current_level_id - 1
             # In this case, we climbed out of the dungeons, just return
@@ -298,6 +303,12 @@ class PointOfView:
             else:
                 self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
                 self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
+                # # TODO: Check of we need to skip this level.
+                # level_challenge_count = self.dungeon.levels[self.current_level_id]["challenge_count"]
+                # if level_challenge_count < 1:
+                #     # We can skip this level
+                #     return self.climb_up()
+
                 # We just came "up" into the next dungeon.  So we need to find the down_ladder in this dungeon and start
                 # there.
                 for i in range(len(self.current_level)):

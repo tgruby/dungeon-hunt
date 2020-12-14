@@ -42,6 +42,7 @@ def use_item(game, action):
     item_number_picked = int(action)
     # Collapse Inventory Items returns a 2D Array with each element listed as [count, name, type, object]
     items_list = view.screen.collapse_inventory_items(our_hero)
+    msg = ''
     if item_number_picked > len(items_list):
         return paint(our_hero, "You do not have an item of that number!")
     selected_item = items_list[item_number_picked - 1][4]
@@ -67,9 +68,11 @@ def use_item(game, action):
                 our_hero.inventory.remove(selected_item)
                 msg = "You drank the %s and a warm fuzzy feeling comes over you." % selected_item["name"]
         elif selected_item["id"] == 'teleport':
-            game.current_controller = 'enchantment_shop'
+            our_hero.view.set_starting_position()  # put character back at the start of dungeon level 0.
+            game.current_controller = 'town'
             our_hero.inventory.remove(selected_item)
-            msg = "You drank the %s and your vision begins to swim and you pass out! You awake in town." % selected_item["name"]
+            msg = "You drank the %s and your vision swims and everything goes dark! You awake in town." \
+                  % selected_item["name"]
     else:
         msg = "You cannot equip that item!"
 
