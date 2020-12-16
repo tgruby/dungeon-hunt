@@ -164,7 +164,7 @@ def stepped_on_trap(game):
         if not our_hero.is_alive():
             # Hero has been killed
             game.game_over = True
-            game.killed_by = 'Trap, L' + our_hero.view.current_level_id
+            game.killed_by = 'Trap, L' + str(our_hero.view.current_level_id)
             return screen.paint_two_panes(
                 hero=our_hero,
                 commands='Enter your name for the leaderboard...',

@@ -74,7 +74,7 @@ def process(game, action):
 def hero_is_slain(game):
     game.game_over = True
     our_hero = game.character
-    game.killed_by = our_hero.monster.name + ', L' + our_hero.view.current_level_id
+    game.killed_by = our_hero.monster.name + ', L' + str(our_hero.view.current_level_id)
 
     return screen.paint_two_panes(
         hero=our_hero,
