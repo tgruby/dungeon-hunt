@@ -33,15 +33,15 @@ def process(game, action):
     db.init_db()
     lb = db.load_leaderboard()
     print("Leaderboard Length: " + str(len(lb.high_scores)))
-    content = "  Rank | Gamer         | Killed By   | Score " + '\n'
-    content += screen.medium_border + '\n'
+    content = "  Rank | Gamer                | Killed By              | Score " + '\n'
+    content += '<=============================<o>==============================>\n'
     # getting length of list
     length = len(lb.high_scores)
     for i in range(length):
         content += "   " + \
                    screen.back_padding(str(i + 1), 3) + " | " + \
-                   screen.back_padding(lb.high_scores[i].gamer_tag, 13) + " | " + \
-                   screen.back_padding(lb.high_scores[i].killed_by, 11) + " | " + \
+                   screen.back_padding(lb.high_scores[i].gamer_tag, 20) + " | " + \
+                   screen.back_padding(lb.high_scores[i].killed_by, 22) + " | " + \
                    str(lb.high_scores[i].score) + '\n'
 
     if action is None:
