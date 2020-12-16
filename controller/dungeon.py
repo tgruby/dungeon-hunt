@@ -121,12 +121,13 @@ def found_treasure(game):
         our_hero.gold += treasure
         game.score += 10  # Obtain 10 points per treasure
         msg: str = " You have found a treasure chest with %d gold in it!" % treasure
-        # Check to see if there is a weapon in the treasure chest. If so, put it in the hero's inventory.
-        drop_weapon = random.randint(0, 9)  # 10%
+        # Check to see if there is a magic item in the treasure chest. If so, put it in the hero's inventory.
+        drop_weapon = random.randint(0, 19)  # 5%
         if drop_weapon == 0:
-            weapon = items.equipment_shop_list[random.randint(0, len(items.equipment_shop_list) - 1)]
+            weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
+        # Check to see if the chest contains a map.
         drop_map = random.randint(0, 9)  # 10%
         if drop_map == 0:
             #  Drop the first map user doesn't have.  If they have all 4, don't drop.

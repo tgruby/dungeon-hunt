@@ -25,7 +25,7 @@ def process(game, action):
             our_hero.gold += our_hero.monster.gold
             game.score += our_hero.monster.level * 10  # Increase Score for killing monsters.
             # Check to see if the monster drops it's weapon. If so, put it in the hero's inventory.
-            drop_weapon = random.randint(0, 3)
+            drop_weapon = random.randint(0, 3)  # 25%
             if drop_weapon == 0:
                 our_hero.inventory.append(our_hero.monster.weapon)
                 message = message + " The monster has dropped " + our_hero.monster.weapon["name"] + "!"

@@ -31,7 +31,7 @@ chain_mail_armor = {
 bony_fingers = {
     "type": "loot",
     "name": "Bony Fingers",
-    "damage": 40,
+    "damage": 30,
     "cost": 20,
     "attack_message": "%s wraps it's fingers around your throat squeezing and doing %d damage!"
 }
@@ -63,7 +63,7 @@ spider_fangs = {
 bat_fangs = {
     "type": "loot",
     "name": "Bat Fangs",
-    "damage": 35,
+    "damage": 25,
     "cost": 12,
     "attack_message": "%s sinks it's fangs into you doing %d damage!"
 }
@@ -80,7 +80,7 @@ rat_teeth = {
 wolf_teeth = {
     "type": "loot",
     "name": "Wolf Teeth",
-    "damage": 30,
+    "damage": 20,
     "cost": 7,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
 }
