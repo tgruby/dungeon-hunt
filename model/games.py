@@ -11,6 +11,7 @@ class Game:
         self.current_controller = 'get_gamer_tag'
         self.score = 0
         self.game_over = False
+        self.killed_by = None
 
 
 def route(game, action):

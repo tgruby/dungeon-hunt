@@ -21,7 +21,7 @@ class Character:
         self.equipped_shield = character_definition["equipped_shield"]
         self.inventory = character_definition["inventory"]
         # Instantiate a point of view object.  This will help us render the view of the character
-        self.view = physics.PointOfView()
+        self.view = physics.PointOfView(self)
         self.monster = None
 
     # Return True if the character is alive, False if not.

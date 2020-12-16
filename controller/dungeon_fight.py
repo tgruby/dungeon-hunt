@@ -1,4 +1,5 @@
 import random
+from model import items
 from view import screen, images
 
 
@@ -29,6 +30,10 @@ def process(game, action):
                 our_hero.inventory.append(our_hero.monster.weapon)
                 message = message + " The monster has dropped " + our_hero.monster.weapon["name"] + "!"
             message = message + " Digging through the %s remains you found %d gold!" % (our_hero.monster.name, our_hero.monster.gold)
+            # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
+            if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):
+                our_hero.inventory.append(items.skeleton_key)
+                message += " You find a %s!" % items.skeleton_key["name"]
             commands = "Press any key to continue..."
 
             if our_hero.monster.name == "Red Dragon":
@@ -69,6 +74,7 @@ def process(game, action):
 def hero_is_slain(game):
     game.game_over = True
     our_hero = game.character
+    game.killed_by = our_hero.monster.name + ', L' + our_hero.view.current_level_id
 
     return screen.paint_two_panes(
         hero=our_hero,

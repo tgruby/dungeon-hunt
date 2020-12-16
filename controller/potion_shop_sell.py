@@ -1,6 +1,6 @@
 import view.screen
 from view import screen, images
-from controller import enchantment_shop
+from controller import potion_shop
 
 messages = "Wonderful, we have been running low on hard to get items for our spells and potions!  What are you willing "
 "to part with? "
@@ -27,10 +27,10 @@ def process(game, action):
     if action is None:
         return paint(our_hero, messages)
 
-    # Leave and go back to the enchantment_shop
+    # Leave and go back to the potion_shop
     if action.lower() == "l":
-        game.current_controller = 'enchantment_shop'
-        return enchantment_shop.process(game, None)
+        game.current_controller = 'potion_shop'
+        return potion_shop.process(game, None)
 
     print(" +--> check if a digit...")
     if action.isdigit():
@@ -74,7 +74,7 @@ def draw_sell_list(our_hero):
     return response
 
 
-# Create a Filtered list of only items we can sell in the enchantment shop
+# Create a Filtered list of only items we can sell in the potion shop
 def filtered_sell_list(our_hero):
     filtered_list = []
     items_list = view.screen.collapse_inventory_items(our_hero)

@@ -122,9 +122,9 @@ def found_treasure(game):
         game.score += 10  # Obtain 10 points per treasure
         msg: str = " You have found a treasure chest with %d gold in it!" % treasure
         # Check to see if there is a weapon in the treasure chest. If so, put it in the hero's inventory.
-        drop_weapon = random.randint(0, 5)  # 17%
+        drop_weapon = random.randint(0, 9)  # 10%
         if drop_weapon == 0:
-            weapon = items.equipment_list[random.randint(0, len(items.equipment_list) - 1)]
+            weapon = items.equipment_shop_list[random.randint(0, len(items.equipment_shop_list) - 1)]
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
         drop_map = random.randint(0, 9)  # 10%
@@ -135,6 +135,10 @@ def found_treasure(game):
                     our_hero.inventory.append(m)
                     msg += " You find a map in the chest!"
                     break
+        # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
+        if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):
+            our_hero.inventory.append(items.skeleton_key)
+            msg += " You find a %s!" % items.skeleton_key["name"]
 
         cmd = "Press any key to continue..."
         return screen.paint_two_panes(
@@ -160,6 +164,7 @@ def stepped_on_trap(game):
         if not our_hero.is_alive():
             # Hero has been killed
             game.game_over = True
+            game.killed_by = 'Trap, L' + our_hero.view.current_level_id
             return screen.paint_two_panes(
                 hero=our_hero,
                 commands='Enter your name for the leaderboard...',

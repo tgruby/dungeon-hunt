@@ -27,6 +27,15 @@ class Dungeon:
             return True
         return False
 
+    def is_all_challenges_complete(self, level_id):
+        return self.levels[level_id]['challenge_count'] <= 0
+
+    def is_level_locked(self, level_id):
+        return self.levels[level_id]['level_locked']
+
+    def unlock_level(self, level_id):
+        self.levels[level_id]['level_locked'] = False
+
     def print_level(self, level_id):
         level = self.levels[level_id]
         print(level.get("map"))

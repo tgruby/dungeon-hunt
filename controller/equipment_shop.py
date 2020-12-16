@@ -47,8 +47,8 @@ def process(game, action):
 
 def purchase_an_item(our_hero, action):
     item_number_picked = int(action)
-    if item_number_picked < len(items.equipment_list):
-        item = items.equipment_list[item_number_picked]
+    if item_number_picked < len(items.equipment_shop_list):
+        item = items.equipment_shop_list[item_number_picked]
         if item in our_hero.inventory:
             msg = "You already own that item!"
         elif our_hero.gold < item["cost"]:
@@ -73,7 +73,7 @@ def draw_buy_list():
     response = view.screen.medium_border + '\n'
     response += "  # | Item         | Type   | Dmg | Cost " + '\n'
     response += view.screen.medium_border + '\n'
-    for number, e in enumerate(items.equipment_list):
+    for number, e in enumerate(items.equipment_shop_list):
         response += view.screen.front_padding(str(number), 3) + " | " \
                     + view.screen.back_padding(e["name"], 12) + " | " \
                     + view.screen.front_padding(str(e["type"]), 6) + " | " \

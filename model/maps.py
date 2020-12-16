@@ -1,28 +1,28 @@
 map_0 = {
     "number": 0,
     "type": "map",
-    "name": "Ground Level Map",
+    "name": "Peasant Tombs",
     "cost": 50
 }
 
 map_1 = {
     "number": 1,
     "type": "map",
-    "name": "Level 1 Map",
+    "name": "Merchant Tombs",
     "cost": 100
 }
 
 map_2 = {
     "number": 2,
     "type": "map",
-    "name": "Level 2 Map",
+    "name": "Lord Tombs",
     "cost": 200
 }
 
 map_3 = {
     "number": 3,
     "type": "map",
-    "name": "Level 3 Map",
+    "name": "King Tombs",
     "cost": 400
 }
 

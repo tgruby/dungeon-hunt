@@ -144,13 +144,13 @@ short_sword = {
     "attack_message": "%s slashs and jabs causing %d damage!"
 }
 
-trident = {
+tritons_trident = {
     "number": 5,
     "type": "weapon",
-    "name": "Trident",
-    "damage": 20,
-    "cost": 50,
-    "attack_message": "%s stabs with the trident causing %d damage!"
+    "name": "Triton's Trident",
+    "damage": 164,
+    "cost": 800,
+    "attack_message": "the trident crackles with electricity as %s stab frying for %d damage!"
 }
 
 war_hammer = {
@@ -192,14 +192,21 @@ elvin_sword = {
 dragonbane = {
     "number": 0,
     "type": "weapon",
-    "name": "Dragonbane",
+    "name": "Dragonbane Sword",
     "damage": 128,
     "cost": 1000,
     "attack_message": "Dragonbane bursts into flames as it guides %s's arm, slicing through your enemy for %d damage!"
 }
 
-equipment_list = [
-    elvin_sword,
+skeleton_key = {
+    "number": 20,
+    "type": "key",
+    "name": "Skeleton Key",
+    "damage": 0,
+    "cost": 0,
+}
+
+equipment_shop_list = [
     broad_sword,
     battle_axe,
     war_hammer,
@@ -209,5 +216,46 @@ equipment_list = [
     leather_armor,
     heater,
     buckler
+]
+
+magical_items = [
+    dragonbane,
+    elvin_sword,
+    tritons_trident
+]
+
+map_0 = {
+    "number": 0,
+    "type": "map",
+    "name": "Ground Level Map",
+    "cost": 50
+}
+
+map_1 = {
+    "number": 1,
+    "type": "map",
+    "name": "Level 1 Map",
+    "cost": 100
+}
+
+map_2 = {
+    "number": 2,
+    "type": "map",
+    "name": "Level 2 Map",
+    "cost": 150
+}
+
+map_3 = {
+    "number": 3,
+    "type": "map",
+    "name": "Level 3 Map",
+    "cost": 200
+}
+
+map_list = [
+    map_0,
+    map_1,
+    map_2,
+    map_3
 ]
 

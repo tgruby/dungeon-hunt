@@ -79,7 +79,7 @@ def draw_sell_list(our_hero):
     return response
 
 
-# Create a Filtered list of only items we can sell in the enchantment shop
+# Create a Filtered list of only items we can sell in the potion shop
 def filtered_sell_list(our_hero):
     filtered_list = []
     items_list = view.screen.collapse_inventory_items(our_hero)

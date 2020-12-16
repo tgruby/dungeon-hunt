@@ -1,10 +1,10 @@
 
 
 # Class object to represent any active monster
-class EnchantedItem:
+class Potion:
     # Class Level Variables
 
-    # Monster Constructor
+    # Potion Constructor
     def __init__(self, enchantment_type):
         self.name = enchantment_type["name"]
         self.description = enchantment_type["description"]
@@ -13,8 +13,7 @@ class EnchantedItem:
         self.gold = enchantment_type["cost"]
 
 
-# Dictionaries of all enchantments in the Game
-# TODO: Add a potion to teleport hero back to town
+# Dictionaries of potions in the Game
 
 half_health_potion = {
     "id": 'half_heal',
@@ -23,24 +22,23 @@ half_health_potion = {
     "type": "potion",
     "max_hit_points": .5,
     "affects": "character",
-    "cost": 25
+    "cost": 15
 }
 
 full_health_potion = {
     "id": 'full_heal',
     "name": "Good Stuff Healing Potion",
-    "description": "This potion will fully restore you, like a young Gandolf!",
+    "description": "This potion will fully restore you, like a younger Gandolf!",
     "type": "potion",
     "max_hit_points": 1,
     "affects": "character",
-    "cost": 50
+    "cost": 30
 }
 
 teleport_potion = {
     "id": 'teleport',
     "name": "Teleport Potion",
-    "description": "This potion will get you out of a deep jam if stuck in the catacombs and bring you home it is "
-                   "bound to the enchantment shop!",
+    "description": "This potion will get you out of a deep jam if stuck in the catacombs and bring you back to town!",
     "type": "potion",
     "max_hit_points": 1,
     "affects": "character",

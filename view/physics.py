@@ -1,5 +1,5 @@
 import logging
-from model import dungeon, dungeon_creator
+from model import dungeon, dungeon_generator, items
 from view import screen, perspectives
 
 log = logging.getLogger('dragonsville')
@@ -132,9 +132,10 @@ class PointOfView:
 
     dungeon = None
 
-    def __init__(self):
-        self.dungeon = dungeon.Dungeon(dungeon_creator.generate_dungeon_levels())
+    def __init__(self, hero):
+        self.dungeon = dungeon.Dungeon(dungeon_generator.generate_dungeon_levels())
         self.set_starting_position()
+        self.hero = hero
 
     # When entering the dungeon, we come "down" into the dungeon.
     # So we need to find the up door in this dungeon by scanning the 2d array
@@ -240,6 +241,17 @@ class PointOfView:
         x1 = self.mid_center_block[self.current_direction]['x']
         y1 = self.mid_center_block[self.current_direction]['y']
         value = self.current_level[self.current_y + y1][self.current_x + x1]
+        if value == self.doorway_down:
+            # Check to see if it is locked
+            next_level = self.current_level_id + 1
+            if self.dungeon.is_level_locked(next_level):
+                # Now see if we have a key, if we do, take the key, use it, and set the level to unlocked.
+                if items.skeleton_key in self.hero.inventory:
+                    self.hero.inventory.remove(items.skeleton_key)
+                    self.dungeon.unlock_level(next_level)
+                else:
+                    return "This door is locked."
+
         if value == self.hallway_1 or \
                 value == self.doorway_up or \
                 value == self.doorway_down or \

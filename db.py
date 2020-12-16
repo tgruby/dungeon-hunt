@@ -1,6 +1,6 @@
 import os
 import pickle
-from model import leaderboard, games
+from controller import leader_board
 
 
 def init_db():
@@ -14,12 +14,12 @@ def init_db():
 def load_leaderboard():
     lb = load('data/leaderboard')
     if lb is None:
-        lb = leaderboard.Leaderboard([])
+        lb = leader_board.Leaderboard([])
     return lb
 
 
-def save_leaderboard(leader_board):
-    save('data/leaderboard', leader_board)
+def save_leaderboard(lb):
+    save('data/leaderboard', lb)
 
 
 def load_game(game_id):

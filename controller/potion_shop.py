@@ -1,10 +1,10 @@
 import view.screen
 from view import screen, images
-from model import enchantments
-from controller import town, enchantment_shop_sell
+from model import potions
+from controller import town, potion_shop_sell
 
 commands = "Enter a (#) to purchase an item, (S)ell an Item, (L)eave Shop"
-message = "Welcome to Janet's Enchantments!  Would you like me to use some of your monster " \
+message = "Welcome to Janet's Potions!  Would you like me to use some of your monster " \
               "'treasures' to make you potent elixir for your journeys?"
 image = images.shop
 
@@ -36,8 +36,8 @@ def process(game, action):
 
     # Go to the sell controller
     if action.lower() == 's':
-        game.current_controller = 'enchantment_shop_sell'
-        return enchantment_shop_sell.process(game, None)
+        game.current_controller = 'potion_shop_sell'
+        return potion_shop_sell.process(game, None)
 
     # Attempt to buy an item
     if action.isdigit():
@@ -49,8 +49,8 @@ def process(game, action):
 
 def purchase_items(our_hero, action):
     item_number_picked = int(action)
-    if item_number_picked <= len(enchantments.all_enchantments)-1:
-        item = enchantments.all_enchantments[item_number_picked]
+    if item_number_picked <= len(potions.all_enchantments)-1:
+        item = potions.all_enchantments[item_number_picked]
         if our_hero.gold < item["cost"]:
             msg = "You don't have enough money for that!"
         else:
@@ -67,7 +67,7 @@ def draw_purchase_list():
     response = view.screen.medium_border + '\n'
     response += "  # | Item                           | Cost " + '\n'
     response += view.screen.medium_border + '\n'
-    for number, e in enumerate(enchantments.all_enchantments):
+    for number, e in enumerate(potions.all_enchantments):
         response += view.screen.front_padding(str(number), 3) + " | " \
                     + view.screen.back_padding(e["name"], 30) + " | " \
                     + view.screen.front_padding(str(e["cost"]), 4) + '\n'
