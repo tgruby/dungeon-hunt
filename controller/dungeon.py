@@ -75,7 +75,10 @@ def process(game, action):
             return fight_monster(game)
 
         # Step forward
-        return paint(our_hero, msg, None)
+        sound = None
+        if our_hero.view.get_position_info() == our_hero.view.door:
+            sound = 'open-door'
+        return paint(our_hero, msg, sound)
 
     # Look in backpack at the hero's inventory
     if action.lower() == "i":
@@ -148,7 +151,7 @@ def found_treasure(game):
             messages=msg,
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=images.treasure_chest,
-            sound='open-chest',
+            sound='challenge-complete',
             delay=500,
             interaction_type='key_press'
         )

@@ -1,8 +1,8 @@
 import view.screen
 from view import screen, images
-from controller import dungeon, cartography_shop, equipment_shop, temple, potion_shop, help
+from controller import dungeon, equipment_shop, temple, potion_shop, help
 
-commands = "(E)quipment, (P)otions, (C)artographer, (D)ungeon, (H)elp"
+commands = "(E)quipment Shop, (P)otion Shop, (T)emple, (D)ungeon, (H)elp"
 msg = "Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
           "entrance is carved into the side of the mountain nearby. "
 image = images.small_village
@@ -18,9 +18,9 @@ def process(game, action):
         return equipment_shop.process(game, None)
 
     # Go into the Map Shop
-    if action.lower() == "c":
-        game.current_controller = 'cartography_shop'
-        return cartography_shop.process(game, None)
+    # if action.lower() == "c":
+    #     game.current_controller = 'cartography_shop'
+    #     return cartography_shop.process(game, None)
 
     # Visit the Magic shop
     if action.lower() == "p":
@@ -28,9 +28,9 @@ def process(game, action):
         return potion_shop.process(game, None)
 
     # Go into the Temple
-    # if action.lower() == "t":
-    #     game.current_controller = 'temple'
-    #     return temple.process(game, None)
+    if action.lower() == "t":
+        game.current_controller = 'temple'
+        return temple.process(game, None)
 
     # Enter Dungeon
     if action.lower() == "d":

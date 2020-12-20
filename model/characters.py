@@ -23,6 +23,7 @@ class Character:
         # Instantiate a point of view object.  This will help us render the view of the character
         self.view = physics.PointOfView(self)
         self.monster = None
+        self.clairvoyance_count = 0
 
     # Return True if the character is alive, False if not.
     def is_alive(self):

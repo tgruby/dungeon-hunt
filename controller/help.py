@@ -4,14 +4,13 @@ from controller import town
 
 commands = "E(x)it"
 image = images.small_village
-help_content = "Dungeon of Thordon is maze strategy game requiring you to navigate \
-mazes, fight monsters, and ultimately defeating the dragon in the last maze. \
-For each level, you must find the key to unlock the next level. Your score will \
-increase with each monster you kill and each treasure you find. Be on the lookout for magical items \
-you can find on the way!  As your hero vanquishes monsters she will level up giving you additional \
-health. Make use of the maps, weapons, armor, and potions, and its a good idea to stock up \
-before going down to the next level. Each maze gets progressively bigger as \
-well, so maps becomes more important the further you go.    Good luck! "
+help_content = "Dungeon of Thordon is a maze strategy game, requiring you to solve each maze in as few moves as " \
+               "possible. You will need to find the skeleton key to unlock the door to the next maze.  Keys along " \
+               "with gold and magical items can be found in chests, which are typically found behind doors, " \
+               "although be careful, sometimes there are traps instead. Monsters are there to block your path, " \
+               "chose to fight or run away, but they too can give you goodies if you kill them. Ultimately the town " \
+               "needs you to defeat the dragon, so gear up in town with armor, weapons, and magical potions.\n\nGood " \
+               "luck, young warrior! "
 
 
 def process(game, action):

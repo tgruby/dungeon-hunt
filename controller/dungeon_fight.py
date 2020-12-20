@@ -47,7 +47,7 @@ def process(game, action):
                 messages=message,
                 left_pane_content=our_hero.view.generate_perspective(),
                 right_pane_content=images.treasure_chest,
-                sound=None,
+                sound='challenge-complete',
                 delay=500,
                 interaction_type='key_press'
             )

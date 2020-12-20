@@ -1,6 +1,7 @@
 import view.screen
 from view import screen, images
 from controller import dungeon
+from model import potions
 
 commands = "Enter a (#) to equip an item, or (C)lose Pack"
 message = "You open you pack and check your inventory..."
@@ -56,23 +57,7 @@ def use_item(game, action):
         our_hero.equipped_shield = selected_item
         msg = "You have equipped the %s." % selected_item["name"]
     elif selected_item["type"] == "potion":
-        if selected_item["id"] == 'half_heal' or selected_item["id"] == 'full_heal':
-            if our_hero.hit_points == our_hero.max_hit_points:
-                msg = "You don't need that right now."
-            else:
-                if selected_item["id"] == 'half_heal':
-                    healing = (our_hero.max_hit_points - our_hero.hit_points) / 2
-                    our_hero.hit_points += healing
-                elif selected_item["id"] == 'full_heal':
-                    our_hero.hit_points = our_hero.max_hit_points
-                our_hero.inventory.remove(selected_item)
-                msg = "You drank the %s and a warm fuzzy feeling comes over you." % selected_item["name"]
-        elif selected_item["id"] == 'teleport':
-            our_hero.view.set_starting_position()  # put character back at the start of dungeon level 0.
-            game.current_controller = 'town'
-            our_hero.inventory.remove(selected_item)
-            msg = "You drank the %s and your vision swims and everything goes dark! You awake in town." \
-                  % selected_item["name"]
+        potions.use_potion(selected_item, game)
     else:
         msg = "You cannot equip that item!"
 

@@ -13,18 +13,6 @@ body {
     padding: 10px;
 }
 
-.left, .right {
-    width: 50%; /* Floated elements technically need a width specified. */
-}
-
-.left {
-    float: left;
-}
-
-.right {
-    float: right;
-}
-
 .button {
     border: none;
     color: white;
@@ -50,4 +38,35 @@ body {
     color: white;
 }
 
+.control {
+    border: none;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 12px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+}
 
+.green-control {
+    background-color: #333333;
+    color: white;
+    border: 2px solid #4CAF50;
+}
+
+.green-control:hover {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}

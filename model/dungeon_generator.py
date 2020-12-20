@@ -94,7 +94,7 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     for (a, b) in zip(hor2, ver2):
         mmap += ''.join(a + ['\n'] + b + ['\n'])
 
-    is_locked = dungeon_id is not 0
+    is_locked = dungeon_id != 0
 
     return {
         "maze": maze,

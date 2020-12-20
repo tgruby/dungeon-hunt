@@ -138,19 +138,24 @@ class PointOfView:
         self.hero = hero
 
     # When entering the dungeon, we come "down" into the dungeon.
-    # So we need to find the up door in this dungeon by scanning the 2d array
+    # We need to find the first maze we have not completed, then find the up door to place our hero.
     def set_starting_position(self):
-        self.current_level_id = 0
-        self.current_direction = self.east
-        self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
-        self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
-        for i in range(len(self.current_level) - 1):
-            for j in range(len(self.current_level[0]) - 1):
-                if self.current_level[i][j] == self.doorway_up:
-                    self.current_y = i
-                    self.current_x = j + 1
-                    log.info("starting x: %d, y: %d" % (j, i))
-                    return
+        for i in range(len(self.dungeon.levels)):
+            if not self.dungeon.should_skip_walking_through_level(i):
+                self.current_level_id = i
+                self.current_level = self.dungeon.levels[i]["maze"]
+                self.current_level_map = self.dungeon.levels[i]["map"]
+                # Even numbers start by face east on left side of maze, odd numbers start facing west on right side
+                # of maze.
+                if (i % 2) == 0:
+                    self.current_direction = self.east
+                    self.current_y = 1
+                    self.current_x = 1
+                else:
+                    self.current_direction = self.west
+                    self.current_y = len(self.dungeon.levels[i]["maze"]) - 2
+                    self.current_x = len(self.dungeon.levels[i]["maze"][0]) - 1
+                return self.step_forward()
 
     def generate_perspective(self):
         # Simplify variables
@@ -270,68 +275,45 @@ class PointOfView:
         else:
             return "You can't walk through walls!"
 
-    def turn_around(self):
-        if self.current_direction == self.north:
-            self.current_direction = self.south
-        elif self.current_direction == self.south:
-            self.current_direction = self.north
-        elif self.current_direction == self.east:
-            self.current_direction = self.west
-        elif self.current_direction == self.west:
+    # Method to determine which way we need to face as we enter a new dungeon level.
+    def face_forward(self):
+        # You can only enter a dungeon from the left or right (east or west). That means you are standing
+        # at the beginning or end of an array in the matrix.  So if you are at x position 0, you need to face east
+        # otherwise, west.
+        if self.current_x == 0:
             self.current_direction = self.east
+        else:
+            self.current_direction = self.west
 
     def climb_down(self):
         # First check if they are on a down_ladder
         if self.current_level[self.current_y][self.current_x] == self.doorway_down:
-            self.current_level_id = self.current_level_id + 1
-            self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
-            self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
-            # # TODO: Check of we need to skip this level.
-            # level_challenge_count = self.dungeon.levels[self.current_level_id]["challenge_count"]
-            # if level_challenge_count < 1:
-            #     # We can skip this level
-            #     return self.climb_down()
-            # We just came "down" into the next dungeon.  So we need to find the up_ladder in this dungeon and start
-            # there.
-            for i in range(len(self.current_level)):
-                for j in range(len(self.current_level[i])):
-                    if self.current_level[i][j] == self.doorway_up:
-                        self.current_y = i
-                        self.current_x = j
-                        self.turn_around()  # Turn around, so we are "entering" the next dungeon
-                        self.step_forward()  # Take one more step forward to enter the dungeon
-                        break
-            return "You climb down into the next dungeon!"
+            # Find first level we have not completed
+            l = self.current_level_id + 1
+            while l < len(self.dungeon.levels):
+                if not self.dungeon.should_skip_walking_through_level(l):
+                    self.current_level_id = l
+                    self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
+                    self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
+                    # find the up ladder to start at.
+                    for i in range(len(self.current_level)):
+                        for j in range(len(self.current_level[i])):
+                            if self.current_level[i][j] == self.doorway_up:
+                                self.current_y = i
+                                self.current_x = j
+                                self.face_forward()  # Turn around, so we are "entering" the next dungeon
+                                self.step_forward()  # Take one more step forward to enter the dungeon
+                                break
+                    return "You climb down into the next dungeon!"
         else:
             return "You can't do that here!"
 
     def climb_up(self):
         # First check if they are on a up_ladder
         if self.current_level[self.current_y][self.current_x] == self.doorway_up:
-            self.current_level_id = self.current_level_id - 1
-            # In this case, we climbed out of the dungeons, just return
-            if self.current_level_id < 0:
-                return
-            else:
-                self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
-                self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
-                # # TODO: Check of we need to skip this level.
-                # level_challenge_count = self.dungeon.levels[self.current_level_id]["challenge_count"]
-                # if level_challenge_count < 1:
-                #     # We can skip this level
-                #     return self.climb_up()
-
-                # We just came "up" into the next dungeon.  So we need to find the down_ladder in this dungeon and start
-                # there.
-                for i in range(len(self.current_level)):
-                    for j in range(len(self.current_level[i])):
-                        if self.current_level[i][j] == self.doorway_down:
-                            self.current_y = i
-                            self.current_x = j
-                            self.turn_around()  # Turn around, so we are "entering" the next dungeon
-                            self.step_forward()  # Take one more step forward to enter the dungeon
-                            break
-                return "You climb up into the higher dungeon."
+            # Since all previous levels have had all challenges completed, we can skip right to town.
+            self.current_level_id = -1
+            return
         else:
             return "You can't do that here!"
 

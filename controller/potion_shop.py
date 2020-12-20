@@ -3,9 +3,9 @@ from view import screen, images
 from model import potions
 from controller import town, potion_shop_sell
 
-commands = "Enter a (#) to purchase an item, (S)ell an Item, (L)eave Shop"
-message = "Welcome to Janet's Potions!  Would you like me to use some of your monster " \
-              "'treasures' to make you potent elixir for your journeys?"
+commands = "Enter a (#) to purchase an item, (L)eave Shop"
+message = "Welcome to Janet's Potions!  Your gold is no good here, but for a few of your monster " \
+              "'treasures' I can make you a potent elixir for your journeys."
 image = images.shop
 
 

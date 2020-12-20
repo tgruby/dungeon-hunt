@@ -13,21 +13,35 @@ class Potion:
         self.gold = enchantment_type["cost"]
 
 
+def use_potion(potion, game):
+    hero = game.character
+    msg = ''
+    if potion["id"] == 'heal':
+        if hero.hit_points == hero.max_hit_points:
+            msg = "You don't need that right now."
+        else:
+            hero.hit_points = hero.max_hit_points
+            hero.inventory.remove(potion)
+            msg = "You drank the %s and a warm fuzzy feeling comes over you." % potion["name"]
+    elif potion["id"] == 'teleport':
+        hero.view.set_starting_position()  # put character back at the start of dungeon level 0.
+        game.current_controller = 'town'
+        hero.inventory.remove(potion)
+        msg = "You drank the %s and your vision swims and everything goes dark! You awake in town." \
+              % potion["name"]
+    elif potion["id"] == 'clairvoyance':
+        hero.clairvoyance_count = 20
+        hero.inventory.remove(potion)
+        msg = "You drank the %s and your mind sharpens.  You instantly know the entire layout of the catacombs!" \
+              % potion["name"]
+
+    return msg
+
+
 # Dictionaries of potions in the Game
-
-half_health_potion = {
-    "id": 'half_heal',
-    "name": "Watered Down Healing Potion",
-    "description": "This potion will refresh you, sort of...",
-    "type": "potion",
-    "max_hit_points": .5,
-    "affects": "character",
-    "cost": 15
-}
-
-full_health_potion = {
-    "id": 'full_heal',
-    "name": "Good Stuff Healing Potion",
+health_potion = {
+    "id": 'heal',
+    "name": "Healing Potion",
     "description": "This potion will fully restore you, like a younger Gandolf!",
     "type": "potion",
     "max_hit_points": 1,
@@ -42,11 +56,21 @@ teleport_potion = {
     "type": "potion",
     "max_hit_points": 1,
     "affects": "character",
+    "cost": 40
+}
+
+clairvoyance_potion = {
+    "id": 'clairvoyance',
+    "name": "Clairvoyance Potion",
+    "description": "This potion will enable your mind to see the entire catacombs for a short time",
+    "type": "potion",
+    "time_period": 20,
+    "affects": "character",
     "cost": 50
 }
 
 all_enchantments = [
-    half_health_potion,
-    full_health_potion,
-    teleport_potion
+    health_potion,
+    teleport_potion,
+    clairvoyance_potion
 ]

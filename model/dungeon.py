@@ -36,6 +36,11 @@ class Dungeon:
     def unlock_level(self, level_id):
         self.levels[level_id]['level_locked'] = False
 
+    # Add method to determine if we should skip walking through the level (all challenges completed and the next
+    # level is unlocked.
+    def should_skip_walking_through_level(self, level_id):
+        return self.is_all_challenges_complete(level_id) and not self.is_level_locked(level_id + 1)
+
     def print_level(self, level_id):
         level = self.levels[level_id]
         print(level.get("map"))
