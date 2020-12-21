@@ -18,7 +18,7 @@ leather_armor = {
     "type": "armor",
     "name": "Leather",
     "damage": -8,
-    "cost": 50
+    "cost": 60
 }
 
 chain_mail_armor = {
@@ -112,7 +112,7 @@ bee_stinger = {
 banshee_scream = {
     "type": "loot",
     "name": "Banshee Vocal Cords",
-    "damage": 120,
+    "damage": 100,
     "cost": 80,
     "attack_message": "%s opens it's mouth and screams... the sound chills you to the bone and rips at your " 
                       "soul doing %d damage!"
@@ -131,7 +131,7 @@ club = {
     "type": "weapon",
     "name": "Club",
     "damage": 12,
-    "cost": 16,
+    "cost": 24,
     "attack_message": "%s swing and bash doing %d damage!"
 }
 
@@ -180,6 +180,15 @@ broad_sword = {
     "attack_message": "%s slash with the Broad Sword causing %d damage!"
 }
 
+two_handed_sword = {
+    "number": 2,
+    "type": "weapon",
+    "name": "Two Handed Sword",
+    "damage": 64,
+    "cost": 250,
+    "attack_message": "%s slash with the Two-Handed Sword causing %d damage!"
+}
+
 elvin_sword = {
     "number": 1,
     "type": "weapon",
@@ -207,6 +216,7 @@ skeleton_key = {
 }
 
 equipment_shop_list = [
+    two_handed_sword,
     broad_sword,
     battle_axe,
     war_hammer,

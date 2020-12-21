@@ -71,11 +71,11 @@ def purchase_an_item(our_hero, action):
 
 def draw_buy_list():
     response = view.screen.medium_border + '\n'
-    response += "  # | Item         | Type   | Dmg | Cost " + '\n'
+    response += "  # | Item             | Type   | Dmg | Cost " + '\n'
     response += view.screen.medium_border + '\n'
     for number, e in enumerate(items.equipment_shop_list):
         response += view.screen.front_padding(str(number), 3) + " | " \
-                    + view.screen.back_padding(e["name"], 12) + " | " \
+                    + view.screen.back_padding(e["name"], 16) + " | " \
                     + view.screen.front_padding(str(e["type"]), 6) + " | " \
                     + view.screen.front_padding(str(e["damage"]), 3) + " | " \
                     + view.screen.front_padding(str(round(e["cost"])), 4) + '\n'

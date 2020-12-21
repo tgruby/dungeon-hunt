@@ -28,7 +28,7 @@ def process(game, action):
             drop_weapon = random.randint(0, 3)  # 25%
             if drop_weapon == 0:
                 our_hero.inventory.append(our_hero.monster.weapon)
-                message = message + " The monster has dropped " + our_hero.monster.weapon["name"] + "!"
+                message = message + " You recover a " + our_hero.monster.weapon["name"] + " from the monster!"
             message = message + " Digging through the %s remains you found %d gold!" % (our_hero.monster.name, our_hero.monster.gold)
             # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
             if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):

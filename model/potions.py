@@ -30,7 +30,7 @@ def use_potion(potion, game):
         msg = "You drank the %s and your vision swims and everything goes dark! You awake in town." \
               % potion["name"]
     elif potion["id"] == 'clairvoyance':
-        hero.clairvoyance_count = 20
+        hero.clairvoyance_count = 25
         hero.inventory.remove(potion)
         msg = "You drank the %s and your mind sharpens.  You instantly know the entire layout of the catacombs!" \
               % potion["name"]
@@ -46,7 +46,7 @@ health_potion = {
     "type": "potion",
     "max_hit_points": 1,
     "affects": "character",
-    "cost": 30
+    "cost": 2
 }
 
 teleport_potion = {
@@ -56,7 +56,7 @@ teleport_potion = {
     "type": "potion",
     "max_hit_points": 1,
     "affects": "character",
-    "cost": 40
+    "cost": 3
 }
 
 clairvoyance_potion = {
@@ -64,9 +64,8 @@ clairvoyance_potion = {
     "name": "Clairvoyance Potion",
     "description": "This potion will enable your mind to see the entire catacombs for a short time",
     "type": "potion",
-    "time_period": 20,
     "affects": "character",
-    "cost": 50
+    "cost": 4
 }
 
 all_enchantments = [

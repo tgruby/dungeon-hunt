@@ -9,7 +9,7 @@ def process(game, action):
     # set the controller to the town.
     print("creating character!!!")
     game = games.Game(str(uuid.uuid4()))
-    game.character = characters.Character(characters.warrior)
+    game.character = characters.Character(game, characters.warrior)
     game.current_controller = 'town'
     db.save_game(game.game_id, game)
     return screen.paint_one_pane(

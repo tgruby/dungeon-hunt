@@ -279,8 +279,8 @@ def get_stats(our_hero):
     if not our_hero.is_alive():
         return "*** YOU ARE DEAD ***"
     else:
-        response = "Hit Points: %d/%d, Level: %d, Gold: %d, Score: %d" % (
-            our_hero.hit_points, our_hero.max_hit_points, our_hero.level, our_hero.gold, our_hero.experience_points * 10)
+        response = "Hit Points: %d/%d, Level: %d, Gold: %d, Score: %d, Steps: %d" % (
+            our_hero.hit_points, our_hero.max_hit_points, our_hero.level, our_hero.gold, our_hero.game.score, our_hero.step_count)
         if our_hero.view:
             response += ", Facing: " + our_hero.view.get_direction()
         return response

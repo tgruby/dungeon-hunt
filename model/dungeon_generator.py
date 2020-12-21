@@ -87,8 +87,11 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         else:
             buff.append(s[index])
 
+    print("Level ID: " + str(dungeon_id))
     challenge_count = add_doors_traps_and_treasures(maze)
-    challenge_count += add_monsters(maze)
+    print("Treasure Count: " + str(challenge_count))
+    monster_count = add_monsters(maze)
+    print("Monster Count: " + str(monster_count))
 
     mmap = ""
     for (a, b) in zip(hor2, ver2):

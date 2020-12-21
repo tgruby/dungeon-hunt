@@ -1,7 +1,7 @@
 import view.screen
 from view import screen, images
 from model import potions
-from controller import town, potion_shop_sell
+from controller import town
 
 commands = "Enter a (#) to purchase an item, (L)eave Shop"
 message = "Welcome to Janet's Potions!  Your gold is no good here, but for a few of your monster " \
@@ -34,11 +34,6 @@ def process(game, action):
         game.current_controller = 'town'
         return town.process(game, None)
 
-    # Go to the sell controller
-    if action.lower() == 's':
-        game.current_controller = 'potion_shop_sell'
-        return potion_shop_sell.process(game, None)
-
     # Attempt to buy an item
     if action.isdigit():
         return purchase_items(our_hero, action)
@@ -51,10 +46,11 @@ def purchase_items(our_hero, action):
     item_number_picked = int(action)
     if item_number_picked <= len(potions.all_enchantments)-1:
         item = potions.all_enchantments[item_number_picked]
-        if our_hero.gold < item["cost"]:
-            msg = "You don't have enough money for that!"
+
+        if count_monster_parts(our_hero) < item["cost"]:
+            msg = "You don't have enough monster parts for that!"
         else:
-            our_hero.gold -= item["cost"]
+            take_monster_parts(our_hero, item["cost"])
             our_hero.inventory.append(item)
             msg = "You have purchased the %s." % item["name"]
     else:
@@ -73,3 +69,21 @@ def draw_purchase_list():
                     + view.screen.front_padding(str(e["cost"]), 4) + '\n'
     response += view.screen.medium_border + '\n'
     return response
+
+
+def count_monster_parts(hero):
+    count = 0
+    for item in hero.inventory:
+        if item['type'] == 'loot':
+            count += 1
+    return count
+
+
+def take_monster_parts(hero, number):
+    count = number
+    for item in hero.inventory:
+        if item['type'] == 'loot':
+            hero.inventory.remove(item)
+            count -= 1
+            if count == 0:
+                return

@@ -43,21 +43,12 @@ class Monster:
 
 
 # This Function is to decide which monster to spawn in a given dungeon.
-def get_a_monster_for_dungeon(dungeon_id):
-    if dungeon_id < 0:
-        return None
-    dungeon_monsters = []
-
-    # Build a list of monsters that we could find in this dungeon level
-    monster_leveling = 10 + (dungeon_id * 10)
-    log.info("Monster Leveling %d for Dungeon %d" % (monster_leveling, dungeon_id))
-    for index in range(len(all_monsters)):
-        if all_monsters[index]["level"] < monster_leveling:
-            dungeon_monsters.append(all_monsters[index])
+def get_a_monster_for_dungeon_level(level_id):
     # Select a monster appropriate for the level of this dungeon.
-    monster_id = random.randint(0, len(dungeon_monsters) - 1)
-    monster = Monster(dungeon_monsters[monster_id])
-    log.info("Monster Selected: %s, Level: %d for Dungeon %d" % (monster.name, monster.level, dungeon_id))
+    monster_options = monsters_by_level[level_id]
+    selected_monster = random.randint(0, len(monster_options) - 1)
+    monster = Monster(monster_options[selected_monster])
+    log.info("Monster Selected: %s, Level: %d for Dungeon %d" % (monster.name, monster.level, level_id))
     return monster
 
 
@@ -66,59 +57,59 @@ def get_a_monster_for_dungeon(dungeon_id):
 giant_rat = {
     "name": "Giant Rat",
     "type": "monster",
-    "level": 3,
+    "level": 4,
     "image": images.rat,
     "max_hit_points": 10,
     "max_gold": 10,
     "weapon": items.rat_teeth
 }
 
-angry_gnome = {
-    "name": "Angry Gnome",
-    "type": "monster",
-    "level": 4,
-    "image": images.gnome,
-    "max_hit_points": 10,
-    "max_gold": 18,
-    "weapon": items.gnome_feet
-}
-
 giant_ant = {
     "name": "Giant Ant",
     "type": "monster",
-    "level": 6,
+    "level": 8,
     "image": images.giant_ant,
-    "max_hit_points": 10,
+    "max_hit_points": 12,
     "max_gold": 12,
     "weapon": items.ant_pincers
+}
+
+angry_gnome = {
+    "name": "Angry Gnome",
+    "type": "monster",
+    "level": 12,
+    "image": images.gnome,
+    "max_hit_points": 14,
+    "max_gold": 18,
+    "weapon": items.gnome_feet
 }
 
 badger = {
     "name": "Badger",
     "type": "monster",
-    "level": 7,
+    "level": 16,
     "image": images.badger,
-    "max_hit_points": 15,
-    "max_gold": 15,
+    "max_hit_points": 16,
+    "max_gold": 16,
     "weapon": items.badger_teeth
 }
 
 giant_spider = {
     "name": "Giant Spider",
     "type": "monster",
-    "level": 8,
+    "level": 18,
     "image": images.giant_spider,
-    "max_hit_points": 15,
-    "max_gold": 10,
+    "max_hit_points": 18,
+    "max_gold": 14,
     "weapon": items.spider_fangs
 }
 
 wolf = {
     "name": "Wolf",
     "type": "monster",
-    "level": 11,
+    "level": 28,
     "image": images.wolf,
-    "max_hit_points": 50,
+    "max_hit_points": 40,
     "max_gold": 30,
     "weapon": items.wolf_teeth
 }
@@ -126,16 +117,16 @@ wolf = {
 goblin = {
     "name": "Goblin",
     "type": "monster",
-    "level": 12,
+    "level": 32,
     "image": images.goblin,
-    "max_hit_points": 40,
+    "max_hit_points": 50,
     "max_gold": 60,
     "weapon": items.broad_sword
 }
 skeleton = {
     "name": "Skeleton",
     "type": "monster",
-    "level": 13,
+    "level": 46,
     "image": images.skeleton,
     "max_hit_points": 75,
     "max_gold": 100,
@@ -145,7 +136,7 @@ skeleton = {
 vampire_bat = {
     "name": "Vampire Bat",
     "type": "monster",
-    "level": 10,
+    "level": 16,
     "image": images.vampire_bat,
     "max_hit_points": 30,
     "max_gold": 45,
@@ -155,27 +146,27 @@ vampire_bat = {
 skeleton_warrior = {
     "name": "Skeleton Warrior",
     "type": "monster",
-    "level": 23,
+    "level": 96,
     "image": images.skeleton_warrior,
     "max_hit_points": 150,
     "max_gold": 150,
-    "weapon": items.elvin_sword
+    "weapon": items.battle_axe
 }
 
 half_orc = {
     "name": "Half Orc",
     "type": "monster",
-    "level": 28,
+    "level": 128,
     "image": images.half_orc,
     "max_hit_points": 200,
     "max_gold": 300,
-    "weapon": items.elvin_sword
+    "weapon": items.two_handed_sword
 }
 
 banshee = {
     "name": "Banshee",
     "type": "monster",
-    "level": 32,
+    "level": 164,
     "image": images.banshee,
     "max_hit_points": 250,
     "max_gold": 400,
@@ -185,7 +176,7 @@ banshee = {
 minotaur = {
     "name": "Minotaur",
     "type": "monster",
-    "level": 35,
+    "level": 256,
     "image": images.minotaur,
     "max_hit_points": 350,
     "max_gold": 600,
@@ -195,7 +186,7 @@ minotaur = {
 red_dragon = {
     "name": "Red Dragon",
     "type": "monster",
-    "level": 99,
+    "level": 512,
     "image": images.dragon,
     "max_hit_points": 500,
     "max_gold": 2000,
@@ -218,37 +209,35 @@ all_monsters = [
     minotaur
 ]
 
-level_0 = [
-    giant_rat,
-    giant_ant,
-    giant_spider,
-    badger
-]
-
-level_1 = [
-    wolf,
-    angry_gnome,
-    badger,
-    vampire_bat,
-    goblin,
-]
-
-level_2 = [
-    wolf,
-    angry_gnome,
-    skeleton,
-    vampire_bat,
-    goblin,
-    skeleton_warrior,
-]
-
-level_3 = [
-    angry_gnome,
-    skeleton,
-    vampire_bat,
-    goblin,
-    skeleton_warrior,
-    half_orc,
-    banshee,
-    minotaur
-]
+monsters_by_level = [
+    [
+        giant_rat,
+        giant_ant,
+        giant_spider,
+        badger
+    ],
+    [
+        wolf,
+        angry_gnome,
+        badger,
+        vampire_bat,
+        goblin,
+    ],
+    [
+        wolf,
+        angry_gnome,
+        skeleton,
+        vampire_bat,
+        goblin,
+        skeleton_warrior,
+    ],
+    [
+        angry_gnome,
+        skeleton,
+        vampire_bat,
+        goblin,
+        skeleton_warrior,
+        half_orc,
+        banshee,
+        minotaur
+    ]]

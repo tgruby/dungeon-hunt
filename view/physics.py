@@ -132,14 +132,15 @@ class PointOfView:
 
     dungeon = None
 
-    def __init__(self, hero):
+    def __init__(self, game):
         self.dungeon = dungeon.Dungeon(dungeon_generator.generate_dungeon_levels())
         self.set_starting_position()
-        self.hero = hero
+        self.game = game
 
     # When entering the dungeon, we come "down" into the dungeon.
     # We need to find the first maze we have not completed, then find the up door to place our hero.
     def set_starting_position(self):
+        print("Current Steps: " + str(self.game.character.step_count))
         for i in range(len(self.dungeon.levels)):
             if not self.dungeon.should_skip_walking_through_level(i):
                 self.current_level_id = i
@@ -150,7 +151,7 @@ class PointOfView:
                 if (i % 2) == 0:
                     self.current_direction = self.east
                     self.current_y = 1
-                    self.current_x = 1
+                    self.current_x = 0
                 else:
                     self.current_direction = self.west
                     self.current_y = len(self.dungeon.levels[i]["maze"]) - 2
@@ -251,8 +252,8 @@ class PointOfView:
             next_level = self.current_level_id + 1
             if self.dungeon.is_level_locked(next_level):
                 # Now see if we have a key, if we do, take the key, use it, and set the level to unlocked.
-                if items.skeleton_key in self.hero.inventory:
-                    self.hero.inventory.remove(items.skeleton_key)
+                if items.skeleton_key in self.game.character.inventory:
+                    self.game.character.inventory.remove(items.skeleton_key)
                     self.dungeon.unlock_level(next_level)
                 else:
                     return "This door is locked."
@@ -288,6 +289,8 @@ class PointOfView:
     def climb_down(self):
         # First check if they are on a down_ladder
         if self.current_level[self.current_y][self.current_x] == self.doorway_down:
+            self.game.calc_level_bonus(self.current_level_id, self.game.character.step_count)
+
             # Find first level we have not completed
             l = self.current_level_id + 1
             while l < len(self.dungeon.levels):

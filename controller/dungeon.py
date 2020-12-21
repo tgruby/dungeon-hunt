@@ -2,7 +2,7 @@
 # interactions between the user and the computer.  This is where we will put all of our controller code.
 import random
 
-from model import items, monsters, traps, maps
+from model import items, monsters, traps
 from view import screen, images
 from controller import dungeon_inventory, dungeon_fight, town
 
@@ -51,6 +51,15 @@ def process(game, action):
             game.current_controller = 'town'
             return town.process(game, None)
 
+        if msg != "You can't walk through walls!":
+            our_hero.step_count += 1
+            if our_hero.clairvoyance_count > 0:
+                our_hero.clairvoyance_count -= 1  # Subtract the count for every step.
+
+        sound = None
+        if msg == "You climb down into the next dungeon!":
+            sound = 'open-door'
+
         stepped_on = our_hero.view.get_position_info()
         # Check to see if we have met the Dragon
         if stepped_on == our_hero.view.x_marks_the_spot:
@@ -74,10 +83,6 @@ def process(game, action):
             print("Hero runs into a Monster!")
             return fight_monster(game)
 
-        # Step forward
-        sound = None
-        if our_hero.view.get_position_info() == our_hero.view.door:
-            sound = 'open-door'
         return paint(our_hero, msg, sound)
 
     # Look in backpack at the hero's inventory
@@ -93,7 +98,7 @@ def process(game, action):
 def fight_monster(game):
     our_hero = game.character
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
-        monster = monsters.get_a_monster_for_dungeon(our_hero.view.current_level_id)
+        monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
         our_hero.monster = monster
         game.current_controller = 'dungeon_fight'
         return dungeon_fight.process(game, None)
@@ -103,12 +108,10 @@ def fight_monster(game):
 
 # Show the map if our hero has a map for this dungeon
 def show_map(our_hero):
-    dungeon_id = our_hero.view.current_level_id
-    for i in our_hero.inventory:
-        if "number" in i:
-            if i["number"] == dungeon_id and i["type"] == "map":
-                return our_hero.view.current_level_map
-    return "You have no map for Level " + str(our_hero.view.current_level_id)
+    if our_hero.clairvoyance_count > 0:
+        return our_hero.view.current_level_map
+    else:
+        return "Its dark down here\n    on level " + str(our_hero.view.current_level_id)
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.
@@ -131,14 +134,14 @@ def found_treasure(game):
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
         # Check to see if the chest contains a map.
-        drop_map = random.randint(0, 9)  # 10%
-        if drop_map == 0:
-            #  Drop the first map user doesn't have.  If they have all 4, don't drop.
-            for m in maps.map_list:
-                if m not in our_hero.inventory:
-                    our_hero.inventory.append(m)
-                    msg += " You find a map in the chest!"
-                    break
+        # drop_map = random.randint(0, 9)  # 10%
+        # if drop_map == 0:
+        #     #  Drop the first map user doesn't have.  If they have all 4, don't drop.
+        #     for m in maps.map_list:
+        #         if m not in our_hero.inventory:
+        #             our_hero.inventory.append(m)
+        #             msg += " You find a map in the chest!"
+        #             break
         # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
         if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):
             our_hero.inventory.append(items.skeleton_key)

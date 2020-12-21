@@ -13,6 +13,16 @@ class Game:
         self.game_over = False
         self.killed_by = None
 
+    def calc_level_bonus(self, level_id, steps):
+        #  Calculate updated score:
+        level_bonus = (level_id + 1) * 2000
+        step_deduction = steps * 10  # subtract the step costs.
+        if step_deduction < level_bonus:
+            level_bonus -= step_deduction
+        else:
+            level_bonus = 0
+        self.score += level_bonus
+
 
 def route(game, action):
     print("Calling " + game.current_controller + " with Action: " + str(action))
