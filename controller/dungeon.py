@@ -2,7 +2,7 @@
 # interactions between the user and the computer.  This is where we will put all of our controller code.
 import random
 
-from model import items, monsters, traps
+from model import items, monsters, traps, maps
 from view import screen, images
 from controller import dungeon_inventory, dungeon_fight, town
 
@@ -108,6 +108,13 @@ def fight_monster(game):
 
 # Show the map if our hero has a map for this dungeon
 def show_map(our_hero):
+    # First check to see if we have the map.
+    for i in our_hero.inventory:
+        if "number" in i:
+            if i["type"] == "map" and i["number"] == our_hero.view.current_level_id:
+                return our_hero.view.current_level_map
+
+    # Otherwise, see if we have drank the potion.
     if our_hero.clairvoyance_count > 0:
         return our_hero.view.current_level_map
     else:
@@ -133,6 +140,14 @@ def found_treasure(game):
             weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
+        # Check to see if the chest contains a map.
+        drop_map = random.randint(0, 4)  # 25%
+        if drop_map == 0:
+            #  Drop the current dungeon level map.  If they have it, don't drop.
+            m = maps.map_list[our_hero.view.current_level_id]
+            if m not in our_hero.inventory:
+                our_hero.inventory.append(m)
+                msg += " You find a map in the chest!"
         # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
         if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):
             our_hero.inventory.append(items.skeleton_key)
