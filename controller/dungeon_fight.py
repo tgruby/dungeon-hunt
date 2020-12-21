@@ -9,7 +9,7 @@ def process(game, action):
     our_hero = game.character
 
     if action is None:
-        return paint(our_hero, "A " + our_hero.monster.name + " stands before you, blocking your path!")
+        return paint(our_hero, our_hero.monster.image, "A " + our_hero.monster.name + " stands before you, blocking your path!")
 
     if action.lower() == "f":
         message = our_hero.attack_the_monster()
@@ -17,7 +17,7 @@ def process(game, action):
             message = message + '\n ' + our_hero.monster.attack(our_hero)
             if not our_hero.is_alive():
                 return hero_is_slain(game)
-            return paint(our_hero, message)
+            return paint(our_hero, our_hero.monster.image, message)
         else:
             # Monster has been killed
             our_hero.view.dungeon.complete_challenge(our_hero, 'monster')
@@ -61,16 +61,18 @@ def process(game, action):
 
         message += '\n ' + "You run as fast as your little legs will carry you and... Get away!"
         our_hero.monster = None
-        # TODO: Get the hero lost. Randomly put them somewhere else in the dungeon level with an open space.
-
+        #  Turn around and go one step back.
+        our_hero.view.turn_right()
+        our_hero.view.turn_right()
+        our_hero.view.step_forward()
         game.current_controller = 'dungeon'
-        return paint(our_hero, message)
+        return paint(our_hero, "You've Escaped!", message)
 
     # Default message if they typed jibberish
-    return paint(our_hero, "A " + our_hero.monster.name + " stands before you, blocking your path!")
+    return paint(our_hero, our_hero.monster.image, "A " + our_hero.monster.name + " stands before you, blocking your path!")
 
 
-# routine to run if your hero is slain
+# routine if your hero is slain
 def hero_is_slain(game):
     game.game_over = True
     our_hero = game.character
@@ -108,13 +110,13 @@ def dragon_killed(game):
     )
 
 
-def paint(our_hero, msg):
+def paint(our_hero, image, msg):
     return screen.paint_two_panes(
         hero=our_hero,
         commands="(F)ight, (R)un away!",
         messages=msg,
         left_pane_content=our_hero.view.generate_perspective(),
-        right_pane_content=our_hero.monster.image,
+        right_pane_content=image,
         sound=None,
         delay=0,
         interaction_type='key_press'

@@ -133,15 +133,6 @@ def found_treasure(game):
             weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
-        # Check to see if the chest contains a map.
-        # drop_map = random.randint(0, 9)  # 10%
-        # if drop_map == 0:
-        #     #  Drop the first map user doesn't have.  If they have all 4, don't drop.
-        #     for m in maps.map_list:
-        #         if m not in our_hero.inventory:
-        #             our_hero.inventory.append(m)
-        #             msg += " You find a map in the chest!"
-        #             break
         # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
         if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):
             our_hero.inventory.append(items.skeleton_key)

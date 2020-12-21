@@ -140,7 +140,6 @@ class PointOfView:
     # When entering the dungeon, we come "down" into the dungeon.
     # We need to find the first maze we have not completed, then find the up door to place our hero.
     def set_starting_position(self):
-        print("Current Steps: " + str(self.game.character.step_count))
         for i in range(len(self.dungeon.levels)):
             if not self.dungeon.should_skip_walking_through_level(i):
                 self.current_level_id = i
