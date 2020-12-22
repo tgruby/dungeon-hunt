@@ -96,17 +96,17 @@ def dragon_killed(game):
     our_hero = game.character
     return screen.paint_two_panes(
         hero=our_hero,
-        commands="YOU WON THE GAME!!!",
+        commands="YOU WON THE GAME!!! Enter your name for the leaderboard...",
         messages="You have slain the dragon!!! " \
                  "The village rejoices, the dungeons are emptied of monsters and return \n" \
-                 "to the peaceful catacombs.  You are made lord over the " \
+                 "to peaceful catacombs.  You are made lord over the " \
                  "local lands and reign for \n" \
                  "many peaceful years.  Congratulations!!!",
         left_pane_content=images.treasure_chest,
         right_pane_content=images.castle,
-        sound=None,
-        delay=0,
-        interaction_type='key_press'
+        sound='challenge-complete',
+        delay=1000,
+        interaction_type='enter_press'
     )
 
 

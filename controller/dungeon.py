@@ -141,7 +141,7 @@ def found_treasure(game):
             our_hero.inventory.append(weapon)
             msg += " You find a %s in the chest!" % weapon["name"]
         # Check to see if the chest contains a map.
-        drop_map = random.randint(0, 4)  # 25%
+        drop_map = random.randint(0, 5)  # 20%
         if drop_map == 0:
             #  Drop the current dungeon level map.  If they have it, don't drop.
             m = maps.map_list[our_hero.view.current_level_id]
@@ -173,6 +173,7 @@ def stepped_on_trap(game):
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
         our_hero.view.dungeon.complete_challenge(our_hero, 'trap')
         trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
+        msg = trap.triggered(our_hero)
 
         if not our_hero.is_alive():
             # Hero has been killed
@@ -181,7 +182,7 @@ def stepped_on_trap(game):
             return screen.paint_two_panes(
                 hero=our_hero,
                 commands='Enter your name for the leaderboard...',
-                messages=trap.triggered(our_hero) + " You have been killed!",
+                messages=msg + " You have been killed!",
                 left_pane_content=images.tombstone,
                 right_pane_content=trap.image,
                 sound=None,
@@ -193,7 +194,7 @@ def stepped_on_trap(game):
         return screen.paint_two_panes(
             hero=our_hero,
             commands=commands,
-            messages=trap.triggered(our_hero),
+            messages=msg,
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=trap.image,
             sound=None,
