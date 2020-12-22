@@ -185,7 +185,7 @@ def stepped_on_trap(game):
                 messages=msg + " You have been killed!",
                 left_pane_content=images.tombstone,
                 right_pane_content=trap.image,
-                sound=None,
+                sound='morning-star-trap',
                 delay=1000,
                 interaction_type='enter_press'
             )
@@ -197,7 +197,7 @@ def stepped_on_trap(game):
             messages=msg,
             left_pane_content=our_hero.view.generate_perspective(),
             right_pane_content=trap.image,
-            sound=None,
+            sound='morning-star-trap',
             delay=500,
             interaction_type='key_press'
         )
