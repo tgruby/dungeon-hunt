@@ -30,6 +30,13 @@ async function process(term, canvas, sound, delay, interactionType) {
     }
 }
 
+function mobileButtonPushed(emulatedKeyPress) {
+    let nodes = document.querySelectorAll('input');
+    for (let i = 0; i < nodes.length; i++) {
+        nodes[i].dispatchEvent(new KeyboardEvent('keyup',{'key': emulatedKeyPress}));
+    }
+}
+
 // Basic function to send a command and get the response.
 function endGame() {
     fetch('/api/v1/game/end-game', {

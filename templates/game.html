@@ -24,26 +24,19 @@
 	</audio>
 
 {#    <div style="display: grid; grid-template-columns: min-content min-content min-content;">#}
-
+{##}
         {# Arrow Controls #}
-{#            <table style="height: 480px; padding: 40px;">#}
-{#                <tr></tr>#}
+{#            <table class="mobile-controls" style="height: 480px; padding: 40px;">#}
 {#                <tr>#}
 {#                    <td></td>#}
-{#                    <td style="vertical-align: bottom;"><button class="control green-control" onclick="">&uarr;</button></td>#}
+{#                    <td style="vertical-align: bottom;"><button id="up_button" class="control green-control" onclick="mobileButtonPushed('w')">&uarr;</button></td>#}
 {#                    <td></td>#}
 {#                </tr>#}
 {#                <tr>#}
-{#                    <td style="text-align: right;"><button class="control green-control" onclick="">&larr;</button></td>#}
+{#                    <td style="text-align: right;"><button id="left_button" class="control green-control" onclick="mobileButtonPushed(e)">&larr;</button></td>#}
 {#                    <td></td>#}
-{#                    <td style="text-align: left;"><button class="control green-control" onclick="">&rarr;</button></td>#}
+{#                    <td style="text-align: left;"><button id="right_button" class="control green-control" onclick="mobileButtonPushed(e)">&rarr;</button></td>#}
 {#                </tr>#}
-{#                <tr>#}
-{#                    <td></td>#}
-{#                    <td style="vertical-align: top;"><button class="control green-control" onclick="">&darr;</button></td>#}
-{#                    <td></td>#}
-{#                </tr>#}
-{#                <tr></tr>#}
 {#            </table>#}
 
         {# Main Screen & Console #}
@@ -58,15 +51,15 @@
                 v[{{ last_updated }}] UTC
             </div>
         </div>
-
+{##}
         {# Select, Cancel Controls #}
-{#        <table style="height: 480px; padding: 40px;">#}
+{#        <table class="mobile-controls" style="height: 480px; padding: 40px;">#}
 {#            <tr>#}
-{#                <td><button class="control green-control" onclick="">A</button></td>#}
-{#                <td><button class="control green-control" onclick="">B</button></td>#}
+{#                <td><button id="a_button" class="control green-control" onclick="mobileButtonPushed(e)">A</button></td>#}
+{#                <td><button id="b_button" class="control green-control" onclick="mobileButtonPushed(e)">B</button></td>#}
 {#            </tr>#}
 {#        </table>#}
-
+{##}
 {#    </div>#}
 
 	<script>

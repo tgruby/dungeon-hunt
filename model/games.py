@@ -13,15 +13,17 @@ class Game:
         self.game_over = False
         self.killed_by = None
 
-    def calc_level_bonus(self, level_id, steps):
+    def calc_level_bonus(self, level_id):
         #  Calculate updated score:
-        level_bonus = (level_id + 1) * 2000
-        step_deduction = steps * 10  # subtract the step costs.
+        level_bonus = (level_id + 2) * 2000
+
+        step_deduction = self.character.step_count * 10  # subtract the step costs.
         if step_deduction < level_bonus:
             level_bonus -= step_deduction
         else:
             level_bonus = 0
         self.score += level_bonus
+        self.character.step_count = 0
 
 
 def route(game, action):
