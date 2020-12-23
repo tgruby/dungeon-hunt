@@ -128,7 +128,7 @@ def add_doors_traps_and_treasures(maze_array):
 
     # Loop through the 2D maze array. Start with a range of at least 1 to -2 length to avoid out-of-range errors. To
     # simplify door image combinations, using a range 1 to -3
-    for y in range(1, len(maze_array) - 2):
+    for y in range(1, len(maze_array) - 1):
         for x in range(1, len(maze_array[0]) - 1):
             opening_count = 0
             door_x = 0
@@ -176,10 +176,7 @@ def add_monsters(maze_array):
 def is_wall(position):
     if position == '-' or \
             position == '|' or \
-            position == '+' or \
-            position == 'X' or \
-            position == '^' or \
-            position == 'v':
+            position == '+':
         return True
     return False
 
@@ -190,7 +187,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = make_maze(10, 5, 0, True)
+    m = make_maze(8, 6, 0, False)
     print("Map: \n" + m.get("map"))
     print("Maze:")
     for row in m.get("maze"):
