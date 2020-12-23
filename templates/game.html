@@ -39,14 +39,15 @@
         {# Arrow Controls #}
             <table class="mobile-controls" style="height: 510px;">
                 <tr>
-                    <td></td>
-                    <td style="vertical-align: bottom;"><button id="up_button" class="control green-control" onclick="mobileButtonPushed('w')">&uarr;</button></td>
-                    <td></td>
+                    <td colspan="2" style="vertical-align: bottom; text-align: center"><button id="up_button" class="control green-control" onclick="mobileButtonPushed('w')">&uarr;</button></td>
                 </tr>
                 <tr>
-                    <td style="vertical-align: top; text-align: right;"><button id="left_button" class="control green-control" onclick="mobileButtonPushed('a')">&larr;</button></td>
-                    <td></td>
-                    <td style="vertical-align: top; text-align: left;"><button id="right_button" class="control green-control" onclick="mobileButtonPushed('d')">&rarr;</button></td>
+                    <td style="vertical-align: top;">
+                        <button class="control green-control" onclick="mobileButtonPushed('a')">&larr;</button>
+                    </td>
+                    <td style="vertical-align: top;">
+                        <button class="control green-control" onclick="mobileButtonPushed('d')">&rarr;</button>
+                    </td>
                 </tr>
             </table>
 

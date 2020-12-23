@@ -44,13 +44,13 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
-    margin: 12px;
+    margin: 6px;
     transition-duration: 0.4s;
     cursor: pointer;
-    height: 80px;
-    width: 80px;
+    height: 60px;
+    width: 60px;
 }
 
 .green-control {
@@ -70,12 +70,12 @@ body {
     padding: 10px;
 }
 
-.mobile-controls {
-    display: none;
-}
+/*.mobile-controls {*/
+/*    display: none;*/
+/*}*/
 
-@media screen and (max-width: 768px) {
-    .mobile-controls {
-        display: block;
-    }
-}
+/*@media screen and (max-width: 768px) {*/
+/*    .mobile-controls {*/
+/*        display: block;*/
+/*    }*/
+/*}*/
