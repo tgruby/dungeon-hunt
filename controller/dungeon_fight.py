@@ -84,7 +84,7 @@ def hero_is_slain(game):
         messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
         left_pane_content=images.tombstone,
         right_pane_content=our_hero.monster.image,
-        sound=None,
+        sound='death-durg',
         delay=1000,
         interaction_type='enter_press'
     )

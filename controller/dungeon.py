@@ -59,6 +59,8 @@ def process(game, action):
         sound = None
         if msg == "You climb down into the next dungeon!":
             sound = 'open-door'
+        elif msg == "This door is locked.":
+            sound = 'footstep'
 
         stepped_on = our_hero.view.get_position_info()
         # Check to see if we have met the Dragon
@@ -185,7 +187,7 @@ def stepped_on_trap(game):
                 messages=msg + " You have been killed!",
                 left_pane_content=images.tombstone,
                 right_pane_content=trap.image,
-                sound='morning-star-trap',
+                sound='death-durg',
                 delay=1000,
                 interaction_type='enter_press'
             )
