@@ -35,7 +35,7 @@ def process(game, action):
     # Enter Dungeon
     if action.lower() == "d":
         game.current_controller = 'dungeon'
-        return dungeon.process(game, None)
+        return dungeon.process(game, 'enter')
 
     # Enter Dungeon
     if action.lower() == "h":

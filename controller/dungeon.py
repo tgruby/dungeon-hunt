@@ -28,8 +28,11 @@ def paint(our_hero, msg, sound):
 def process(game, action):
     our_hero = game.character
 
-    if action is None:
+    if action is 'enter':
         return paint(our_hero, message, None)
+
+    if action is None:
+        return paint(our_hero, None, None)
 
     # Turn Left
     if action.lower() == "a":
@@ -93,7 +96,7 @@ def process(game, action):
         return dungeon_inventory.process(game, None)
 
     # If the command is nonsense, just repeat current screen.
-    return paint(our_hero, ' ', None)
+    return paint(our_hero, None, None)
 
 
 # spawn a monster and go to battle!
