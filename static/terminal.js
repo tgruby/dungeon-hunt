@@ -70,7 +70,7 @@ var Terminal = (function () {
 				}
 			} else if (PROMPT_TYPE === AUTO_PROMPT) {
 				// Added for DoT game only! If Alpha character pressed, send right away.
-				keyChar = String.fromCharCode(e.keyCode)
+				keyChar = e.key
                 isNumeric = /[0-9.]/.test(keyChar)
                 // isAlpha = /[^A-Za-z\s]/.test(keyChar)
 				if (!isNumeric) {

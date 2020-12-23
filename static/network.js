@@ -33,7 +33,7 @@ async function process(term, canvas, sound, delay, interactionType) {
 function mobileButtonPushed(emulatedKeyPress) {
     let nodes = document.querySelectorAll('input');
     for (let i = 0; i < nodes.length; i++) {
-        nodes[i].dispatchEvent(new KeyboardEvent('keyup',{'key': emulatedKeyPress}));
+        nodes[i].onkeyup(new KeyboardEvent('keyup',{'key': emulatedKeyPress}));
     }
 }
 

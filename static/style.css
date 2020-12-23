@@ -8,9 +8,8 @@ body {
 
 .Terminal {
     font-family: 'Lucida Console', Courier, monospace;
-    font-size: 0.875em; /* 14px/16=0.875em */
+    font-size: 1em; /* 14px/16=0.875em */
     border-radius: 15px;
-    padding: 10px;
 }
 
 .button {
@@ -69,4 +68,14 @@ body {
     margin: auto;
     width: 60%;
     padding: 10px;
+}
+
+.mobile-controls {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-controls {
+        display: block;
+    }
 }

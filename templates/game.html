@@ -35,49 +35,49 @@
 		<source src="static/snd/morning-star-trap.mp3" type="audio/mpeg">
 	</audio>
 
-{#    <div style="display: grid; grid-template-columns: min-content min-content min-content;">#}
-{##}
+    <div style="display: grid; grid-template-columns: min-content min-content min-content;">
+
         {# Arrow Controls #}
-{#            <table class="mobile-controls" style="height: 480px; padding: 40px;">#}
-{#                <tr>#}
-{#                    <td></td>#}
-{#                    <td style="vertical-align: bottom;"><button id="up_button" class="control green-control" onclick="mobileButtonPushed('w')">&uarr;</button></td>#}
-{#                    <td></td>#}
-{#                </tr>#}
-{#                <tr>#}
-{#                    <td style="text-align: right;"><button id="left_button" class="control green-control" onclick="mobileButtonPushed(e)">&larr;</button></td>#}
-{#                    <td></td>#}
-{#                    <td style="text-align: left;"><button id="right_button" class="control green-control" onclick="mobileButtonPushed(e)">&rarr;</button></td>#}
-{#                </tr>#}
-{#            </table>#}
+            <table class="mobile-controls" style="height: 510px;">
+                <tr>
+                    <td></td>
+                    <td style="vertical-align: bottom;"><button id="up_button" class="control green-control" onclick="mobileButtonPushed('w')">&uarr;</button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: top; text-align: right;"><button id="left_button" class="control green-control" onclick="mobileButtonPushed('a')">&larr;</button></td>
+                    <td></td>
+                    <td style="vertical-align: top; text-align: left;"><button id="right_button" class="control green-control" onclick="mobileButtonPushed('d')">&rarr;</button></td>
+                </tr>
+            </table>
 
         {# Main Screen & Console #}
-        <div style="width: 550px; display: grid; grid-template-columns: min-content" class="center">
-            <div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 550px;">
+        <div style="width: 600px; display: grid; grid-template-columns: min-content" class="center">
+            <div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 600px;">
                 DЦИGΞФИ ФF ΓHФЯDФИ
             </div>
-            <pre id="screen" style="margin:auto; width: 550px;"></pre>
-            <div style="width: 550px;">
+            <pre id="screen" style="margin:auto; width: 600px;"></pre>
+            <div style="width: 600px;">
                 <button class="button green-button" onclick="endGame();">End Game</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 v[{{ last_updated }}] UTC
             </div>
         </div>
-{##}
+
         {# Select, Cancel Controls #}
-{#        <table class="mobile-controls" style="height: 480px; padding: 40px;">#}
-{#            <tr>#}
-{#                <td><button id="a_button" class="control green-control" onclick="mobileButtonPushed(e)">A</button></td>#}
-{#                <td><button id="b_button" class="control green-control" onclick="mobileButtonPushed(e)">B</button></td>#}
-{#            </tr>#}
-{#        </table>#}
-{##}
-{#    </div>#}
+        <table class="mobile-controls" style="height: 510px;">
+            <tr>
+                <td><button id="a_button" class="control green-control" onclick="mobileButtonPushed('f')">A</button></td>
+                <td><button id="b_button" class="control green-control" onclick="mobileButtonPushed('r')">B</button></td>
+            </tr>
+        </table>
+
+    </div>
 
 	<script>
 		const term = new Terminal('terminal');
-		term.setHeight("420px");
-		term.setWidth('550px');
+		term.setHeight("450px");
+		term.setWidth('600px');
 		term.setBackgroundColor('black');
 		term.setTextColor('green');
 		term.blinkingCursor(false);
