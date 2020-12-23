@@ -1,6 +1,6 @@
 import logging
 from model import dungeon, dungeon_generator, items
-from view import screen, perspectives
+from view import perspectives
 
 log = logging.getLogger('dragonsville')
 
@@ -291,10 +291,10 @@ class PointOfView:
             self.game.calc_level_bonus(self.current_level_id)
 
             # Find first level we have not completed
-            l = self.current_level_id + 1
-            while l < len(self.dungeon.levels):
-                if not self.dungeon.should_skip_walking_through_level(l):
-                    self.current_level_id = l
+            lv = self.current_level_id + 1
+            while lv < len(self.dungeon.levels):
+                if not self.dungeon.should_skip_walking_through_level(lv):
+                    self.current_level_id = lv
                     self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
                     self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
                     # find the up ladder to start at.
