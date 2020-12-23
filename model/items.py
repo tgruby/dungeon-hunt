@@ -205,13 +205,13 @@ elvin_sword = {
     "attack_message": "The Elvin Sword glows bright blue as it guides %s's arm, cutting for %d damage!"
 }
 
-dragonbane = {
+blade_of_thordon = {
     "number": 0,
     "type": "weapon",
-    "name": "Dragonbane Sword",
+    "name": "Blade of Thordon",
     "damage": 128,
     "cost": 1000,
-    "attack_message": "Dragonbane bursts into flames as it guides %s's arm, slicing through your enemy for %d damage!"
+    "attack_message": "The Thordon Blade bursts into flames as it guides %s's arm, slicing through your enemy for %d damage!"
 }
 
 skeleton_key = {
@@ -236,7 +236,7 @@ equipment_shop_list = [
 ]
 
 magical_items = [
-    dragonbane,
+    blade_of_thordon,
     elvin_sword
 ]
 
