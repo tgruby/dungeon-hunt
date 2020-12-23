@@ -1,28 +1,30 @@
+
+
 map_0 = {
     "number": 0,
     "type": "map",
-    "name": "Peasant Tombs Map",
+    "name": "Tomb of Peasants Map",
     "cost": 50
 }
 
 map_1 = {
     "number": 1,
     "type": "map",
-    "name": "Merchant Tombs Map",
+    "name": "Tomb of Merchants Map",
     "cost": 100
 }
 
 map_2 = {
     "number": 2,
     "type": "map",
-    "name": "Lord Tombs Map",
+    "name": "Tomb of Lords Map",
     "cost": 200
 }
 
 map_3 = {
     "number": 3,
     "type": "map",
-    "name": "King Tombs Map",
+    "name": "Tomb of Kings Map",
     "cost": 400
 }
 

@@ -180,7 +180,7 @@ minotaur = {
     "image": images.minotaur,
     "max_hit_points": 350,
     "max_gold": 600,
-    "weapon": items.dragonbane
+    "weapon": items.elvin_sword
 }
 
 red_dragon = {

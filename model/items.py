@@ -11,7 +11,7 @@ heater = {
     "type": "shield",
     "name": "Heater",
     "damage": -8,
-    "cost": 75
+    "cost": 100
 }
 
 leather_armor = {
@@ -25,7 +25,7 @@ chain_mail_armor = {
     "type": "armor",
     "name": "Chain Mail",
     "damage": -12,
-    "cost": 100
+    "cost": 180
 }
 
 bony_fingers = {
@@ -39,7 +39,7 @@ bony_fingers = {
 gnome_feet = {
     "type": "loot",
     "name": "Gnome Foot",
-    "damage": 4,
+    "damage": 10,
     "cost": 5,
     "attack_message": "%s kicks at you doing %d damage!"
 }
@@ -47,7 +47,7 @@ gnome_feet = {
 ant_pincers = {
     "type": "loot",
     "name": "Ant Pincers",
-    "damage": 4,
+    "damage": 10,
     "cost": 8,
     "attack_message": "%s bites and saws with its pincers doing %d damage!"
 }
@@ -55,7 +55,7 @@ ant_pincers = {
 spider_fangs = {
     "type": "loot",
     "name": "Spider Fangs",
-    "damage": 6,
+    "damage": 10,
     "cost": 4,
     "attack_message": "%s sinks it's fangs into you doing %d damage!"
 }
@@ -63,7 +63,7 @@ spider_fangs = {
 bat_fangs = {
     "type": "loot",
     "name": "Bat Fangs",
-    "damage": 25,
+    "damage": 24,
     "cost": 12,
     "attack_message": "%s sinks it's fangs into you doing %d damage!"
 }
@@ -71,7 +71,7 @@ bat_fangs = {
 rat_teeth = {
     "type": "loot",
     "name": "Rat Teeth",
-    "damage": 4,
+    "damage": 10,
     "cost": 2,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
 }
@@ -80,7 +80,7 @@ rat_teeth = {
 wolf_teeth = {
     "type": "loot",
     "name": "Wolf Teeth",
-    "damage": 20,
+    "damage": 24,
     "cost": 7,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
 }
@@ -88,7 +88,7 @@ wolf_teeth = {
 badger_teeth = {
     "type": "loot",
     "name": "Badger Teeth",
-    "damage": 8,
+    "damage": 10,
     "cost": 14,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
 }
@@ -96,7 +96,7 @@ badger_teeth = {
 fireball = {
     "type": "weapon",
     "name": "Dragon Heart",
-    "damage": 150,
+    "damage": 128,
     "cost": 1000,
     "attack_message": "%s rears back and vomits a molten fireball at your head burning you for %d damage!"
 }
@@ -112,7 +112,7 @@ bee_stinger = {
 banshee_scream = {
     "type": "loot",
     "name": "Banshee Vocal Cords",
-    "damage": 100,
+    "damage": 72,
     "cost": 80,
     "attack_message": "%s opens it's mouth and screams... the sound chills you to the bone and rips at your " 
                       "soul doing %d damage!"
@@ -230,42 +230,7 @@ equipment_shop_list = [
 
 magical_items = [
     dragonbane,
-    elvin_sword,
-    tritons_trident
+    elvin_sword
 ]
 
-map_0 = {
-    "number": 0,
-    "type": "map",
-    "name": "Ground Level Map",
-    "cost": 50
-}
-
-map_1 = {
-    "number": 1,
-    "type": "map",
-    "name": "Level 1 Map",
-    "cost": 100
-}
-
-map_2 = {
-    "number": 2,
-    "type": "map",
-    "name": "Level 2 Map",
-    "cost": 150
-}
-
-map_3 = {
-    "number": 3,
-    "type": "map",
-    "name": "Level 3 Map",
-    "cost": 200
-}
-
-map_list = [
-    map_0,
-    map_1,
-    map_2,
-    map_3
-]
 

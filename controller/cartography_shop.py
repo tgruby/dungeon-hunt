@@ -4,7 +4,7 @@ from view import screen, images
 from controller import town
 
 commands = "Enter a (#) to purchase an item, (L)eave Shop"
-message = "Welcome to Tina's Cartography, mighty warrior! Would you like to buy a map of the dungeon? They are " \
+message = "Welcome to Tina's Cartography, mighty warrior! Would you like to buy a map of the catacombs? They are " \
           "incredibly useful, and many warriors died to produce them! "
 image = images.scroll
 
@@ -73,11 +73,11 @@ def purchase_a_map(our_hero, action):
 
 def draw_map_list():
     response = view.screen.medium_border + '\n'
-    response += "  # | Item              |      Cost " + '\n'
+    response += "  # | Item                     | Cost " + '\n'
     response += view.screen.medium_border + '\n'
     for number, m in enumerate(maps.map_list):
         response += view.screen.front_padding(str(number), 3) + " | " \
-                    + view.screen.back_padding(m["name"], 17) + " | " \
+                    + view.screen.back_padding(m["name"], 24) + " | " \
                     + view.screen.front_padding(str(m["cost"]), 4) + ' Gold\n'
     response += view.screen.medium_border + '\n'
     return response
