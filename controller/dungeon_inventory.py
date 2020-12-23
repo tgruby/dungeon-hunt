@@ -25,7 +25,7 @@ def paint(our_hero, msg, sound):
 def process(game, action):
     our_hero = game.character
     if action is None:
-        return paint(our_hero, message)
+        return paint(our_hero, message, None)
 
     if action.lower() == 'c':
         game.current_controller = 'dungeon'
