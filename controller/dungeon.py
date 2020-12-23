@@ -167,7 +167,16 @@ def found_treasure(game):
             interaction_type='key_press'
         )
     # else you have already picked up this chest
-    return paint(our_hero, "You see an empty treasure chest...", None)
+    return screen.paint_two_panes(
+        hero=our_hero,
+        commands=commands,
+        messages="You see an empty treasure chest...",
+        left_pane_content=our_hero.view.generate_perspective(),
+        right_pane_content=images.empty_treasure_chest,
+        sound=None,
+        delay=0,
+        interaction_type='key_press'
+    )
 
 
 def stepped_on_trap(game):
@@ -204,4 +213,13 @@ def stepped_on_trap(game):
             interaction_type='key_press'
         )
     else:
-        return paint(our_hero, "A morning star is hanging from the ceiling...", None)
+        return screen.paint_two_panes(
+            hero=our_hero,
+            commands=commands,
+            messages="A morning star lays in the corner of the room...",
+            left_pane_content=our_hero.view.generate_perspective(),
+            right_pane_content=images.sprung_trap,
+            sound=None,
+            delay=None,
+            interaction_type='key_press'
+        )
