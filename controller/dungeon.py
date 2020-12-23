@@ -7,7 +7,7 @@ from view import screen, images
 from controller import dungeon_inventory, dungeon_fight, town
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
-message = "You crawl into the dark cave at the side of the mountain and enter the Dungeon!"
+message = "You crawl into the dark cave at the side of the mountain and enter the Catacombs!"
 
 
 def paint(our_hero, msg, sound):
@@ -93,7 +93,7 @@ def process(game, action):
         return dungeon_inventory.process(game, None)
 
     # If the command is nonsense, just repeat current screen.
-    return paint(our_hero, None, None)
+    return paint(our_hero, ' ', None)
 
 
 # spawn a monster and go to battle!
@@ -135,7 +135,7 @@ def found_treasure(game):
         treasure = random.randint(min_gold, max_gold)
         our_hero.gold += treasure
         game.score += 10  # Obtain 10 points per treasure
-        msg: str = " You have found a treasure chest with %d gold in it!" % treasure
+        msg: str = " You found a treasure chest with %d gold in it!" % treasure
         # Check to see if there is a magic item in the treasure chest. If so, put it in the hero's inventory.
         drop_weapon = random.randint(0, 19)  # 5%
         if drop_weapon == 0:
