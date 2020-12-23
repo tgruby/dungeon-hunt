@@ -128,7 +128,7 @@ skeleton = {
     "type": "monster",
     "level": 46,
     "image": images.skeleton,
-    "max_hit_points": 75,
+    "max_hit_points": 64,
     "max_gold": 100,
     "weapon": items.bony_fingers
 }
@@ -148,7 +148,7 @@ skeleton_warrior = {
     "type": "monster",
     "level": 96,
     "image": images.skeleton_warrior,
-    "max_hit_points": 150,
+    "max_hit_points": 128,
     "max_gold": 150,
     "weapon": items.battle_axe
 }
@@ -156,17 +156,27 @@ skeleton_warrior = {
 half_orc = {
     "name": "Half Orc",
     "type": "monster",
-    "level": 128,
+    "level": 48,
     "image": images.half_orc,
-    "max_hit_points": 200,
-    "max_gold": 300,
+    "max_hit_points": 64,
+    "max_gold": 128,
+    "weapon": items.broad_sword
+}
+
+cyclops = {
+    "name": "Cyclops",
+    "type": "monster",
+    "level": 64,
+    "image": images.cyclops,
+    "max_hit_points": 96,
+    "max_gold": 256,
     "weapon": items.two_handed_sword
 }
 
 banshee = {
     "name": "Banshee",
     "type": "monster",
-    "level": 164,
+    "level": 128,
     "image": images.banshee,
     "max_hit_points": 250,
     "max_gold": 400,
@@ -178,7 +188,7 @@ minotaur = {
     "type": "monster",
     "level": 256,
     "image": images.minotaur,
-    "max_hit_points": 350,
+    "max_hit_points": 156,
     "max_gold": 600,
     "weapon": items.elvin_sword
 }
@@ -227,12 +237,12 @@ monsters_by_level = [
         wolf,
         angry_gnome,
         skeleton,
-        skeleton,
+        half_orc,
         skeleton,
         vampire_bat,
         goblin,
         skeleton_warrior,
-        skeleton_warrior,
+        half_orc,
         skeleton_warrior,
     ],
     [
@@ -242,5 +252,6 @@ monsters_by_level = [
         skeleton_warrior,
         half_orc,
         banshee,
-        minotaur
+        minotaur,
+        cyclops
     ]]

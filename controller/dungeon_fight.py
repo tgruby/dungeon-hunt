@@ -32,7 +32,7 @@ def process(game, action):
             commands = "Press any key to continue..."
 
             if our_hero.monster.name == "Red Dragon":
-                return dragon_killed(our_hero)
+                return dragon_killed(game)
 
             our_hero.monster = None
             game.current_controller = 'dungeon'
@@ -88,15 +88,16 @@ def hero_is_slain(game):
 # TODO: routine to run if your hero kills the dragon
 def dragon_killed(game):
     game.game_over = True
+    game.killed_by = 'Winner!'
     our_hero = game.character
     return screen.paint_two_panes(
         hero=our_hero,
         commands="YOU WON THE GAME!!! Enter your name for the leaderboard...",
         messages="You have slain the dragon!!! " \
-                 "The village rejoices, the dungeons are emptied of monsters and return \n" \
-                 "to peaceful catacombs.  You are made lord over the " \
+                 "The village rejoices, the catacombs are emptied of monsters and life returns \n" \
+                 "to a peaceful existence. You are made lord over the " \
                  "local lands and reign for \n" \
-                 "many peaceful years.  Congratulations!!!",
+                 "many peaceful years!!!",
         left_pane_content=images.treasure_chest,
         right_pane_content=images.castle,
         sound='challenge-complete',

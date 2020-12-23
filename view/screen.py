@@ -64,6 +64,8 @@ def paint_one_pane(
         for line in formatted_image:
             canvas.append(line)
         canvas.append(' ')
+        canvas.append(h_border)
+        canvas.append(' ')
 
     if contents is not None:
         # Wrap long of narratives
@@ -72,11 +74,17 @@ def paint_one_pane(
         # Print each line
         for element in word_list:
             canvas.append(back_padding(element, 80))
+        canvas.append(' ')
+        canvas.append(h_border)
+        canvas.append(' ')
 
     if contents_image is not None:
         formatted_content = square_image(contents_image, 12, 70)
         for line in formatted_content:
             canvas.append(back_padding(line, 80))
+        canvas.append(' ')
+        canvas.append(h_border)
+        canvas.append(' ')
 
     # command
     canvas.append(back_padding(' ', 80))

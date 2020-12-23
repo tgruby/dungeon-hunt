@@ -3,9 +3,19 @@ from typing import List
 
 class Dungeon:
 
+    level_names = [
+        'Tomb of Peasants',
+        'Tomb of Merchants',
+        'Tomb of Lords',
+        'Tomb of Kings'
+    ]
+
     def __init__(self, levels):
         self.levels = levels
         self.completed_challenges: List[str] = []
+
+    def get_catacomb_name(self, level_id):
+        return self.level_names[level_id]
 
     def complete_challenge(self, our_hero, challenge_type):
         level = our_hero.view.current_level_id

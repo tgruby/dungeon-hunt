@@ -15,6 +15,7 @@ def generate_dungeon_levels():
     return levels
 
 
+
 def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
     ver = [["| "] * w + ['|'] for _ in range(h)] + [[]]

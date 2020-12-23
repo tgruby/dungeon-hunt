@@ -123,7 +123,8 @@ def show_map(our_hero):
     if our_hero.clairvoyance_count > 0:
         return our_hero.view.current_level_map
     else:
-        return "Its dark down here\n    on level " + str(our_hero.view.current_level_id)
+        return "Its dark down here in \n  the " + \
+               our_hero.view.dungeon.get_catacomb_name(our_hero.view.current_level_id)
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.

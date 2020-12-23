@@ -1,6 +1,6 @@
 import db
 import uuid
-from view import screen
+from view import screen, images
 from model import characters, games
 
 
@@ -13,7 +13,7 @@ def process(game, action):
     game.current_controller = 'town'
     db.save_game(game.game_id, game)
     return screen.paint_one_pane(
-        title_image=None,
+        title_image=images.title_1,
         contents="The town of Thordon's renowned catacombs have been laid waste by a treacherous red dragon.  The "
                  "catacombs "
         "had served as a place for both the town dead as well as their treasured secrets from the days of old where "

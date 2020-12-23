@@ -3,14 +3,14 @@
 buckler = {
     "type": "shield",
     "name": "Buckler",
-    "damage": -5,
-    "cost": 50
+    "damage": -6,
+    "cost": 48
 }
 
 heater = {
     "type": "shield",
     "name": "Heater",
-    "damage": -8,
+    "damage": -12,
     "cost": 100
 }
 
@@ -18,14 +18,21 @@ leather_armor = {
     "type": "armor",
     "name": "Leather",
     "damage": -8,
-    "cost": 60
+    "cost": 72
 }
 
 chain_mail_armor = {
     "type": "armor",
     "name": "Chain Mail",
-    "damage": -12,
+    "damage": -16,
     "cost": 180
+}
+
+plate_mail_armor = {
+    "type": "armor",
+    "name": "Plate Mail",
+    "damage": -24,
+    "cost": 320
 }
 
 bony_fingers = {
@@ -140,7 +147,7 @@ short_sword = {
     "type": "weapon",
     "name": "Short Sword",
     "damage": 16,
-    "cost": 40,
+    "cost": 50,
     "attack_message": "%s slashs and jabs causing %d damage!"
 }
 
@@ -219,9 +226,9 @@ equipment_shop_list = [
     two_handed_sword,
     broad_sword,
     battle_axe,
-    war_hammer,
     short_sword,
-    dagger,
+    club,
+    plate_mail_armor,
     chain_mail_armor,
     leather_armor,
     heater,
