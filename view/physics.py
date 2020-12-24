@@ -325,8 +325,15 @@ class PointOfView:
         map_array = str.splitlines(self.current_level_map)
         # Get Vertical Row (y) where we stand
         row_string = map_array[self.current_y]
-        # replace our x location with a '*'
-        row_string = change_char(row_string, self.current_x * 2, '*')
+        # replace our x location with an arrow.
+        arrow = '↑'
+        if self.current_direction == self.west:
+            arrow = '←'
+        elif self.current_direction == self.east:
+            arrow = '→'
+        elif self.current_direction == self.south:
+            arrow = '↓'
+        row_string = change_char(row_string, self.current_x * 2, arrow)
         map_array[self.current_y] = row_string
         new_map = ''
         for line in map_array:
