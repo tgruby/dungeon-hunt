@@ -40,42 +40,40 @@
 
 {#    <div style="display: grid; grid-template-columns: min-content min-content min-content;">#}
 
-        {# Arrow Controls #}
-{#        <table style="height: 510px;">#}
-{#            <tr>#}
-{#                <td colspan="2" style="vertical-align: bottom; text-align: center"><button id="up_button" class="control green-control" onclick="mobileButtonPushed('w')">&uarr;</button></td>#}
-{#            </tr>#}
-{#            <tr>#}
-{#                <td style="vertical-align: top;">#}
-{#                    <button class="control green-control" onclick="mobileButtonPushed('a')">&larr;</button>#}
-{#                </td>#}
-{#                <td style="vertical-align: top;">#}
-{#                    <button class="control green-control" onclick="mobileButtonPushed('d')">&rarr;</button>#}
-{#                </td>#}
-{#            </tr>#}
-{#        </table>#}
-
         {# Main Screen & Console #}
         <div style="width: 600px; display: grid; grid-template-columns: min-content" class="center">
             <div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 600px;">
                 DЦИGΞФИ ФF ΓHФЯDФИ
             </div>
-            <pre id="screen" style="margin:auto; width: 600px;"></pre>
             <div style="width: 600px;">
-                <button class="button green-button" onclick="endGame();">End Game</button>
+                <button class="control" style="font-size: 8px; font-weight: normal; border-radius: 15%; height: fit-content; width: fit-content;" onclick="endGame();">End Game</button>
                 <span style="float: right; vertical-align: bottom;">v0.2</span>
             </div>
+            <pre id="screen" style="margin:auto; width: 600px;"></pre>
+            {# Mobile Controls #}
+            <table style="width: 600px;">
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2" style="vertical-align: bottom; text-align: center"><button class="control" onclick="mobileButtonPushed('w')">&uarr;</button></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: top;">
+                                    <button class="control" onclick="mobileButtonPushed('a')">&larr;</button>
+                                </td>
+                                <td style="vertical-align: top;">
+                                    <button class="control" onclick="mobileButtonPushed('d')">&rarr;</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td rowspan="2"><button id="a_button" style="vertical-align: center; " class="control" onclick="mobileButtonPushed('f')">Fight</button></td>
+                    <td rowspan="2"><button id="b_button" class="control" onclick="mobileButtonPushed('r')">Run</button></td>
+                    <td rowspan="2"><button id="b_button" class="control" onclick="mobileButtonPushed('i')">Inv.</button></td>
+                </tr>
+            </table>
         </div>
-
-        {# Select, Cancel Controls #}
-{#        <table style="height: 510px;">#}
-{#            <tr>#}
-{#                <td><button id="a_button" class="control green-control" onclick="mobileButtonPushed('f')">A</button></td>#}
-{#                <td><button id="b_button" class="control green-control" onclick="mobileButtonPushed('r')">B</button></td>#}
-{#            </tr>#}
-{#        </table>#}
-{##}
-{#    </div>#}
 
 	<script>
 		const term = new Terminal('terminal');
