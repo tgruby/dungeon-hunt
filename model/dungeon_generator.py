@@ -15,11 +15,10 @@ def generate_dungeon_levels():
     return levels
 
 
-
 def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
     ver = [["| "] * w + ['|'] for _ in range(h)] + [[]]
-    ver2 = [["|   "] * w + ['|   '] for _ in range(h)] + [[]]
+    ver2 = [["│   "] * w + ['│   '] for _ in range(h)] + [[]]
     hor = [["+-"] * w + ['+'] for _ in range(h + 1)]
     hor2 = [["+---"] * w + ['+   '] for _ in range(h + 1)]
 
@@ -41,25 +40,25 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
 
     walk(randrange(w), randrange(h))
 
-    WDL2 = '| DW'
-    HDL2 = '  DW'
+    wdl2 = '| ▼ '
+    hdl2: str = '  ▼ '
     if is_last:
-        WDL2 = '| X '
-        HDL2 = ' >< '
+        wdl2 = '| ╳ '
+        hdl2 = '  ╳ '
 
     # Insert the Up-Ladder and Down-Ladder
     if dungeon_id % 2 == 0:
-        ver2[0][0] = '|UP '
+        ver2[0][0] = '| ▲ '
         if ver[h - 1][w - 1] == '| ':
-            ver2[h - 1][w - 1] = WDL2
+            ver2[h - 1][w - 1] = wdl2
         else:
-            ver2[h - 1][w - 1] = HDL2
+            ver2[h - 1][w - 1] = hdl2
     else:
-        ver2[0][0] = WDL2
+        ver2[0][0] = wdl2
         if ver[h - 1][w - 1] == '| ':
-            ver2[h - 1][w - 1] = '|UP '
+            ver2[h - 1][w - 1] = '| ▲ '
         else:
-            ver2[h - 1][w - 1] = ' UP '
+            ver2[h - 1][w - 1] = ' ▲  '
 
     # Add Entrances and Exits to dungeon levels
     upper_left = 'v '
@@ -188,7 +187,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = make_maze(8, 6, 0, False)
+    m = make_maze(8, 6, 0, True)
     print("Map: \n" + m.get("map"))
     print("Maze:")
     for row in m.get("maze"):
