@@ -80,15 +80,14 @@ def half_percent(our_hero):
 
 # List out the various healing that our hero can have
 def draw_healing_list(our_hero):
-    border = "<================<o>================>\n"
     full_percent = round(our_hero.max_hit_points - our_hero.hit_points)
 
-    response = border
-    response += " Description     | % Healed | Cost" + '\n'
-    response += border
-    response += " Full Healing    | " + view.screen.front_padding(str(full_percent), 7) + "% | " \
+    response = view.screen.medium_border + '\n'
+    response += "  Description              | % Healed | Cost" + '\n'
+    response += view.screen.medium_border + '\n'
+    response += "  Full Healing             | " + view.screen.front_padding(str(full_percent), 7) + "% | " \
                 + view.screen.front_padding(str(full_price(our_hero)), 4) + '\n'
-    response += " Partial Healing | " + view.screen.front_padding(str(half_percent(our_hero)), 7) + "% | " \
+    response += "  Partial Healing          | " + view.screen.front_padding(str(half_percent(our_hero)), 7) + "% | " \
                 + view.screen.front_padding(str(half_price(our_hero)), 4) + '\n'
-    response += border
+    response += view.screen.medium_border + '\n'
     return response

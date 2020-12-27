@@ -39,7 +39,7 @@ def process(game, action):
         return purchase_items(our_hero, action)
 
     # If we don't know what this action is, just represent the page
-    return print(our_hero, message)
+    return paint(our_hero, message)
 
 
 def purchase_items(our_hero, action):

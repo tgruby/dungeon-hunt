@@ -34,7 +34,7 @@ def process(game, action):
     lb = db.load_leaderboard()
     print("Leaderboard Length: " + str(len(lb.high_scores)))
     content = "  Rank | Gamer                | Killed By              | Score " + '\n'
-    content += '<=============================<o>==============================>\n'
+    content += '<=============================[o]==============================>\n'
     # getting length of list
     length = len(lb.high_scores)
     for i in range(length):

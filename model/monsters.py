@@ -14,7 +14,7 @@ class Monster:
     def __init__(self, monster_definition):
         self.name = monster_definition["name"]
         self.image = monster_definition["image"]
-        self.hit_points = random.randint(5, monster_definition["max_hit_points"])
+        self.hit_points = monster_definition["hit_points"]
         self.gold = random.randint(1, monster_definition["max_gold"])
         self.weapon = monster_definition["weapon"]
         self.level = monster_definition["level"]
@@ -59,7 +59,7 @@ giant_rat = {
     "type": "monster",
     "level": 4,
     "image": images.rat,
-    "max_hit_points": 10,
+    "hit_points": 10,
     "max_gold": 10,
     "weapon": items.rat_teeth
 }
@@ -69,7 +69,7 @@ giant_ant = {
     "type": "monster",
     "level": 8,
     "image": images.giant_ant,
-    "max_hit_points": 12,
+    "hit_points": 12,
     "max_gold": 12,
     "weapon": items.ant_pincers
 }
@@ -79,7 +79,7 @@ angry_gnome = {
     "type": "monster",
     "level": 12,
     "image": images.gnome,
-    "max_hit_points": 14,
+    "hit_points": 14,
     "max_gold": 18,
     "weapon": items.gnome_feet
 }
@@ -89,7 +89,7 @@ badger = {
     "type": "monster",
     "level": 16,
     "image": images.badger,
-    "max_hit_points": 16,
+    "hit_points": 16,
     "max_gold": 16,
     "weapon": items.badger_teeth
 }
@@ -99,7 +99,7 @@ giant_spider = {
     "type": "monster",
     "level": 18,
     "image": images.giant_spider,
-    "max_hit_points": 18,
+    "hit_points": 18,
     "max_gold": 14,
     "weapon": items.spider_fangs
 }
@@ -109,7 +109,7 @@ wolf = {
     "type": "monster",
     "level": 28,
     "image": images.wolf,
-    "max_hit_points": 40,
+    "hit_points": 32,
     "max_gold": 30,
     "weapon": items.wolf_teeth
 }
@@ -119,7 +119,7 @@ goblin = {
     "type": "monster",
     "level": 32,
     "image": images.goblin,
-    "max_hit_points": 50,
+    "hit_points": 42,
     "max_gold": 60,
     "weapon": items.broad_sword
 }
@@ -128,7 +128,7 @@ skeleton = {
     "type": "monster",
     "level": 46,
     "image": images.skeleton,
-    "max_hit_points": 64,
+    "hit_points": 54,
     "max_gold": 100,
     "weapon": items.bony_fingers
 }
@@ -138,7 +138,7 @@ vampire_bat = {
     "type": "monster",
     "level": 16,
     "image": images.vampire_bat,
-    "max_hit_points": 30,
+    "hit_points": 32,
     "max_gold": 45,
     "weapon": items.bat_fangs
 }
@@ -148,7 +148,7 @@ skeleton_warrior = {
     "type": "monster",
     "level": 96,
     "image": images.skeleton_warrior,
-    "max_hit_points": 128,
+    "hit_points": 72,
     "max_gold": 150,
     "weapon": items.battle_axe
 }
@@ -158,7 +158,7 @@ half_orc = {
     "type": "monster",
     "level": 48,
     "image": images.half_orc,
-    "max_hit_points": 64,
+    "hit_points": 64,
     "max_gold": 128,
     "weapon": items.broad_sword
 }
@@ -168,7 +168,7 @@ cyclops = {
     "type": "monster",
     "level": 64,
     "image": images.cyclops,
-    "max_hit_points": 96,
+    "hit_points": 96,
     "max_gold": 256,
     "weapon": items.two_handed_sword
 }
@@ -178,7 +178,7 @@ banshee = {
     "type": "monster",
     "level": 128,
     "image": images.banshee,
-    "max_hit_points": 250,
+    "hit_points": 128,
     "max_gold": 400,
     "weapon": items.banshee_scream
 }
@@ -188,7 +188,7 @@ minotaur = {
     "type": "monster",
     "level": 256,
     "image": images.minotaur,
-    "max_hit_points": 156,
+    "hit_points": 156,
     "max_gold": 600,
     "weapon": items.elvin_sword
 }
@@ -198,7 +198,7 @@ red_dragon = {
     "type": "monster",
     "level": 512,
     "image": images.dragon,
-    "max_hit_points": 500,
+    "hit_points": 512,
     "max_gold": 2000,
     "weapon": items.fireball
 }
