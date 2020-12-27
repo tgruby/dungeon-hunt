@@ -8,28 +8,35 @@
     <meta content="0">
     <title>Dungeon of Thordon</title>
     <link rel="stylesheet" type="text/css" href="static/style.css">
-	<script src="static/terminal.js"></script>
-	<script src="static/network.js"></script>
+	<script src="static/js/terminal.js"></script>
+	<script src="static/js/game-interactions.js"></script>
+	<script src="static/js/confetti.min.js"></script>
 </head>
-<body>
+<body id='body'>
 	<audio id="footstep"><source src="static/snd/footstep.mp3" type="audio/mpeg"></audio>
 	<audio id="challenge-complete"><source src="static/snd/challenge-complete.mp3" type="audio/mpeg"></audio>
 	<audio id="magic"><source src="static/snd/magic.mp3" type="audio/mpeg"></audio>
 	<audio id="open-door"><source src="static/snd/open-door.mp3" type="audio/mpeg"></audio>
 	<audio id="death-durg"><source src="static/snd/death-durg.mp3" type="audio/mpeg"></audio>
 	<audio id="morning-star-trap"><source src="static/snd/morning-star-trap.mp3" type="audio/mpeg"></audio>
+	<audio id="level-complete"><source src="static/snd/level-complete.mp3" type="audio/mpeg"></audio>
 
     <div style="width: 680px; display: grid; grid-template-columns: min-content" class="center">
         {# Title #}
         <div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 100%;">
             DЦИGΞФИ ФF ΓHФЯDФИ
         </div>
+        {# Header #}
+        <div style="width: 680px;">
+            <button class="control" onclick="endGame();">Reset Game</button>
+            <button style="float: right;" class="control" onclick="zoom(-10);">Zoom Out</button>
+            <button style="float: right;" class="control" onclick="zoom(10);">Zoom In</button>
+        </div>
         {# Main Console #}
         <pre id="console"></pre>
         {# Footer #}
         <div style="width: 680px;">
-            <button class="control" onclick="endGame();">Reset Game</button>
-            <span style="font-size: 1.5em; float: right;">v0.3</span>
+            <span style="font-size: 1.5em; float: right;">v0.4</span>
         </div>
     </div>
 

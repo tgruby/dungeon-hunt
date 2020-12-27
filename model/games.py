@@ -24,7 +24,13 @@ class Game:
             level_bonus = 0
         self.score += level_bonus
         self.character.step_count = 0
+        return level_bonus
 
+    def increment_treasure_score(self):
+        self.score += 10  # Obtain 10 points per treasure
+
+    def increment_monster_score(self, monster):
+        self.score += monster.level * 10  # Increase Score for killing monsters.
 
 def route(game, action):
     print("Calling " + game.current_controller + " with Action: " + str(action))

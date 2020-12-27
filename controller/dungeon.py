@@ -4,7 +4,7 @@ import random
 
 from model import items, monsters, traps, maps
 from view import screen, images
-from controller import dungeon_inventory, dungeon_fight, town
+from controller import dungeon_inventory, dungeon_fight, town, level_complete
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
 message = "You crawl into the dark cave at the side of the mountain and enter the Catacombs!"
@@ -61,7 +61,7 @@ def process(game, action):
 
         sound = None
         if msg == "You climb down into the next dungeon!":
-            sound = 'open-door'
+            return level_complete.process(game, our_hero.view.current_level_id-1)
         elif msg == "This door is locked.":
             sound = 'footstep'
 
@@ -123,8 +123,8 @@ def show_map(our_hero):
     if our_hero.clairvoyance_count > 0:
         return our_hero.view.current_level_map
     else:
-        return "Its dark down here in \n  the " + \
-               our_hero.view.dungeon.get_catacomb_name(our_hero.view.current_level_id)
+        return "        Its dark down here... \n" \
+               "Hopefully you are not eaten by a grue."
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.
@@ -138,14 +138,14 @@ def found_treasure(game):
         min_gold = (our_hero.view.current_level_id + 1) * 5
         treasure = random.randint(min_gold, max_gold)
         our_hero.gold += treasure
-        game.score += 10  # Obtain 10 points per treasure
-        msg: str = " You found a treasure chest with %d gold in it!" % treasure
+        game.increment_treasure_score()
+        msg: str = ' You found a treasure chest with %d gold in it!' % treasure
         # Check to see if there is a magic item in the treasure chest. If so, put it in the hero's inventory.
         drop_weapon = random.randint(0, 19)  # 5%
         if drop_weapon == 0:
             weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
             our_hero.inventory.append(weapon)
-            msg += " You find a %s in the chest!" % weapon["name"]
+            msg += ' You find a %s in the chest!' % weapon["name"]
         # Check to see if the chest contains a map.
         drop_map = random.randint(0, 5)  # 20%
         if drop_map == 0:
@@ -153,11 +153,11 @@ def found_treasure(game):
             m = maps.map_list[our_hero.view.current_level_id]
             if m not in our_hero.inventory:
                 our_hero.inventory.append(m)
-                msg += " You find a map in the chest!"
+                msg += ' You find a map in the chest!'
         # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
-        if our_hero.view.dungeon.is_all_challenges_complete(our_hero.view.current_level_id):
+        if our_hero.view.dungeon.are_all_treasures_collected(our_hero.view.current_level_id):
             our_hero.inventory.append(items.skeleton_key)
-            msg += " You find a %s!" % items.skeleton_key["name"]
+            msg += ' You find a %s!' % items.skeleton_key["name"]
 
         cmd = "Press any key to continue..."
         return screen.paint_two_panes(

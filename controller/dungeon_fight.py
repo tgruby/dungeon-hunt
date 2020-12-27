@@ -22,13 +22,14 @@ def process(game, action):
             our_hero.view.dungeon.complete_challenge(our_hero, 'monster')
             # Grab Gold
             our_hero.gold += our_hero.monster.gold
-            game.score += our_hero.monster.level * 10  # Increase Score for killing monsters.
+            game.increment_monster_score(our_hero.monster)
+
             # Check to see if the monster drops it's weapon. If so, put it in the hero's inventory.
             drop_weapon = random.randint(0, 3)  # 25%
             if drop_weapon == 0:
                 our_hero.inventory.append(our_hero.monster.weapon)
-                message = message + " You recover a " + our_hero.monster.weapon["name"] + " from the monster!"
-            message = message + " Digging through the %s remains you found %d gold!" % (our_hero.monster.name, our_hero.monster.gold)
+                message = message + ' You recover a ' + our_hero.monster.weapon["name"] + " from the monster!"
+            message = message + ' Digging through the %s remains you found %d gold!' % (our_hero.monster.name, our_hero.monster.gold)
             commands = "Press any key to continue..."
 
             if our_hero.monster.name == "Red Dragon":

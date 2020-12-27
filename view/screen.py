@@ -1,8 +1,8 @@
 import textwrap
 
-medium_border = "<=====================<>====================>"
-short_border = "<========<>========>"
-h_border = "<=====================================<o>======================================>"
+medium_border = "<=====================[]====================>"
+short_border = "<========[]========>"
+h_border = "<=====================================[o]======================================>"
 v_border = '|'
 left_pane_width = 24
 right_pane_width = 51
@@ -54,6 +54,7 @@ def paint_one_pane(
         commands,
         sound,
         delay,
+        animation,
         interaction_type,
         game_id
 ):
@@ -98,6 +99,8 @@ def paint_one_pane(
         "sound": sound,
         # Time to wait before allowing the player to make the next move
         "delay": delay,
+        # Whether an animation should be played
+        "animation": animation,
         # whether the next move should happen on any key press or the enter key (key_press | enter_press)
         "interaction_type": interaction_type,
         "game_id": game_id
@@ -108,7 +111,7 @@ def paint_one_pane(
 
 # Function to build a border with a title that fits to a given length
 def border(title, length=78):
-    return '<' + center_text("< " + title + " >", '=', length) + '>'
+    return '<' + center_text("[ " + title + " ]", '=', length) + '>'
 
 
 # Function to pad spacing both before and after text

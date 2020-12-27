@@ -288,8 +288,6 @@ class PointOfView:
     def climb_down(self):
         # First check if they are on a down_ladder
         if self.current_level[self.current_y][self.current_x] == self.doorway_down:
-            self.game.calc_level_bonus(self.current_level_id)
-
             # Find first level we have not completed
             lv = self.current_level_id + 1
             while lv < len(self.dungeon.levels):

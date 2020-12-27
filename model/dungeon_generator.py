@@ -10,7 +10,7 @@ def generate_dungeon_levels():
     for level_id in range(4):
         if level_id == 3:
             last_level = True
-        levels.append(make_maze(8 + level_id, 6 + level_id, level_id, last_level))
+        levels.append(make_maze(6 + level_id, 4 + level_id, level_id, last_level))
 
     return levels
 
@@ -87,9 +87,12 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         else:
             buff.append(s[index])
 
-    print("Level ID: " + str(dungeon_id))
-    challenge_count = add_doors_traps_and_treasures(maze)
-    print("Treasure Count: " + str(challenge_count))
+    print("Level: " + str(dungeon_id))
+    traps_and_treasures = add_doors_traps_and_treasures(maze)
+    treasure_count = traps_and_treasures[0]
+    print("Treasure Count: " + str(treasure_count))
+    trap_count = traps_and_treasures[1]
+    print("Trap Count: " + str(trap_count))
     monster_count = add_monsters(maze)
     print("Monster Count: " + str(monster_count))
 
@@ -102,7 +105,12 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     return {
         "maze": maze,
         "map": mmap,
-        "challenge_count": challenge_count,
+        "treasure_count": treasure_count,
+        "treasures_collected": 0,
+        "trap_count": trap_count,
+        "traps_triggered": 0,
+        "monster_count": monster_count,
+        "monsters_killed": 0,
         "level_locked": is_locked
     }
 
@@ -122,6 +130,7 @@ scan_for_door = [
 # Find dead-ends and put a door in front of them, and a chest in them.  Return the count of treasure chests created.
 def add_doors_traps_and_treasures(maze_array):
     treasure_chest_count = 0
+    trap_count = 0
     # walk through every cell in the matrix.
     # Look at cells surrounding the current location: if there is only one hallway, then we have found a dead-end.
     # A pattern will always be a 7 out of 8  walls when excluding current position (i,j).
@@ -147,11 +156,12 @@ def add_doors_traps_and_treasures(maze_array):
                 if is_trap == 0:
                     # print("Placing Trap: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = 'T'
+                    trap_count += 1
                 else:
-                    # print("Placing Chest or Trap: x=%d, y=%d" % (x, y))
+                    # print("Placing Chest: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = '$'
                     treasure_chest_count += 1
-    return treasure_chest_count
+    return treasure_chest_count, trap_count
 
 
 # Randomly add traps and monsters.
@@ -187,9 +197,8 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = make_maze(8, 6, 0, True)
+    m = make_maze(6, 4, 0, False)
     print("Map: \n" + m.get("map"))
     print("Maze:")
     for row in m.get("maze"):
         print(row)
-    print("Challenge Count: " + str(m.get("challenge_count")))

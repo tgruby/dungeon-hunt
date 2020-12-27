@@ -26,5 +26,6 @@ def process(game, action):
         sound=None,
         delay=0,
         interaction_type='key_press',
+        animation=None,
         game_id=game.game_id
     )

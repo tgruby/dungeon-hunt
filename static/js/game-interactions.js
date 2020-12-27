@@ -1,7 +1,7 @@
 // function to make setTimeout act as a java sleep(): https://medium.com/dev-genius/how-to-make-javascript-sleep-or-wait-d95d33c99909
 const sleepNow = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
 
-// Basic function to send a command and get the response.
+// Function to send a command to the server.
 function connect(term, url) {
     fetch(url, {
         method: 'Get',
@@ -9,16 +9,19 @@ function connect(term, url) {
     })
     .then((resp) => resp.json()) // Transform the data into json
     .then(function(data) {
-        process(term, data.canvas, data.sound, data.delay, data.interaction_type)
+        process(term, data.canvas, data.sound, data.delay, data.animation, data.interaction_type)
     })
     .catch((error) => console.error("DoT Error: " + error.message))
 }
 
-async function process(term, canvas, sound, delay, interactionType) {
+// Refresh the screen and process the response from the server.
+async function process(term, canvas, sound, delay, animation, interactionType) {
     term.clear()
 
     for (let i = 0; i < canvas.length; i++) term.print(canvas[i]);
     if (sound) document.getElementById(sound).play();
+
+    if (animation) confetti.start(3000);
 
     // Pause the functioning thread
     await sleepNow(delay)
@@ -30,6 +33,7 @@ async function process(term, canvas, sound, delay, interactionType) {
     }
 }
 
+// Buttons on game page to emulate key presses, making it easier to play on a mobile device.
 function mobileButtonPushed(emulatedKeyPress) {
     let nodes = document.querySelectorAll('input');
     for (let i = 0; i < nodes.length; i++) {
@@ -37,7 +41,7 @@ function mobileButtonPushed(emulatedKeyPress) {
     }
 }
 
-// Basic function to send a command and get the response.
+// Function to send a kill request to the game, ending the game and removing the game token from the session.
 function endGame() {
     fetch('/api/v1/game/end-game', {
         method: 'Get',
@@ -49,4 +53,14 @@ function endGame() {
             location.reload(true);
         })
         .catch((error) => console.error("DoT Error: " + error.message))
+}
+
+// Function to make it easier for the user to zoom in the screen.
+function zoom(percentChange) {
+    let pageZoom = document.body.style.zoom
+    if (pageZoom.length === 0) pageZoom = "100%";
+    pageZoom = pageZoom.slice(0, -1)
+    pageZoom = parseInt(pageZoom)
+    pageZoom = pageZoom + percentChange
+    document.body.style.zoom = pageZoom + "%";
 }

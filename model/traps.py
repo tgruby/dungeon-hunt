@@ -30,8 +30,8 @@ class Trap:
             damage = 0
         # Subtract the damage from our hero's hit points
         character.hit_points -= damage
-        return "You triggered a trap in the room! A %s swings down from the ceiling smashing into you dealing " \
-               "%d damage!" % (self.name, damage)
+        return 'You triggered a trap in the room! A %s swings down from the ceiling smashing into you dealing ' \
+               '%d damage!' % (self.name, damage)
 
 
 # This Function is to decide which trap to spawn in a given dungeon level.

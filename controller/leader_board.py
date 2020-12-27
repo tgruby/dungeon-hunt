@@ -55,13 +55,15 @@ def process(game, action):
 
 
 def paint(scores):
+    title = 'H I G H   S C O R E S'
     return screen.paint_one_pane(
-        title_image='H I G H   S C O R E S',
+        title_image=title,
         contents=None,
         contents_image=scores,
         commands="Press 'S' to start play...",
         sound=None,
         delay=0,
         interaction_type='key_press',
+        animation=None,
         game_id=None
     )
