@@ -51,12 +51,9 @@ def process_action(action):
             return jsonify(leader_board.process(None, None)), 200
 
         if game.game_over:
-            # Character has been killed.  Add to gamer_tag (action) to leaderboard, cleanup game.
-            game.gamer_tag = action
-            if game.gamer_tag is not None:
-                lb = db.load_leaderboard()
-                lb.add_leader(game)
-                db.save_leaderboard(lb)
+            lb = db.load_leaderboard()
+            lb.add_leader(game)
+            db.save_leaderboard(lb)
             db.delete_game(gid)
             session.clear()
             return jsonify(leader_board.process(None, None)), 200

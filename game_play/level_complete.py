@@ -1,9 +1,12 @@
 from game_play import screen
+from town import items
 
 
 def process(game, level_id):
     title_image = 'L E V E L   ' + str(level_id + 1) + '   C O M P L E T E !'
 
+    # Remove the map so the hero has to buy the next map.
+    game.character.inventory.remove(items.dungeon_map)
     level = game.character.view.dungeon.levels[level_id]
 
     contents = "Monsters Killed........ " + str(level["monsters_killed"]) + "/" + str(level["monster_count"]) + "\n" \

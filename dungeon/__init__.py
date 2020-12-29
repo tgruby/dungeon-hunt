@@ -1,71 +1,62 @@
 import town
 import random
-from typing import List
-from town import items, maps
-from dungeon import monsters, traps
+
+from dungeon.physics import PointOfView
+from town import items
 from game_play import images, screen, level_complete
-from dungeon import inventory, fight
+from dungeon import inventory, fight, dungeon_generator, monsters, traps
+
+
+# Static function for storing completed challenge markers.
+def hash_challenge_location(x, y):
+    location = str(x) + "-" + str(y)
+    return location
 
 
 class Dungeon:
 
-    def __init__(self, levels):
-        self.levels = levels
-        self.completed_challenges: List[str] = []
+    def __init__(self):
+        self.levels = []
+        self.current_level = None
 
-    def complete_challenge(self, our_hero, challenge_type):
-        level = our_hero.view.current_level_id
-        x = our_hero.view.current_x
-        y = our_hero.view.current_y
+    def generate_next_level(self):
+        level_id = len(self.levels)
+        self.current_level = dungeon_generator.generate_dungeon_level(level_id, False)
+        self.levels.append(self.current_level)
+
+    def complete_challenge(self, x, y, challenge_type):
         # Mark the location of the challenge as complete so the next time we step here we don't launch a monster or
         # give another treasure
-        self.completed_challenges.append(self.hash_challenge_location(level, x, y))
+        self.current_level["completed_challenges"].append(hash_challenge_location(x, y))
         # Subtract from the treasure count.  Once all challenges are complete, give user a skeleton key to go to
         # the next level.
         if challenge_type == 'treasure':
-            self.levels[level]['treasures_collected'] += 1
+            self.current_level['treasures_collected'] += 1
         if challenge_type == 'trap':
-            self.levels[level]['traps_triggered'] += 1
+            self.current_level['traps_triggered'] += 1
         if challenge_type == 'monster':
-            self.levels[level]['monsters_killed'] += 1
+            self.current_level['monsters_killed'] += 1
 
-    def is_challenge_completed(self, our_hero):
-        level = our_hero.view.current_level_id
-        x = our_hero.view.current_x
-        y = our_hero.view.current_y
-        if self.hash_challenge_location(level, x, y) in self.completed_challenges:
+    def is_challenge_completed(self, x, y):
+        if hash_challenge_location(x, y) in self.current_level["completed_challenges"]:
             return True
         return False
 
-    def are_all_treasures_collected(self, level_id):
-        return self.levels[level_id]['treasure_count'] - self.levels[level_id]['treasures_collected'] == 0
+    def are_all_treasures_collected(self):
+        return self.current_level['treasure_count'] - \
+               self.current_level['treasures_collected'] == 0
 
-    def is_level_locked(self, level_id):
-        return self.levels[level_id]['level_locked']
+    def is_exit_door_locked(self):
+        return self.current_level['exit_door_locked']
 
-    def unlock_level(self, level_id):
-        self.levels[level_id]['level_locked'] = False
+    def unlock_exit_door(self):
+        self.current_level['exit_door_locked'] = False
 
-    # Add method to determine if we should skip walking through the level (all challenges completed and the next
-    # level is unlocked.
-    def should_skip_walking_through_level(self, level_id):
-        return self.are_all_treasures_collected(level_id) and not self.is_level_locked(level_id + 1)
+    def is_level_completed(self):
+        return self.current_level['level_completed']
 
-    def print_level(self, level_id):
-        level = self.levels[level_id]
-        print(level.get("map"))
-        for row in level.get("maze"):
-            line = ''
-            for i in row:
-                line += i
-            print(line)
-
-    # standard mechanism for hashing the location and creating a location key.
-    def hash_challenge_location(self, level, x, y):
-        location = str(level) + '-' + \
-                   str(x) + "-" + \
-                   str(y)
-        return location
+    def complete_level(self):
+        self.current_level['level_completed'] = True
 
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
@@ -91,7 +82,12 @@ def process(game, action):
     our_hero = game.character
 
     if action == 'enter':
-        return paint(our_hero, message, None)
+        if game.dungeon.current_level is None:
+            game.dungeon.generate_next_level()
+        elif game.dungeon.current_level['level_completed'] is True:
+            game.dungeon.generate_next_level()
+        our_hero.view = PointOfView(game)
+        return paint(our_hero, message, 'door-slammed')
 
     if action is None:
         return paint(our_hero, None, None)
@@ -109,23 +105,24 @@ def process(game, action):
     # Step Forward
     if action.lower() == "w":
         msg = our_hero.view.step_forward()
+        sound = None
 
-        if our_hero.view.current_level_id < 0:
-            # we have left the dungeon_0, return
-            our_hero.view.set_starting_position()
+        if msg == "You return to town.":
+            # we have left the dungeon, return to town.
             game.current_controller = 'town'
+            our_hero.view = None
             return town.process(game, None)
-
-        if msg != "You can't walk through walls!":
+        elif msg == "level-complete":
+            game.dungeon.complete_level()
+            return level_complete.process(game, our_hero.view.current_level_id - 1)
+        elif msg == "This door is locked.":
+            print("Processing: This door is locked.")
+            sound = 'door-locked'
+        elif msg != "You can't walk through walls!":
+            print("Processing: You can't walk through walls!")
             our_hero.step_count += 1
             if our_hero.clairvoyance_count > 0:
                 our_hero.clairvoyance_count -= 1  # Subtract the count for every step.
-
-        sound = None
-        if msg == "You climb down into the next dungeon!":
-            return level_complete.process(game, our_hero.view.current_level_id - 1)
-        elif msg == "This door is locked.":
-            sound = 'footstep'
 
         stepped_on = our_hero.view.get_position_info()
         # Check to see if we have met the Dragon
@@ -164,7 +161,7 @@ def process(game, action):
 # spawn a monster and go to battle!
 def fight_monster(game):
     our_hero = game.character
-    if not our_hero.view.dungeon.is_challenge_completed(our_hero):
+    if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
         monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
         our_hero.monster = monster
         game.current_controller = 'dungeon.fight'
@@ -176,13 +173,10 @@ def fight_monster(game):
 # Show the map if our hero has a map for this dungeon
 def show_map(our_hero):
     # First check to see if we have the map.
-    for i in our_hero.inventory:
-        if "number" in i:
-            if i["type"] == "map" and i["number"] == our_hero.view.current_level_id:
-                return our_hero.view.current_level_map
-
+    if items.dungeon_map in our_hero.inventory:
+        return our_hero.view.current_level_map
     # Otherwise, see if we have drank the potion.
-    if our_hero.clairvoyance_count > 0:
+    elif our_hero.clairvoyance_count > 0:
         return our_hero.view.current_level_map
     else:
         return "        Its dark down here... \n" \
@@ -193,8 +187,8 @@ def show_map(our_hero):
 def found_treasure(game):
     our_hero = game.character
 
-    if not our_hero.view.dungeon.is_challenge_completed(our_hero):
-        our_hero.view.dungeon.complete_challenge(our_hero, 'treasure')
+    if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
+        our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'treasure')
         # Save picked_up_treasure to a pkl file so doesn't reset after a restart.
         max_gold = (our_hero.view.current_level_id + 2) * 15
         min_gold = (our_hero.view.current_level_id + 1) * 5
@@ -212,12 +206,11 @@ def found_treasure(game):
         drop_map = random.randint(0, 5)  # 20%
         if drop_map == 0:
             #  Drop the current dungeon level map.  If they have it, don't drop.
-            m = maps.map_list[our_hero.view.current_level_id]
-            if m not in our_hero.inventory:
-                our_hero.inventory.append(m)
+            if items.dungeon_map not in our_hero.inventory:
+                our_hero.inventory.append(items.dungeon_map)
                 msg += ' You find a map in the chest!'
         # Check to see if we have completed all the challenges.  If so, drop a skeleton key.
-        if our_hero.view.dungeon.are_all_treasures_collected(our_hero.view.current_level_id):
+        if our_hero.view.dungeon.are_all_treasures_collected():
             our_hero.inventory.append(items.skeleton_key)
             msg += ' You find a %s!' % items.skeleton_key["name"]
 
@@ -247,24 +240,24 @@ def found_treasure(game):
 
 def stepped_on_trap(game):
     our_hero = game.character
-    if not our_hero.view.dungeon.is_challenge_completed(our_hero):
-        our_hero.view.dungeon.complete_challenge(our_hero, 'trap')
+    if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
+        our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'trap')
         trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
         msg = trap.triggered(our_hero, our_hero.view.current_level_id)
 
         if not our_hero.is_alive():
             # Hero has been killed
             game.game_over = True
-            game.killed_by = 'Trap, L' + str(our_hero.view.current_level_id)
+            game.status = 'Trap, L' + str(our_hero.view.current_level_id)
             return screen.paint_two_panes(
                 hero=our_hero,
-                commands='Enter your name for the leaderboard...',
+                commands='Press the Enter key to continue...',
                 messages=msg + " You have been killed!",
                 left_pane_content=images.tombstone,
                 right_pane_content=trap.image,
-                sound='death-durg',
+                sound='death-dirge',
                 delay=1000,
-                interaction_type='enter_press'
+                interaction_type='key_press'
             )
 
         # return the damage summary you took from the trap

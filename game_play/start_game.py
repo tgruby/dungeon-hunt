@@ -2,6 +2,7 @@ import uuid
 import town
 import game_play
 from game_play import images, screen, db, characters
+import dungeon
 
 
 def process(game, action):
@@ -11,6 +12,7 @@ def process(game, action):
         print("creating character!!!")
         game = game_play.Game(str(uuid.uuid4()))
         game.character = characters.Character(game, characters.warrior)
+        game.dungeon = dungeon.Dungeon()
         game.current_controller = 'game_play.start_game'
         db.save_game(game.game_id, game)
 
@@ -28,7 +30,7 @@ def process(game, action):
             title_image=images.intro_scroll,
             contents= contents,
             contents_image=None,
-            commands="What is your character's name?",
+            commands="What is your character's name (progress will be displayed on the leaderboard)?",
             sound=None,
             delay=0,
             interaction_type='enter_press',

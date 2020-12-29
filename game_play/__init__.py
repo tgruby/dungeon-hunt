@@ -6,13 +6,12 @@ class Game:
     # Constructor for our Game
     def __init__(self, game_id):
         self.game_id = game_id
-        self.gamer_tag = None
         self.character = None
         self.dungeon = None
         self.current_controller = 'game_play.get_gamer_tag'
         self.score = 0
         self.game_over = False
-        self.killed_by = None
+        self.status = None
 
     def calc_level_bonus(self, level_id):
         #  Calculate updated score:

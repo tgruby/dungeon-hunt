@@ -1,6 +1,6 @@
 import random
 from dungeon import physics
-from town import items
+from town import items, potions
 
 
 class Character:
@@ -8,9 +8,7 @@ class Character:
 
     # Character Constructor (for our hero)
     def __init__(self, game, character_definition):
-        self.image = character_definition["image"]
         self.type = character_definition["type"]
-        self.race = character_definition["race"]
         self.max_hit_points = character_definition["hit_points"]
         self.hit_points = self.max_hit_points
         self.experience_points = character_definition["experience_points"]
@@ -21,7 +19,7 @@ class Character:
         self.equipped_shield = character_definition["equipped_shield"]
         self.inventory = character_definition["inventory"]
         # Instantiate a point of view object.  This will help us render the view of the character
-        self.view = physics.PointOfView(game)
+        self.view = None
         self.game = game
         self.monster = None
         self.clairvoyance_count = 0
@@ -57,15 +55,13 @@ class Character:
 warrior = {
     "name": None,
     "type": "warrior",
-    "race": "human",
-    "image": None,
     "hit_points": 20,
     "experience_points": 0,
     "gold": 50,
     "equipped_weapon": items.dagger,
     "equipped_armor": None,
     "equipped_shield": None,
-    "inventory": [items.dagger],
+    "inventory": [items.dagger, potions.health_potion, potions.clairvoyance_potion],
     "experience_levels": 25,
     "level_up_hit_points": 15
 }

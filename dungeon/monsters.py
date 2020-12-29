@@ -45,9 +45,15 @@ class Monster:
 # This Function is to decide which monster to spawn in a given dungeon.
 def get_a_monster_for_dungeon_level(level_id):
     # Select a monster appropriate for the level of this dungeon.
-    monster_options = monsters_by_level[level_id]
-    selected_monster = random.randint(0, len(monster_options) - 1)
-    monster = Monster(monster_options[selected_monster])
+    suitable_monsters = []
+    if level_id > 13:
+        suitable_monsters = all_monsters
+    else:
+        for i in range(level_id):
+            suitable_monsters.append(all_monsters[i])
+
+    selected_monster = random.randint(0, len(suitable_monsters) - 1)
+    monster = Monster(suitable_monsters[selected_monster])
     log.info("Monster Selected: %s, Level: %d for Dungeon %d" % (monster.name, monster.level, level_id))
     return monster
 
@@ -205,13 +211,13 @@ red_dragon = {
 
 all_monsters = [
     giant_rat,
-    wolf,
     giant_ant,
     giant_spider,
-    angry_gnome,
     badger,
-    skeleton,
+    wolf,
+    angry_gnome,
     vampire_bat,
+    skeleton,
     goblin,
     skeleton_warrior,
     half_orc,
@@ -219,39 +225,3 @@ all_monsters = [
     minotaur
 ]
 
-monsters_by_level = [
-    [
-        giant_rat,
-        giant_ant,
-        giant_spider,
-        badger
-    ],
-    [
-        wolf,
-        angry_gnome,
-        badger,
-        vampire_bat,
-        goblin,
-    ],
-    [
-        wolf,
-        angry_gnome,
-        skeleton,
-        half_orc,
-        skeleton,
-        vampire_bat,
-        goblin,
-        skeleton_warrior,
-        half_orc,
-        skeleton_warrior,
-    ],
-    [
-        skeleton,
-        vampire_bat,
-        goblin,
-        skeleton_warrior,
-        half_orc,
-        banshee,
-        minotaur,
-        cyclops
-    ]]

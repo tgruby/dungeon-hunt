@@ -19,7 +19,7 @@ def process(game, action):
             return paint(our_hero, our_hero.monster.image, message)
         else:
             # Monster has been killed
-            our_hero.view.dungeon.complete_challenge(our_hero, 'monster')
+            our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'monster')
             # Grab Gold
             our_hero.gold += our_hero.monster.gold
             game.increment_monster_score(our_hero.monster)
@@ -72,24 +72,24 @@ def process(game, action):
 def hero_is_slain(game):
     game.game_over = True
     our_hero = game.character
-    game.killed_by = our_hero.monster.name + ', L' + str(our_hero.view.current_level_id)
+    game.status = our_hero.monster.name + ', L' + str(our_hero.view.current_level_id)
 
     return screen.paint_two_panes(
         hero=our_hero,
-        commands="Enter your name for the leaderboard...",
+        commands='Press the Enter key to continue...',
         messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
         left_pane_content=images.tombstone,
         right_pane_content=our_hero.monster.image,
-        sound='death-durg',
-        delay=1000,
-        interaction_type='enter_press'
+        sound='death-dirge',
+        delay=2000,
+        interaction_type='key-press'
     )
 
 
 # TODO: routine to run if your hero kills the dragon
 def dragon_killed(game):
     game.game_over = True
-    game.killed_by = 'Winner!'
+    game.status = 'Winner!'
     our_hero = game.character
     return screen.paint_two_panes(
         hero=our_hero,

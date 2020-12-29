@@ -222,6 +222,14 @@ skeleton_key = {
     "cost": 0,
 }
 
+
+dungeon_map = {
+    "number": 0,
+    "type": "map",
+    "name": "Map of Dungeon",
+    "cost": 0
+}
+
 equipment_shop_list = [
     two_handed_sword,
     broad_sword,

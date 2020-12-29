@@ -1,9 +1,5 @@
-import logging
-import dungeon
 from town import items
-from dungeon import dungeon_generator, perspectives
-
-log = logging.getLogger('dragonsville')
+from dungeon import perspectives
 
 
 def change_char(s, p, r):
@@ -134,29 +130,29 @@ class PointOfView:
     dungeon = None
 
     def __init__(self, game):
-        self.dungeon = dungeon.Dungeon(dungeon_generator.generate_dungeon_levels())
-        self.set_starting_position()
         self.game = game
+        self.dungeon = game.dungeon
+        self.set_starting_position()
 
-    # When entering the dungeon, we come "down" into the dungeon.
-    # We need to find the first maze we have not completed, then find the up door to place our hero.
+    # When entering a dungeon level, we come "down" into the dungeon. We need to find the first maze we have not
+    # completed, then find the up door to place our hero there. Because we either enter from the top left or bottom
+    # right, we know where to begin.
     def set_starting_position(self):
-        for i in range(len(self.dungeon.levels)):
-            if not self.dungeon.should_skip_walking_through_level(i):
-                self.current_level_id = i
-                self.current_level = self.dungeon.levels[i]["maze"]
-                self.current_level_map = self.dungeon.levels[i]["map"]
-                # Even numbers start by face east on left side of maze, odd numbers start facing west on right side
-                # of maze.
-                if (i % 2) == 0:
-                    self.current_direction = self.east
-                    self.current_y = 1
-                    self.current_x = 0
-                else:
-                    self.current_direction = self.west
-                    self.current_y = len(self.dungeon.levels[i]["maze"]) - 2
-                    self.current_x = len(self.dungeon.levels[i]["maze"][0]) - 1
-                return self.step_forward()
+        self.current_level_id = len(self.dungeon.levels)
+        print("Current Level: " + str(self.current_level_id))
+        self.current_level = self.dungeon.current_level["maze"]
+        self.current_level_map = self.dungeon.current_level["map"]
+        # Even numbers start by face east on left side of maze, odd numbers start facing west on right side
+        # of maze.
+        if (self.current_level_id % 2) == 0:
+            self.current_direction = self.west
+            self.current_y = len(self.current_level) - 2
+            self.current_x = len(self.current_level[0]) - 1
+        else:
+            self.current_direction = self.east
+            self.current_y = 1
+            self.current_x = 0
+        return self.step_forward()
 
     def generate_perspective(self):
         # Simplify variables
@@ -247,14 +243,19 @@ class PointOfView:
         x1 = self.mid_center_block[self.current_direction]['x']
         y1 = self.mid_center_block[self.current_direction]['y']
         value = self.current_level[self.current_y + y1][self.current_x + x1]
+
+        # After you enter the dungeon, you cannot go back (unless you teleport, of course).
+        if value == self.doorway_up:
+            return "This door is locked."
+        # If getting to the end door, and you have the key, you finish the level.
         if value == self.doorway_down:
             # Check to see if it is locked
-            next_level = self.current_level_id + 1
-            if self.dungeon.is_level_locked(next_level):
+            if self.dungeon.is_exit_door_locked():
                 # Now see if we have a key, if we do, take the key, use it, and set the level to unlocked.
                 if items.skeleton_key in self.game.character.inventory:
                     self.game.character.inventory.remove(items.skeleton_key)
-                    self.dungeon.unlock_level(next_level)
+                    self.dungeon.unlock_exit_door()
+                    return "level-complete"
                 else:
                     return "This door is locked."
 
@@ -268,10 +269,6 @@ class PointOfView:
                 value == self.x_marks_the_spot:
             self.current_y += y1
             self.current_x += x1
-            if value == self.doorway_up:
-                return self.climb_up()
-            if value == self.doorway_down:
-                return self.climb_down()
             return "You move one space " + self.get_direction() + "."
         else:
             return "You can't walk through walls!"
@@ -286,29 +283,6 @@ class PointOfView:
         else:
             self.current_direction = self.west
 
-    def climb_down(self):
-        # First check if they are on a down_ladder
-        if self.current_level[self.current_y][self.current_x] == self.doorway_down:
-            # Find first level we have not completed
-            lv = self.current_level_id + 1
-            while lv < len(self.dungeon.levels):
-                if not self.dungeon.should_skip_walking_through_level(lv):
-                    self.current_level_id = lv
-                    self.current_level = self.dungeon.levels[self.current_level_id]["maze"]
-                    self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
-                    # find the up ladder to start at.
-                    for i in range(len(self.current_level)):
-                        for j in range(len(self.current_level[i])):
-                            if self.current_level[i][j] == self.doorway_up:
-                                self.current_y = i
-                                self.current_x = j
-                                self.face_forward()  # Turn around, so we are "entering" the next dungeon
-                                self.step_forward()  # Take one more step forward to enter the dungeon
-                                break
-                    return "You climb down into the next dungeon!"
-        else:
-            return "You can't do that here!"
-
     def climb_up(self):
         # First check if they are on a up_ladder
         if self.current_level[self.current_y][self.current_x] == self.doorway_up:
@@ -320,7 +294,7 @@ class PointOfView:
 
     def update_map(self):
         # First check if they are on a down_ladder
-        self.current_level_map = self.dungeon.levels[self.current_level_id]["map"]
+        self.current_level_map = self.dungeon.current_level["map"]
         map_array = str.splitlines(self.current_level_map)
         # Get Vertical Row (y) where we stand
         row_string = map_array[self.current_y]

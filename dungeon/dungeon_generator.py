@@ -3,22 +3,14 @@ from typing import List
 from random import shuffle, randrange
 
 
-def generate_dungeon_levels():
-    #  loop through and create 4 dungeons, each progressively bigger
-    levels = []
-    last_level = False
-    for level_id in range(4):
-        if level_id == 3:
-            last_level = True
-        levels.append(make_maze(6 + level_id, 4 + level_id, level_id, last_level))
-
-    return levels
+def generate_dungeon_level(level_number, last_level):
+    return make_maze(5 + level_number, 3 + level_number, level_number, last_level)
 
 
 def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
     ver = [["| "] * w + ['|'] for _ in range(h)] + [[]]
-    ver2 = [["│   "] * w + ['│   '] for _ in range(h)] + [[]]
+    ver2 = [["|   "] * w + ['|   '] for _ in range(h)] + [[]]
     hor = [["+-"] * w + ['+'] for _ in range(h + 1)]
     hor2 = [["+---"] * w + ['+   '] for _ in range(h + 1)]
 
@@ -58,7 +50,7 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         if ver[h - 1][w - 1] == '| ':
             ver2[h - 1][w - 1] = '| ▲ '
         else:
-            ver2[h - 1][w - 1] = ' ▲  '
+            ver2[h - 1][w - 1] = '  ▲ '
 
     # Add Entrances and Exits to dungeon levels
     upper_left = 'v '
@@ -80,7 +72,7 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     maze: List[List[str]] = []
 
     buff = []
-    for index in range(0, len(s)-1):
+    for index in range(0, len(s) - 1):
         if s[index] == '\n':
             maze.append(buff)
             buff = []
@@ -100,8 +92,6 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     for (a, b) in zip(hor2, ver2):
         mmap += ''.join(a + ['\n'] + b + ['\n'])
 
-    is_locked = dungeon_id != 0
-
     return {
         "maze": maze,
         "map": mmap,
@@ -111,7 +101,9 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         "traps_triggered": 0,
         "monster_count": monster_count,
         "monsters_killed": 0,
-        "level_locked": is_locked
+        "completed_challenges": [],
+        "exit_door_locked": True,
+        "level_completed": False
     }
 
 
@@ -170,8 +162,8 @@ def add_monsters(maze_array):
     # Look empty spaces, if empty, randomly decide to put a trap or monster.
     # 10% chance for monster, 5% chance for trap.  You cannot have a trap and a monster on the same space.
     monster_count = 0
-    for y in range(1, len(maze_array)-1):
-        for x in range(1, len(maze_array[0])-1):
+    for y in range(1, len(maze_array) - 1):
+        for x in range(1, len(maze_array[0]) - 1):
             p = maze_array[y][x]
             if is_opening(p):
                 is_monster = random.randint(0, 9)
@@ -197,7 +189,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = make_maze(6, 4, 0, False)
+    m = generate_dungeon_level(1, False)
     print("Map: \n" + m.get("map"))
     print("Maze:")
     for row in m.get("maze"):
