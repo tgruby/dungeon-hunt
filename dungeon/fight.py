@@ -8,7 +8,8 @@ def process(game, action):
     our_hero = game.character
 
     if action is None:
-        return paint(our_hero, our_hero.monster.image, "A " + our_hero.monster.name + " stands before you, blocking your path!")
+        return paint(our_hero, our_hero.monster.image, "A " + our_hero.monster.name + "stands before you, blocking "
+                                                                                      "your path!")
 
     if action.lower() == "f":
         message = our_hero.attack_the_monster()
@@ -72,7 +73,7 @@ def process(game, action):
 def hero_is_slain(game):
     game.game_over = True
     our_hero = game.character
-    game.status = our_hero.monster.name + ', L' + str(our_hero.view.current_level_id)
+    game.status = 'KIA, ' + our_hero.monster.name + ', L' + str(our_hero.view.current_level_id)
 
     return screen.paint_two_panes(
         hero=our_hero,
