@@ -1,6 +1,6 @@
 import textwrap
-from view import screen, images
-from controller import town
+from game_play import images, screen
+import town
 
 commands = "E(x)it"
 image = images.small_village
@@ -45,5 +45,5 @@ def paint(hero):
         right_pane_content=formatted_content,
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )

@@ -1,7 +1,7 @@
-import view.screen
-from model import items
-from view import screen, images
-from controller import town, equipment_shop_sell
+import game_play.screen
+from game_play import images, screen
+from town import equipment_shop_sell, items
+import town
 
 commands = "Enter a (#) to purchase an item, (S)ell an item, or (L)eave Shop"
 message = "Welcome to Bill's Equipment Emporium, mighty warrior!  Would you like to upgrade your shoddy " \
@@ -19,7 +19,7 @@ def paint(our_hero, msg):
         right_pane_content=draw_buy_list(),
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
@@ -35,7 +35,7 @@ def process(game, action):
 
     # If Sell an item, enter another sub-controller
     if action.lower() == 's':
-        game.current_controller = 'equipment_shop_sell'
+        game.current_controller = 'town.equipment_shop_sell'
         return equipment_shop_sell.process(game, None)
 
     if action.isdigit():
@@ -70,14 +70,14 @@ def purchase_an_item(our_hero, action):
 
 
 def draw_buy_list():
-    response = view.screen.medium_border + '\n'
+    response = game_play.screen.medium_border + '\n'
     response += "  # | Item             | Type   | Dmg | Cost " + '\n'
-    response += view.screen.medium_border + '\n'
+    response += game_play.screen.medium_border + '\n'
     for number, e in enumerate(items.equipment_shop_list):
-        response += view.screen.front_padding(str(number), 3) + " | " \
-                    + view.screen.back_padding(e["name"], 16) + " | " \
-                    + view.screen.front_padding(str(e["type"]), 6) + " | " \
-                    + view.screen.front_padding(str(e["damage"]), 3) + " | " \
-                    + view.screen.front_padding(str(round(e["cost"])), 4) + '\n'
-    response += view.screen.medium_border + '\n'
+        response += game_play.screen.front_padding(str(number), 3) + " | " \
+                    + game_play.screen.back_padding(e["name"], 16) + " | " \
+                    + game_play.screen.front_padding(str(e["type"]), 6) + " | " \
+                    + game_play.screen.front_padding(str(e["damage"]), 3) + " | " \
+                    + game_play.screen.front_padding(str(round(e["cost"])), 4) + '\n'
+    response += game_play.screen.medium_border + '\n'
     return response

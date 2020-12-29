@@ -1,5 +1,5 @@
 import random
-from view import screen, images
+from game_play import images, screen
 
 
 # This Function is to attack the monster. This includes the loop to continue to attack until someone dies, or our hero

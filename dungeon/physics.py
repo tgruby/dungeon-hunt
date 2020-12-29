@@ -1,6 +1,7 @@
 import logging
-from model import dungeon, dungeon_generator, items
-from view import perspectives
+import dungeon
+from town import items
+from dungeon import dungeon_generator, perspectives
 
 log = logging.getLogger('dragonsville')
 

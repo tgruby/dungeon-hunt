@@ -1,6 +1,7 @@
 import importlib
 
 
+# Game Object.  Every Game has this object.
 class Game:
     # Constructor for our Game
     def __init__(self, game_id):
@@ -8,7 +9,7 @@ class Game:
         self.gamer_tag = None
         self.character = None
         self.dungeon = None
-        self.current_controller = 'get_gamer_tag'
+        self.current_controller = 'game_play.get_gamer_tag'
         self.score = 0
         self.game_over = False
         self.killed_by = None
@@ -32,9 +33,10 @@ class Game:
     def increment_monster_score(self, monster):
         self.score += monster.level * 10  # Increase Score for killing monsters.
 
+
 def route(game, action):
     print("Calling " + game.current_controller + " with Action: " + str(action))
-    controller = importlib.import_module('controller.' + game.current_controller, package=None)
+    controller = importlib.import_module(game.current_controller, package=None)
     updated_screen = controller.process(game, action)
 
     if updated_screen is None:

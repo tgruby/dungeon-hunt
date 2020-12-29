@@ -1,7 +1,7 @@
-import view.screen
-from model import maps
-from view import screen, images
-from controller import town
+import game_play.screen
+from town import maps
+from game_play import images, screen
+import town
 
 commands = "Enter a (#) to purchase an item, (L)eave Shop"
 message = "Welcome to Tina's Cartography, mighty warrior! Would you like to buy a map of the catacombs? They are " \
@@ -19,7 +19,7 @@ def paint(hero):
         right_pane_content=draw_map_list(),
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
@@ -67,17 +67,17 @@ def purchase_a_map(our_hero, action):
         right_pane_content=draw_map_list(),
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
 def draw_map_list():
-    response = view.screen.medium_border + '\n'
+    response = game_play.screen.medium_border + '\n'
     response += "  # | Item                     | Cost " + '\n'
-    response += view.screen.medium_border + '\n'
+    response += game_play.screen.medium_border + '\n'
     for number, m in enumerate(maps.map_list):
-        response += view.screen.front_padding(str(number), 3) + " | " \
-                    + view.screen.back_padding(m["name"], 24) + " | " \
-                    + view.screen.front_padding(str(m["cost"]), 4) + ' Gold\n'
-    response += view.screen.medium_border + '\n'
+        response += game_play.screen.front_padding(str(number), 3) + " | " \
+                    + game_play.screen.back_padding(m["name"], 24) + " | " \
+                    + game_play.screen.front_padding(str(m["cost"]), 4) + ' Gold\n'
+    response += game_play.screen.medium_border + '\n'
     return response

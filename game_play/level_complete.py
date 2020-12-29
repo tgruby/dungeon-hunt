@@ -1,4 +1,4 @@
-from view import screen
+from game_play import screen
 
 
 def process(game, level_id):

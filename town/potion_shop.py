@@ -1,7 +1,7 @@
-import view.screen
-from view import screen, images
-from model import potions
-from controller import town
+import game_play.screen
+from game_play import images, screen
+from town import potions
+import town
 
 commands = "Enter a (#) to purchase an item, (L)eave Shop"
 message = "Welcome to Janet's Potions!  Your gold is no good here, but for a few of your monster " \
@@ -19,11 +19,12 @@ def paint(our_hero, msg):
         right_pane_content=draw_purchase_list(),
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
 def process(game, action):
+    print('Action: ' + str(action))
     our_hero = game.character
 
     if action is None:
@@ -60,14 +61,14 @@ def purchase_items(our_hero, action):
 
 
 def draw_purchase_list():
-    response = view.screen.medium_border + '\n'
+    response = game_play.screen.medium_border + '\n'
     response += "  # | Item                           | Cost " + '\n'
-    response += view.screen.medium_border + '\n'
+    response += game_play.screen.medium_border + '\n'
     for number, e in enumerate(potions.all_enchantments):
-        response += view.screen.front_padding(str(number), 3) + " | " \
-                    + view.screen.back_padding(e["name"], 30) + " | " \
-                    + view.screen.front_padding(str(e["cost"]), 4) + '\n'
-    response += view.screen.medium_border + '\n'
+        response += game_play.screen.front_padding(str(number), 3) + " | " \
+                    + game_play.screen.back_padding(e["name"], 30) + " | " \
+                    + game_play.screen.front_padding(str(e["cost"]), 4) + '\n'
+    response += game_play.screen.medium_border + '\n'
     return response
 
 

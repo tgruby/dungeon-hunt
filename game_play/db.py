@@ -1,11 +1,11 @@
 import os
 import pickle
-from controller import leader_board
+from game_play import leader_board
 
 
 def init_db():
     try:
-        os.mkdir('data')
+        os.mkdir('../data')
     except OSError as error:
         # supressed due to this is the normal operation. TODO: fix this so we check first before trying to make.
         pass

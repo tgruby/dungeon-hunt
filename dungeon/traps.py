@@ -1,5 +1,5 @@
 import random
-from view import images
+from game_play import images
 
 
 # Class object to represent any active monster

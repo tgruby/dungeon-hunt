@@ -1,6 +1,6 @@
-import view.screen
-from view import screen, images
-from controller import town
+import game_play.screen
+from game_play import images, screen
+import town
 
 commands = "(F)ull Healing, (P)artial Healing, (L)eave Temple"
 message = "Welcome to Wudang Five Immortals Temple, weary traveler. How can we help you?"
@@ -18,7 +18,7 @@ def paint(our_hero, msg):
         right_pane_content=draw_healing_list(our_hero),
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
@@ -82,12 +82,12 @@ def half_percent(our_hero):
 def draw_healing_list(our_hero):
     full_percent = round(our_hero.max_hit_points - our_hero.hit_points)
 
-    response = view.screen.medium_border + '\n'
+    response = game_play.screen.medium_border + '\n'
     response += "  Description              | % Healed | Cost" + '\n'
-    response += view.screen.medium_border + '\n'
-    response += "  Full Healing             | " + view.screen.front_padding(str(full_percent), 7) + "% | " \
-                + view.screen.front_padding(str(full_price(our_hero)), 4) + '\n'
-    response += "  Partial Healing          | " + view.screen.front_padding(str(half_percent(our_hero)), 7) + "% | " \
-                + view.screen.front_padding(str(half_price(our_hero)), 4) + '\n'
-    response += view.screen.medium_border + '\n'
+    response += game_play.screen.medium_border + '\n'
+    response += "  Full Healing             | " + game_play.screen.front_padding(str(full_percent), 7) + "% | " \
+                + game_play.screen.front_padding(str(full_price(our_hero)), 4) + '\n'
+    response += "  Partial Healing          | " + game_play.screen.front_padding(str(half_percent(our_hero)), 7) + "% | " \
+                + game_play.screen.front_padding(str(half_price(our_hero)), 4) + '\n'
+    response += game_play.screen.medium_border + '\n'
     return response

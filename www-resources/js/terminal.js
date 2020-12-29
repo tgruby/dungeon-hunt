@@ -70,16 +70,11 @@ var Terminal = (function () {
 				}
 			} else if (PROMPT_TYPE === AUTO_PROMPT) {
 				// Added for DoT game only! If Alpha character pressed, send right away.
-				keyChar = e.key
-                isNumeric = /[0-9.]/.test(keyChar)
-                // isAlpha = /[^A-Za-z\s]/.test(keyChar)
-				if (!isNumeric) {
-				    terminalObj._input.style.display = 'none'
-                    var inputValue = inputField.value
-                    if (shouldDisplayInput) terminalObj.print(inputValue)
-                    terminalObj.html.removeChild(inputField)
-					callback(keyChar)
-				}
+				terminalObj._input.style.display = 'none'
+				let inputValue = inputField.value
+				if (shouldDisplayInput) terminalObj.print(inputValue)
+				terminalObj.html.removeChild(inputField)
+				callback(e.key)
 			}
 		}
 		if (firstPrompt) {

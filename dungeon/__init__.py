@@ -1,10 +1,72 @@
-# The word "controller" in programming often is used to refer to parts of the program that control the flow of
-# interactions between the user and the computer.  This is where we will put all of our controller code.
+import town
 import random
+from typing import List
+from town import items, maps
+from dungeon import monsters, traps
+from game_play import images, screen, level_complete
+from dungeon import inventory, fight
 
-from model import items, monsters, traps, maps
-from view import screen, images
-from controller import dungeon_inventory, dungeon_fight, town, level_complete
+
+class Dungeon:
+
+    def __init__(self, levels):
+        self.levels = levels
+        self.completed_challenges: List[str] = []
+
+    def complete_challenge(self, our_hero, challenge_type):
+        level = our_hero.view.current_level_id
+        x = our_hero.view.current_x
+        y = our_hero.view.current_y
+        # Mark the location of the challenge as complete so the next time we step here we don't launch a monster or
+        # give another treasure
+        self.completed_challenges.append(self.hash_challenge_location(level, x, y))
+        # Subtract from the treasure count.  Once all challenges are complete, give user a skeleton key to go to
+        # the next level.
+        if challenge_type == 'treasure':
+            self.levels[level]['treasures_collected'] += 1
+        if challenge_type == 'trap':
+            self.levels[level]['traps_triggered'] += 1
+        if challenge_type == 'monster':
+            self.levels[level]['monsters_killed'] += 1
+
+    def is_challenge_completed(self, our_hero):
+        level = our_hero.view.current_level_id
+        x = our_hero.view.current_x
+        y = our_hero.view.current_y
+        if self.hash_challenge_location(level, x, y) in self.completed_challenges:
+            return True
+        return False
+
+    def are_all_treasures_collected(self, level_id):
+        return self.levels[level_id]['treasure_count'] - self.levels[level_id]['treasures_collected'] == 0
+
+    def is_level_locked(self, level_id):
+        return self.levels[level_id]['level_locked']
+
+    def unlock_level(self, level_id):
+        self.levels[level_id]['level_locked'] = False
+
+    # Add method to determine if we should skip walking through the level (all challenges completed and the next
+    # level is unlocked.
+    def should_skip_walking_through_level(self, level_id):
+        return self.are_all_treasures_collected(level_id) and not self.is_level_locked(level_id + 1)
+
+    def print_level(self, level_id):
+        level = self.levels[level_id]
+        print(level.get("map"))
+        for row in level.get("maze"):
+            line = ''
+            for i in row:
+                line += i
+            print(line)
+
+    # standard mechanism for hashing the location and creating a location key.
+    def hash_challenge_location(self, level, x, y):
+        location = str(level) + '-' + \
+                   str(x) + "-" + \
+                   str(y)
+        return location
+
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
 message = "You crawl into the dark cave at the side of the mountain and enter the Catacombs!"
@@ -28,7 +90,7 @@ def paint(our_hero, msg, sound):
 def process(game, action):
     our_hero = game.character
 
-    if action is 'enter':
+    if action == 'enter':
         return paint(our_hero, message, None)
 
     if action is None:
@@ -61,7 +123,7 @@ def process(game, action):
 
         sound = None
         if msg == "You climb down into the next dungeon!":
-            return level_complete.process(game, our_hero.view.current_level_id-1)
+            return level_complete.process(game, our_hero.view.current_level_id - 1)
         elif msg == "This door is locked.":
             sound = 'footstep'
 
@@ -70,8 +132,8 @@ def process(game, action):
         if stepped_on == our_hero.view.x_marks_the_spot:
             print("You encounter the Dragon!")
             our_hero.monster = monsters.Monster(monsters.red_dragon)
-            game.current_controller = 'dungeon_fight'
-            return dungeon_fight.process(game, None)
+            game.current_controller = 'dungeon.fight'
+            return fight.process(game, None)
 
         # Check to see if we have stepped on Treasure
         if stepped_on == our_hero.view.treasure:
@@ -92,8 +154,8 @@ def process(game, action):
 
     # Look in backpack at the hero's inventory
     if action.lower() == "i":
-        game.current_controller = 'dungeon_inventory'
-        return dungeon_inventory.process(game, None)
+        game.current_controller = 'dungeon.inventory'
+        return inventory.process(game, None)
 
     # If the command is nonsense, just repeat current screen.
     return paint(our_hero, None, None)
@@ -105,8 +167,8 @@ def fight_monster(game):
     if not our_hero.view.dungeon.is_challenge_completed(our_hero):
         monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
         our_hero.monster = monster
-        game.current_controller = 'dungeon_fight'
-        return dungeon_fight.process(game, None)
+        game.current_controller = 'dungeon.fight'
+        return fight.process(game, None)
     # else we have already fought this monster...
     return paint(our_hero, "You see a body crumpled against the wall...", None)
 

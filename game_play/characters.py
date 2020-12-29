@@ -1,6 +1,6 @@
 import random
-from view import physics
-from model import items
+from dungeon import physics
+from town import items
 
 
 class Character:
@@ -26,6 +26,7 @@ class Character:
         self.monster = None
         self.clairvoyance_count = 0
         self.step_count = 0
+        self.name = None
 
     # Return True if the character is alive, False if not.
     def is_alive(self):

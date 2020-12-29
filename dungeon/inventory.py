@@ -1,7 +1,7 @@
-import view.screen
-from view import screen, images
-from controller import dungeon
-from model import potions
+import game_play.screen
+from game_play import images, screen
+import dungeon
+from town import potions
 
 commands = "Enter a (#) to equip an item, or (C)lose Pack"
 message = "You open you pack and check your inventory..."
@@ -15,10 +15,10 @@ def paint(our_hero, msg, sound):
         commands=commands,
         messages=msg,
         left_pane_content=image,
-        right_pane_content=view.screen.list_inventory(our_hero),
+        right_pane_content=game_play.screen.list_inventory(our_hero),
         sound=sound,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
@@ -43,7 +43,7 @@ def use_item(game, action):
     our_hero = game.character
     item_number_picked = int(action)
     # Collapse Inventory Items returns a 2D Array with each element listed as [count, name, type, object]
-    items_list = view.screen.collapse_inventory_items(our_hero)
+    items_list = game_play.screen.collapse_inventory_items(our_hero)
     msg = ''
     if item_number_picked > len(items_list):
         return paint(our_hero, "You do not have an item of that number!", sound)

@@ -1,6 +1,6 @@
-import view.screen
-from view import screen, images
-from controller import equipment_shop
+import game_play.screen
+from game_play import images, screen
+from town import equipment_shop
 
 commands = "Enter a (#) to sell an item, or (L)eave."
 message = "Wonderful, we have been running low on good hardware!  What are you " \
@@ -18,7 +18,7 @@ def paint(our_hero, msg):
         right_pane_content=draw_sell_list(our_hero),
         sound=None,
         delay=0,
-        interaction_type='enter_press'
+        interaction_type='key_press'
     )
 
 
@@ -29,7 +29,7 @@ def process(game, action):
 
     # Leave and go back to the town
     if action.lower() == "l":
-        game.current_controller = 'equipment_shop'
+        game.current_controller = 'town.equipment_shop'
         return equipment_shop.process(game, None)
 
     # If Sell an item, enter another sub-controller
@@ -67,22 +67,22 @@ def sell_items(our_hero, action):
 
 def draw_sell_list(our_hero):
     items = filtered_sell_list(our_hero)
-    response = view.screen.medium_border + '\n'
+    response = game_play.screen.medium_border + '\n'
     response += "  # | Items            | Type   | Value " + '\n'
-    response += view.screen.medium_border + '\n'
+    response += game_play.screen.medium_border + '\n'
     for num, item in enumerate(items):
-        response += view.screen.front_padding(str(num), 3) + " | " \
-                    + view.screen.back_padding(str(item[0]) + " " + item[1], 16) + " | " \
-                    + view.screen.front_padding(str(item[2]), 6) + " | " \
-                    + view.screen.front_padding(str(round(item[3] / 2)), 4) + '\n'
-    response += view.screen.medium_border + '\n'
+        response += game_play.screen.front_padding(str(num), 3) + " | " \
+                    + game_play.screen.back_padding(str(item[0]) + " " + item[1], 16) + " | " \
+                    + game_play.screen.front_padding(str(item[2]), 6) + " | " \
+                    + game_play.screen.front_padding(str(round(item[3] / 2)), 4) + '\n'
+    response += game_play.screen.medium_border + '\n'
     return response
 
 
 # Create a Filtered list of only items we can sell in the potion shop
 def filtered_sell_list(our_hero):
     filtered_list = []
-    items_list = view.screen.collapse_inventory_items(our_hero)
+    items_list = game_play.screen.collapse_inventory_items(our_hero)
     for item in items_list:
         if item[2] == 'armor' or item[2] == 'shield' or item[2] == 'weapon':
             filtered_list.append(item)

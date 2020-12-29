@@ -1,7 +1,7 @@
 import logging
 import random
-from view import images
-from model import items
+from game_play import images
+from town import items
 
 log = logging.getLogger('dragonsville')
 

@@ -1,17 +1,20 @@
 import os
-import db
+
+import game_play
+from game_play import db, leader_board
 from datetime import datetime
-from model import games
-from controller import leader_board
 from flask import Flask, render_template, jsonify, session
 
 
 # Set the directory where we store web resources
-app = Flask(__name__, static_url_path='/static', instance_relative_config=True)
-app.config.from_mapping(
-    SECRET_KEY='billy_bobby_bruno_beats_a_basket',
-    DATABASE=os.path.join(app.instance_path, 'dungeon_hunt.sqlite'),
+app = Flask(
+    __name__,
+    static_url_path='/resources',
+    static_folder="www-resources",
+    template_folder="www",
+    instance_relative_config=True
 )
+app.config.from_mapping(SECRET_KEY='billy_bobby_bruno_beats_a_basket')
 
 
 # Return our root page (terminal)
@@ -59,7 +62,7 @@ def process_action(action):
             return jsonify(leader_board.process(None, None)), 200
         else:
             # Just run the game route.
-            update = games.route(game, action)
+            update = game_play.route(game, action)
             db.save_game(gid, game)
             return jsonify(update), 200
 
@@ -67,12 +70,12 @@ def process_action(action):
 # Receive a game play command and respond with a json object representing each panel.
 @app.route('/api/v1/game/end-game')
 def end_game():
-        if 'game_id' in session:
-            gid = session['game_id']
-        session.clear()
-        print('Ending Game: ' + gid)
-        db.delete_game(gid)
-        return jsonify('{ok}'), 200
+    if 'game_id' in session:
+        game_id = session['game_id']
+        print('Ending Game: ' + game_id)
+        db.delete_game(game_id)
+    session.clear()
+    return jsonify('{ok}'), 200
 
 
 if __name__ == '__main__':
