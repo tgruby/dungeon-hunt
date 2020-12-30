@@ -19,7 +19,7 @@ def process(game, level_id):
     game.character.level += 1
 
     # Update the Leaderboard
-    game.status = "In Play: L" + str(level_id + 1)
+    game.status = "Playing: L" + str(level_id + 1)
     lb = db.load_leaderboard()
     lb.update_leader(game)
     db.save_leaderboard(lb)
