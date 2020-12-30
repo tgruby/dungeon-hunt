@@ -230,6 +230,14 @@ dungeon_map = {
     "cost": 0
 }
 
+
+monster_parts = {
+    "type": "loot",
+    "name": "Monster Parts",
+    "damage": 0,
+    "cost": 0
+}
+
 equipment_shop_list = [
     two_handed_sword,
     broad_sword,

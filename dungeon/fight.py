@@ -1,5 +1,6 @@
 import random
 from game_play import images, screen
+from town import items
 
 
 # This Function is to attack the monster. This includes the loop to continue to attack until someone dies, or our hero
@@ -25,10 +26,13 @@ def process(game, action):
             our_hero.gold += our_hero.monster.gold
             game.increment_monster_score(our_hero.monster)
 
-            # Check to see if the monster drops it's weapon. If so, put it in the hero's inventory.
-            drop_weapon = random.randint(0, 3)  # 25%
-            if drop_weapon == 0:
-                our_hero.inventory.append(our_hero.monster.weapon)
+            # Check to see if the monster drops it's monster parts. If so, put it in the hero's inventory.
+            drop_part = random.randint(0, 3)  # 25%
+            if drop_part == 0:
+                if our_hero.monster.weapon["type"] == "loot":
+                    our_hero.inventory.append(items.monster_parts)
+                else:
+                    our_hero.inventory.append(our_hero.monster.weapon)
                 message = message + ' You recover a ' + our_hero.monster.weapon["name"] + " from the monster!"
             message = message + ' Digging through the %s remains you found %d gold!' % (our_hero.monster.name, our_hero.monster.gold)
             commands = "Press any key to continue..."
