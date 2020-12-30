@@ -1,10 +1,15 @@
 import random
+from game_play import screen, images
 from typing import List
 from random import shuffle, randrange
 
 
 def generate_dungeon_level(level_number, last_level):
-    return make_maze(5 + level_number, 3 + level_number, level_number, last_level)
+    # limit 11 x 9 due to screen realistate
+    if level_number < 7:
+        return make_maze(6 + level_number, 3 + level_number, level_number, last_level)
+    else:
+        return make_maze(12, 9, level_number, last_level)
 
 
 def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
@@ -189,8 +194,17 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = generate_dungeon_level(1, False)
+    m = generate_dungeon_level(7, False)
+    view = screen.paint_two_panes(
+        hero=None,
+        commands="Commands Goes Here",
+        messages="Nothing to see here...",
+        left_pane_content=images.tombstone,
+        right_pane_content=m["map"],
+        sound=None,
+        delay=None,
+        interaction_type='key_press'
+    )
     print("Map: \n" + m.get("map"))
-    print("Maze:")
-    for row in m.get("maze"):
+    for row in view.get("canvas"):
         print(row)

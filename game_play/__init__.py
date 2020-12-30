@@ -15,7 +15,7 @@ class Game:
 
     def calc_score_level_bonus(self, level_id):
         #  Calculate updated score:
-        level_bonus = (level_id + 2) * 1000
+        level_bonus = level_id * 1000
 
         step_deduction = self.character.step_count * 10  # subtract the step costs.
         if step_deduction < level_bonus:

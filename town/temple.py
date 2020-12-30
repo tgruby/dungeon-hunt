@@ -66,7 +66,7 @@ def process(game, action):
 
 
 def full_price(our_hero):
-    return round((our_hero.max_hit_points - our_hero.hit_points) / 2)
+    return round((our_hero.max_hit_points - our_hero.hit_points) * 2)
 
 
 def half_price(our_hero):

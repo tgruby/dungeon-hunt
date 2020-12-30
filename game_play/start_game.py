@@ -30,7 +30,7 @@ def process(game, action):
             title_image=images.intro_scroll,
             contents= contents,
             contents_image=None,
-            commands="What is your character's name (progress will be displayed on the leaderboard)?",
+            commands="Please provide your gamer-tag (for display on the leaderboard):",
             sound=None,
             delay=0,
             interaction_type='enter_press',

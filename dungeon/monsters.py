@@ -52,6 +52,10 @@ def get_a_monster_for_dungeon_level(level_id):
         for i in range(level_id):
             suitable_monsters.append(all_monsters[i])
 
+    # To keep it hard, remove the easy monsters if more than 5 monsters are assigned to the level.
+    while len(suitable_monsters) > 5:
+        del suitable_monsters[0]
+
     selected_monster = random.randint(0, len(suitable_monsters) - 1)
     monster = Monster(suitable_monsters[selected_monster])
     log.info("Monster Selected: %s, Level: %d for Dungeon %d" % (monster.name, monster.level, level_id))

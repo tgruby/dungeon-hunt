@@ -287,6 +287,8 @@ def padding(text, length):
 
 
 def get_stats(our_hero):
+    if our_hero is None:
+        return "*** NO HERO INFO ***"
     if not our_hero.is_alive():
         return "*** YOU ARE DEAD ***"
     else:
