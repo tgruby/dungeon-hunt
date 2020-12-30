@@ -52,7 +52,7 @@ def process_action(action):
 
         if game.game_over:
             lb = db.load_leaderboard()
-            lb.add_leader(game)
+            lb.update_leader(game)
             db.save_leaderboard(lb)
             db.delete_game(gid)
             session.clear()

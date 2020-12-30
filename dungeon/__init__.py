@@ -248,7 +248,7 @@ def stepped_on_trap(game):
         if not our_hero.is_alive():
             # Hero has been killed
             game.game_over = True
-            game.status = 'KIA, Trap, L' + str(our_hero.view.current_level_id)
+            game.status = 'KIA: Trap, L' + str(our_hero.view.current_level_id)
             return screen.paint_two_panes(
                 hero=our_hero,
                 commands='Press the Enter key to continue...',

@@ -1,21 +1,31 @@
-from game_play import screen, db, start_game
+from typing import List
+from game_play import Game, screen, db, start_game
 
 
 class Leaderboard:
     # Global Class Variables
-    high_scores = []
+    leaders: List[Game] = []
 
     def __init__(self, leaders):
-        self.high_scores = leaders
+        self.leaders = leaders
 
     # Return True if the character is alive, False if not.
-    def add_leader(self, game):
-        # Add the score to the top ten list.
-        self.high_scores.append(game)
+    def update_leader(self, game):
+        # Add the score to the top list.
+        updated = False
+        for idx, leader in enumerate(self.leaders):
+            print("Compare: " + leader.game_id + " to " + game.game_id)
+            if leader.game_id == game.game_id:
+                print("Update Leader: " + game.game_id)
+                self.leaders[idx] = game
+                updated = True
+        if not updated:
+            print("Append Leader: " + game.game_id)
+            self.leaders.append(game)
 
         # now sort the list and truncate if greater than 10
-        self.high_scores.sort(key=by_score, reverse=True)
-        truncate_list(self.high_scores, 15)
+        self.leaders.sort(key=by_score, reverse=True)
+        truncate_list(self.leaders, 15)
 
 
 def truncate_list(sorted_list, limit):
@@ -30,17 +40,17 @@ def by_score(game):
 def process(game, action):
     db.init_db()
     lb = db.load_leaderboard()
-    print("Leaderboard Length: " + str(len(lb.high_scores)))
+    print("Leaderboard Length: " + str(len(lb.leaders)))
     content = "         Rank | Character       | Status                     | Score " + '\n'
     content += '     ◀-------------------------------◊-------------------------------▶ \n'
     # getting length of list
-    length = len(lb.high_scores)
+    length = len(lb.leaders)
     for i in range(length):
         content += "          " + \
                    screen.back_padding(str(i + 1), 3) + " | " + \
-                   screen.back_padding(lb.high_scores[i].character.name, 15) + " | " + \
-                   screen.back_padding(lb.high_scores[i].status, 26) + " | " + \
-                   str(lb.high_scores[i].score) + '\n'
+                   screen.back_padding(lb.leaders[i].character.name, 15) + " | " + \
+                   screen.back_padding(lb.leaders[i].status, 26) + " | " + \
+                   str(lb.leaders[i].score) + '\n'
 
     if action is None:
         return paint(content)
@@ -53,7 +63,7 @@ def process(game, action):
 
 
 def paint(scores):
-    title = 'H I G H   S C O R E S'
+    title = 'L E A D E R   B O A R D'
     return screen.paint_one_pane(
         title_image=title,
         contents=None,

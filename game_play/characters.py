@@ -1,5 +1,4 @@
 import random
-from dungeon import physics
 from town import items, potions
 
 
