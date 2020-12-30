@@ -10,7 +10,6 @@ class Character:
         self.type = character_definition["type"]
         self.max_hit_points = character_definition["hit_points"]
         self.hit_points = self.max_hit_points
-        self.experience_points = character_definition["experience_points"]
         self.level = 1
         self.gold = character_definition["gold"]
         self.equipped_weapon = character_definition["equipped_weapon"]
@@ -36,18 +35,6 @@ class Character:
             damage = random.randint(0, weapon["damage"])
             self.monster.hit_points -= damage
             message = weapon["attack_message"] % ('You', damage)
-            if not self.monster.is_alive():
-                #  We killed the monster.  Add experience points to our hero
-                self.experience_points += self.monster.level
-                message += " You have killed the %s!" % self.monster.name
-                if self.experience_points > (self.level * 30):  # level x 30 = next level
-                    # We have leveled up!  add additional hit points
-                    addl_hit_points = random.randint(4, 8)
-                    self.max_hit_points\
-                        += addl_hit_points
-                    self.hit_points += addl_hit_points
-                    self.level += 1
-                    message += " You have gained enough experience to level up to level %d!" % self.level
             return message
 
 
@@ -55,7 +42,6 @@ warrior = {
     "name": None,
     "type": "warrior",
     "hit_points": 20,
-    "experience_points": 0,
     "gold": 50,
     "equipped_weapon": items.dagger,
     "equipped_armor": None,

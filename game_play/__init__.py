@@ -8,12 +8,12 @@ class Game:
         self.game_id = game_id
         self.character = None
         self.dungeon = None
-        self.current_controller = 'game_play.get_gamer_tag'
+        self.current_controller = None
         self.score = 0
         self.game_over = False
         self.status = None
 
-    def calc_level_bonus(self, level_id):
+    def calc_score_level_bonus(self, level_id):
         #  Calculate updated score:
         level_bonus = (level_id + 2) * 2000
 
@@ -25,6 +25,15 @@ class Game:
         self.score += level_bonus
         self.character.step_count = 0
         return level_bonus
+
+    def calc_hp_bonus(self, level_id):
+        #  Calculate updated hp:
+        monsters_killed = self.dungeon.current_level["monsters_killed"]
+        self.character.max_hit_points += monsters_killed
+        self.character.hit_points += monsters_killed
+        if self.character.hit_points > self.character.max_hit_points:
+            self.character.hit_points = self.character.max_hit_points
+        return monsters_killed
 
     def increment_treasure_score(self):
         self.score += 10  # Obtain 10 points per treasure

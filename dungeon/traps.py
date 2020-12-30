@@ -16,8 +16,7 @@ class Trap:
     # Method to call when the trap is triggered
     def triggered(self, character, level):
         #  Calculate Damage Inflicted
-        damage = random.randint(0, self.hit_points)
-        damage += 10 * level  # make it harder as you go.
+        damage = random.randint(0, (self.hit_points + 4 * level))  # make it harder as you go.
         # Calculate Damage prevented by protection
         protection = 0
         if character.equipped_armor is not None:
@@ -46,7 +45,7 @@ mace_trap = {
     "type": "trap",
     "level": 5,
     "image": images.mace,
-    "max_hit_points": 20
+    "max_hit_points": 10
 }
 
 all_traps = [

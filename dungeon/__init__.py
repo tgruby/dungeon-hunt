@@ -190,20 +190,21 @@ def found_treasure(game):
     if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
         our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'treasure')
         # Save picked_up_treasure to a pkl file so doesn't reset after a restart.
-        max_gold = (our_hero.view.current_level_id + 2) * 15
-        min_gold = (our_hero.view.current_level_id + 1) * 5
+        max_gold = (our_hero.view.current_level_id + 1) * 10
+        min_gold = (our_hero.view.current_level_id + 1) * 1
         treasure = random.randint(min_gold, max_gold)
         our_hero.gold += treasure
         game.increment_treasure_score()
         msg: str = ' You found a treasure chest with %d gold in it!' % treasure
         # Check to see if there is a magic item in the treasure chest. If so, put it in the hero's inventory.
-        drop_weapon = random.randint(0, 19)  # 5%
-        if drop_weapon == 0:
-            weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
-            our_hero.inventory.append(weapon)
-            msg += ' You find a %s in the chest!' % weapon["name"]
+        if len(game.dungeon.levels) > 8:  # After level 8, allow for the drop of a magical item.
+            drop_weapon = random.randint(0, 19)  # 5%
+            if drop_weapon == 0:
+                weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
+                our_hero.inventory.append(weapon)
+                msg += ' You find a %s in the chest!' % weapon["name"]
         # Check to see if the chest contains a map.
-        drop_map = random.randint(0, 5)  # 20%
+        drop_map = random.randint(0, 4)  # 20%
         if drop_map == 0:
             #  Drop the current dungeon level map.  If they have it, don't drop.
             if items.dungeon_map not in our_hero.inventory:
