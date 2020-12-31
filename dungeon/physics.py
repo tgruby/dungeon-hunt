@@ -123,6 +123,7 @@ class PointOfView:
     current_level_id = 0
     current_level = None
     current_level_map = None
+    current_level_clairvoyance_map = None
     current_x = 0
     current_y = 0
     current_direction = east
@@ -187,7 +188,11 @@ class PointOfView:
             obstructions.append("block_" + self.perspective_map.get("center_" + str(3)) + '_' + distant_center)
 
         image_file = perspectives.build_view(obstructions)
-        self.update_map()  # Don't forget to update the map
+
+        # Don't forget to update the map
+        self.current_level_map = self.update_map(self.dungeon.current_level["map"])
+        self.current_level_clairvoyance_map = self.update_map(self.dungeon.current_level["clairvoyance_map"])
+
         return image_file
 
     # Return what we find in this block: wall, hallway, door ignoring variations
@@ -292,13 +297,8 @@ class PointOfView:
         else:
             return "You can't do that here!"
 
-    def update_map(self):
-        # TODO: if clarivoince, show monsters, treasures, and traps
-        show_hidden_items = self.game.character.clairvoyance_count > 0
-
-        # First check if they are on a down_ladder
-        self.current_level_map = self.dungeon.current_level["map"]
-        map_array = str.splitlines(self.current_level_map)
+    def update_map(self, map):
+        map_array = str.splitlines(map)
         # Get Vertical Row (y) where we stand
         row_string = map_array[self.current_y]
         # replace our x location with an arrow.
@@ -314,4 +314,4 @@ class PointOfView:
         new_map = ''
         for line in map_array:
             new_map += line + '\n'
-        self.current_level_map = new_map
+        return new_map

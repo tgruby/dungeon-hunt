@@ -2,14 +2,14 @@ import textwrap
 from game_play import images, screen
 import town
 
-commands = "E(x)it"
+commands = "(L)eave"
 image = images.small_village
-help_content = "Dungeon of Thordon is a maze strategy game, requiring you to solve each maze in as few moves as " \
-               "possible. You will need to find the skeleton key to unlock the door to the next maze.  Keys along " \
-               "with gold and magical items can be found in chests, which are typically found behind doors, " \
-               "although be careful, sometimes there are traps instead. Monsters are there to block your path, " \
-               "chose to fight or run away, but they too can give you goodies if you kill them. Ultimately the town " \
-               "needs you to defeat the dragon, so gear up in town with armor, weapons, and magical potions.\n\nGood " \
+help_content = "Dungeon of Thordon is a maze strategy game, requiring you to solve each maze, while not being killed by monsters or traps. " \
+               " You will need to find skeleton keys to unlock the next maze (found behind doors). " \
+               "Gold and sometimes maps and magical items can be found in chests. " \
+               "although be careful opening doors, sometimes there are traps instead. Monsters are there to block your path, " \
+               "chose to fight or run away, but they too can give you goodies if you kill them. " \
+               "Gear up in town with armor, weapons, and magical potions.\n\nGood " \
                "luck, young warrior! "
 
 
@@ -19,7 +19,7 @@ def process(game, action):
         return paint(game.character)
 
     # Visit the Shop to buy stuff
-    if action.lower() == "x":
+    if action.lower() == "l":
         game.current_controller = 'town'
         return town.process(game, None)
 

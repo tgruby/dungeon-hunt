@@ -172,11 +172,9 @@ def fight_monster(game):
 
 # Show the map if our hero has a map for this dungeon
 def show_map(our_hero):
-    # First check to see if we have the map.
-    if items.dungeon_map in our_hero.inventory:
-        return our_hero.view.current_level_map
-    # Otherwise, see if we have drank the potion.
-    elif our_hero.clairvoyance_count > 0:
+    if our_hero.clairvoyance_count > 0:
+        return our_hero.view.current_level_clairvoyance_map
+    elif items.dungeon_map in our_hero.inventory:
         return our_hero.view.current_level_map
     else:
         return "                    Its dark down here... \n" \

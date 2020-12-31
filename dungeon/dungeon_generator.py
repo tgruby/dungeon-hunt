@@ -43,7 +43,7 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         wdl2 = '| ╳ '
         hdl2 = '  ╳ '
 
-    # Insert the Up-Ladder and Down-Ladder
+    # Insert the Up-Door and Down Door
     if dungeon_id % 2 == 0:
         ver2[0][0] = '| ▲ '
         if ver[h - 1][w - 1] == '| ':
@@ -100,6 +100,7 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     return {
         "maze": maze,
         "map": mmap,
+        "clairvoyance_map": create_clarivoyance_map(maze),
         "treasure_count": treasure_count,
         "treasures_collected": 0,
         "trap_count": trap_count,
@@ -110,6 +111,50 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         "exit_door_locked": True,
         "level_completed": False
     }
+
+
+def create_clarivoyance_map(maze):
+    all_map = ""
+    for y in range(len(maze)):
+        for x in range(len(maze[0])):
+            cell = maze[y][x]
+            if len(maze[0])-1 <= x+1:
+                next_cell = None
+            else:
+                next_cell = maze[y][x+1]
+
+            if cell == '+':
+                if next_cell is None:
+                    all_map += '+'
+                elif next_cell == ' ':
+                    all_map += '+ '
+                elif next_cell == '-':
+                    all_map += '+-'
+                else:
+                    all_map += '+ '
+
+            if cell == '-':
+                all_map += '--'
+            if cell == 'v':
+                all_map += '▼ '
+            if cell == '^':
+                all_map += '▲ '
+            if cell == '|':
+                all_map += '| '
+            if cell == ' ':
+                all_map += '  '
+            if cell == 'D':
+                all_map += '  '
+            if cell == 'M':
+                all_map += '☠ '
+            if cell == 'T':
+                all_map += '☹ '
+            if cell == '$':
+                all_map += '$ '
+
+        all_map += '\n'
+
+    return all_map
 
 
 scan_for_door = [
@@ -194,7 +239,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = generate_dungeon_level(7, False)
+    m = generate_dungeon_level(1, False)
     view = screen.paint_two_panes(
         hero=None,
         commands="Commands Goes Here",
@@ -205,6 +250,12 @@ if __name__ == "__main__":
         delay=None,
         interaction_type='key_press'
     )
+
     print("Map: \n" + m.get("map"))
     for row in view.get("canvas"):
         print(row)
+
+    for row in m["maze"]:
+        print(row)
+
+    print(make_maps(m["maze"]))

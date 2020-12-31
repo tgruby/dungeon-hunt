@@ -3,7 +3,7 @@ from game_play import images, screen
 import dungeon
 from town import potions
 
-commands = "Enter a (#) to equip an item, or (C)lose Pack"
+commands = "Enter a (#) to equip an item, or (L)eave"
 message = "You open you pack and check your inventory..."
 image = images.backpack_small
 
@@ -27,7 +27,7 @@ def process(game, action):
     if action is None:
         return paint(our_hero, message, None)
 
-    if action.lower() == 'c':
+    if action.lower() == 'l':
         game.current_controller = 'dungeon'
         return dungeon.process(game, None)
 
