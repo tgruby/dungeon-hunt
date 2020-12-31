@@ -179,8 +179,9 @@ def show_map(our_hero):
     elif our_hero.clairvoyance_count > 0:
         return our_hero.view.current_level_map
     else:
-        return "        Its dark down here... \n" \
-               "Hopefully you are not eaten by a grue."
+        return "                    Its dark down here... \n" \
+               "           Hopefully you are not eaten by a grue. \n" \
+               "(hint: use a Clairvoyance potion or Map to help get your bearings)"
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.
@@ -204,7 +205,7 @@ def found_treasure(game):
                 our_hero.inventory.append(weapon)
                 msg += ' You find a %s in the chest!' % weapon["name"]
         # Check to see if the chest contains a map.
-        drop_map = random.randint(0, 4)  # 20%
+        drop_map = random.randint(0, 3)  # 25%
         if drop_map == 0:
             #  Drop the current dungeon level map.  If they have it, don't drop.
             if items.dungeon_map not in our_hero.inventory:

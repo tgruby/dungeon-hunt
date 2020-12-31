@@ -5,7 +5,9 @@ import town
 
 commands = "Enter a (#) to purchase an item, (L)eave Shop"
 message = "Welcome to Janet's Potions!  Your gold is no good here, but for a few of your monster " \
-              "'treasures' I can make you a potent elixir for your journeys."
+              "'treasures' I can make you a potent elixir for your journeys.  The Healing potion will fully heal you, " \
+          "while the Teleportation potion will immediately whisk you back to the town center.  Clairvoyance will let " \
+          "you see the dungeon layout, even without a map. "
 image = images.shop
 
 

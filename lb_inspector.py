@@ -14,4 +14,4 @@ if __name__ == '__main__':
         db.save_leaderboard(lb)
     if command == "list":
         for idx, game in enumerate(lb.leaders):
-            print("Index:" + str(idx) + ", Name: " + game.character.name + ", Score:" + str(game.score))
+            print("Index:" + str(idx) + ", Name: " + game.character.name + ", Score:" + str(game.score) + ", Game ID: " + game.game_id)

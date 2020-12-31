@@ -30,7 +30,7 @@ def use_potion(potion, game):
         msg = "You drank the %s and your vision swims and everything goes dark! You awake in town." \
               % potion["name"]
     elif potion["id"] == 'clairvoyance':
-        hero.clairvoyance_count = 25
+        hero.clairvoyance_count += 100
         hero.inventory.remove(potion)
         msg = "You drank the %s and your mind sharpens.  You instantly know the entire layout of the catacombs!" \
               % potion["name"]
