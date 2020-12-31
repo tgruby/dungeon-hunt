@@ -271,11 +271,17 @@ def collapse_inventory_items(our_hero):
 
 
 def back_padding(text, length):
-    return text + padding(text, length)
+    pad = text + padding(text, length)
+    if len(pad) > length:
+        pad = pad[:length]
+    return pad
 
 
 def front_padding(text, length):
-    return padding(text, length) + text
+    pad = padding(text, length) + text
+    if len(pad) > length:
+        pad = pad[:length]
+    return pad
 
 
 def padding(text, length):
