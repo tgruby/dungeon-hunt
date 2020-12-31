@@ -78,7 +78,7 @@ bat_fangs = {
 rat_teeth = {
     "type": "loot",
     "name": "Rat Teeth",
-    "damage": 10,
+    "damage": 6,
     "cost": 2,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
 }

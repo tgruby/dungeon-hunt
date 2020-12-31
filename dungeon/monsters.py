@@ -15,7 +15,7 @@ class Monster:
         self.name = monster_definition["name"]
         self.image = monster_definition["image"]
         self.hit_points = monster_definition["hit_points"]
-        self.gold = random.randint(1, monster_definition["max_gold"])
+        self.gold = random.randint(3, monster_definition["max_gold"])
         self.weapon = monster_definition["weapon"]
         self.level = monster_definition["level"]
 
@@ -69,7 +69,7 @@ giant_rat = {
     "type": "monster",
     "level": 4,
     "image": images.rat,
-    "hit_points": 10,
+    "hit_points": 8,
     "max_gold": 10,
     "weapon": items.rat_teeth
 }
