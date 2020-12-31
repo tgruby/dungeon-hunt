@@ -246,7 +246,7 @@ class PointOfView:
 
         # After you enter the dungeon, you cannot go back (unless you teleport, of course).
         if value == self.doorway_up:
-            return "This door is locked."
+            return "town"
         # If getting to the end door, and you have the key, you finish the level.
         if value == self.doorway_down:
             # Check to see if it is locked
@@ -293,6 +293,9 @@ class PointOfView:
             return "You can't do that here!"
 
     def update_map(self):
+        # TODO: if clarivoince, show monsters, treasures, and traps
+        show_hidden_items = self.game.character.clairvoyance_count > 0
+
         # First check if they are on a down_ladder
         self.current_level_map = self.dungeon.current_level["map"]
         map_array = str.splitlines(self.current_level_map)

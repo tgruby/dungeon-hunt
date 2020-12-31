@@ -107,7 +107,7 @@ def process(game, action):
         msg = our_hero.view.step_forward()
         sound = None
 
-        if msg == "You return to town.":
+        if msg == "town":
             # we have left the dungeon, return to town.
             game.current_controller = 'town'
             our_hero.view = None
