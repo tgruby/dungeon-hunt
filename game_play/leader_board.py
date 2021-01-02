@@ -40,7 +40,6 @@ def by_score(game):
 def process(game, action):
     db.init_db()
     lb = db.load_leaderboard()
-    print("Leaderboard Length: " + str(len(lb.leaders)))
     content = "         Rank | Character       | Status                     | Score " + '\n'
     content += '     <-------------------------------o-------------------------------> \n'
     # getting length of list
@@ -63,7 +62,7 @@ def process(game, action):
 
 
 def paint(scores):
-    title = 'L E A D E R   B O A R D'
+    title = "H e r o ' s   o f   T h o r d o n"
     return screen.paint_one_pane(
         title_image=title,
         contents=None,

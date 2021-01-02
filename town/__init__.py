@@ -1,9 +1,9 @@
 import game_play.screen
 from game_play import images, screen
 import dungeon
-from town import cartography_shop, equipment_shop, hints, potion_shop, temple
+from town import cartography_shop, equipment_shop, guild, potion_shop, temple
 
-commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (D)ungeon, (H)ints"
+commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (D)ungeon, (G)uild"
 msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
       "entrance is carved into the side of the mountain nearby. "
 image = images.small_village
@@ -39,9 +39,9 @@ def process(game, action):
         return dungeon.process(game, 'enter')
 
     # Enter Dungeon
-    if action.lower() == "h":
-        game.current_controller = 'town.hints'
-        return hints.process(game, None)
+    if action.lower() == "g":
+        game.current_controller = 'town.guild'
+        return guild.process(game, None)
 
     # Cheat to help with testing.... yank after testing
     if action.lower() == "$":
