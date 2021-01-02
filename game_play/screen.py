@@ -1,8 +1,8 @@
 import textwrap
 
-medium_border = "◀----------------------◊----------------------▶"
-short_border = "◀--------◊--------▶"
-h_border = "◀--------------------------------------◊---------------------------------------▶"
+medium_border = "<----------------------o---------------------->"
+short_border = "<--------o-------->"
+h_border = "<--------------------------------------o--------------------------------------->"
 v_border = '|'
 left_pane_width = 24
 right_pane_width = 51
@@ -111,7 +111,7 @@ def paint_one_pane(
 
 # Function to build a border with a title that fits to a given length
 def border(title, length=78):
-    return '◀' + center_text("❬ " + title + " ❭", '-', length) + '▶'
+    return '<' + center_text("{ " + title + " }", '-', length) + '>'
 
 
 # Function to pad spacing both before and after text
@@ -149,7 +149,7 @@ def create_center_pane(left_image, right_image, messages):
         word_list = wrapper.wrap(text=messages)
         # Right Image should be fit into a h=20, w=47 space
         right_pane_content = square_image(right_image, 20-(len(word_list)+1), right_pane_width)
-        right_pane_content.append('---------------------❬ Info ❭----------------------')
+        right_pane_content.append('---------------------{ Info }----------------------')
         # protect against too long of messages
         # Print each line.
         for element in word_list:

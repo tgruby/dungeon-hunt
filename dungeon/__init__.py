@@ -177,8 +177,8 @@ def show_map(our_hero):
     elif items.dungeon_map in our_hero.inventory:
         return our_hero.view.current_level_map
     else:
-        return "                    Its dark down here... \n" \
-               "           Hopefully you are not eaten by a grue."
+        return "        Its dark down here... \n" \
+               "Hopefully you are not eaten by a grue."
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.
