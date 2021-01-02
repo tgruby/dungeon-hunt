@@ -17,7 +17,6 @@ class Monster:
         self.hit_points = monster_definition["hit_points"]
         self.gold = random.randint(3, monster_definition["max_gold"])
         self.weapon = monster_definition["weapon"]
-        self.level = monster_definition["level"]
 
     # Method to call when the monster attacks a character
     def attack(self, character):
@@ -44,22 +43,24 @@ class Monster:
 
 # This Function is to decide which monster to spawn in a given dungeon.
 def get_a_monster_for_dungeon_level(level_id):
-    # Select a monster appropriate for the level of this dungeon.
-    suitable_monsters = []
-    if level_id > 13:
-        suitable_monsters = all_monsters
-    else:
-        for i in range(level_id):
-            suitable_monsters.append(all_monsters[i])
+    # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
+    if level_id == 0:
+        return dungeon_monsters[0]
 
-    # # To keep it hard, remove the easy monsters if more than 5 monsters are assigned to the level.
-    # while len(suitable_monsters) > 5:
-    #     del suitable_monsters[0]
+    suitable_monsters = []
+    upper_bounds = level_id
+    if upper_bounds >= len(dungeon_monsters):
+        upper_bounds = len(dungeon_monsters)-1
+    lower_bounds = upper_bounds - 4
+    if lower_bounds < 0:
+        lower_bounds = 0
+
+    while lower_bounds <= upper_bounds:
+        suitable_monsters.append(dungeon_monsters[lower_bounds])
+        lower_bounds += 1
 
     selected_monster = random.randint(0, len(suitable_monsters) - 1)
-    monster = Monster(suitable_monsters[selected_monster])
-    log.info("Monster Selected: %s, Level: %d for Dungeon %d" % (monster.name, monster.level, level_id))
-    return monster
+    return Monster(suitable_monsters[selected_monster])
 
 
 # Dictionaries of all Monsters in the Game
@@ -67,7 +68,6 @@ def get_a_monster_for_dungeon_level(level_id):
 giant_rat = {
     "name": "Giant Rat",
     "type": "monster",
-    "level": 4,
     "image": images.rat,
     "hit_points": 8,
     "max_gold": 10,
@@ -77,7 +77,6 @@ giant_rat = {
 giant_ant = {
     "name": "Giant Ant",
     "type": "monster",
-    "level": 8,
     "image": images.giant_ant,
     "hit_points": 12,
     "max_gold": 12,
@@ -87,7 +86,6 @@ giant_ant = {
 angry_gnome = {
     "name": "Angry Gnome",
     "type": "monster",
-    "level": 12,
     "image": images.gnome,
     "hit_points": 14,
     "max_gold": 18,
@@ -97,7 +95,6 @@ angry_gnome = {
 badger = {
     "name": "Badger",
     "type": "monster",
-    "level": 16,
     "image": images.badger,
     "hit_points": 16,
     "max_gold": 16,
@@ -107,7 +104,6 @@ badger = {
 giant_spider = {
     "name": "Giant Spider",
     "type": "monster",
-    "level": 18,
     "image": images.giant_spider,
     "hit_points": 18,
     "max_gold": 14,
@@ -117,46 +113,42 @@ giant_spider = {
 wolf = {
     "name": "Wolf",
     "type": "monster",
-    "level": 28,
     "image": images.wolf,
     "hit_points": 32,
     "max_gold": 30,
     "weapon": items.wolf_teeth
 }
 
-goblin = {
-    "name": "Goblin",
-    "type": "monster",
-    "level": 32,
-    "image": images.goblin,
-    "hit_points": 42,
-    "max_gold": 60,
-    "weapon": items.broad_sword
-}
-skeleton = {
-    "name": "Skeleton",
-    "type": "monster",
-    "level": 46,
-    "image": images.skeleton,
-    "hit_points": 54,
-    "max_gold": 100,
-    "weapon": items.bony_fingers
-}
-
 vampire_bat = {
     "name": "Vampire Bat",
     "type": "monster",
-    "level": 16,
     "image": images.vampire_bat,
     "hit_points": 32,
     "max_gold": 45,
     "weapon": items.bat_fangs
 }
 
+goblin = {
+    "name": "Goblin",
+    "type": "monster",
+    "image": images.goblin,
+    "hit_points": 42,
+    "max_gold": 60,
+    "weapon": items.broad_sword
+}
+
+skeleton = {
+    "name": "Skeleton",
+    "type": "monster",
+    "image": images.skeleton,
+    "hit_points": 54,
+    "max_gold": 100,
+    "weapon": items.bony_fingers
+}
+
 skeleton_warrior = {
     "name": "Skeleton Warrior",
     "type": "monster",
-    "level": 96,
     "image": images.skeleton_warrior,
     "hit_points": 72,
     "max_gold": 150,
@@ -166,19 +158,26 @@ skeleton_warrior = {
 half_orc = {
     "name": "Half Orc",
     "type": "monster",
-    "level": 48,
     "image": images.half_orc,
     "hit_points": 64,
     "max_gold": 128,
     "weapon": items.broad_sword
 }
 
+minotaur = {
+    "name": "Minotaur",
+    "type": "monster",
+    "image": images.minotaur,
+    "hit_points": 96,
+    "max_gold": 196,
+    "weapon": items.two_handed_sword
+}
+
 cyclops = {
     "name": "Cyclops",
     "type": "monster",
-    "level": 64,
     "image": images.cyclops,
-    "hit_points": 96,
+    "hit_points": 128,
     "max_gold": 256,
     "weapon": items.two_handed_sword
 }
@@ -186,21 +185,10 @@ cyclops = {
 wraith = {
     "name": "Wraith",
     "type": "monster",
-    "level": 128,
     "image": images.wraith,
-    "hit_points": 128,
-    "max_gold": 400,
+    "hit_points": 256,
+    "max_gold": 250,
     "weapon": items.wraith_touch
-}
-
-minotaur = {
-    "name": "Minotaur",
-    "type": "monster",
-    "level": 256,
-    "image": images.minotaur,
-    "hit_points": 156,
-    "max_gold": 600,
-    "weapon": items.elvin_sword
 }
 
 red_dragon = {
@@ -213,7 +201,7 @@ red_dragon = {
     "weapon": items.fireball
 }
 
-all_monsters = [
+dungeon_monsters = [
     giant_rat,
     giant_ant,
     giant_spider,
@@ -225,7 +213,11 @@ all_monsters = [
     goblin,
     skeleton_warrior,
     half_orc,
-    wraith,
     minotaur
 ]
 
+monster_bosses = [
+    cyclops,
+    wraith,
+    red_dragon
+]

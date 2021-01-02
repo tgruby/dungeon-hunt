@@ -24,7 +24,7 @@ def process(game, action):
             our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'monster')
             # Grab Gold
             our_hero.gold += our_hero.monster.gold
-            game.increment_monster_score(our_hero.monster)
+            game.increment_monster_score(game.dungeon)
 
             # Check to see if the monster drops it's monster parts. If so, put it in the hero's inventory.
             drop_part = random.randint(0, 3)  # 25%

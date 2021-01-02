@@ -36,8 +36,9 @@ class Game:
     def increment_treasure_score(self):
         self.score += 10  # Obtain 10 points per treasure
 
-    def increment_monster_score(self, monster):
-        self.score += monster.level * 10  # Increase Score for killing monsters.
+    def increment_monster_score(self, dungeon):
+        # Increase Score for killing monsters.  The higher the level, the more points.
+        self.score += len(dungeon.levels) * 10
 
 
 def route(game, action):
