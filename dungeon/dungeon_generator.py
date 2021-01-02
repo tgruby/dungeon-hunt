@@ -12,15 +12,15 @@ from random import shuffle, randrange
 
 def generate_dungeon_level(level_number):
     # limit 11 x 8 due to screen realistate
-    boss_level = False
+    # boss_level = False
     if level_number == 4 or level_number == 9 or level_number == 14:
         boss_level = True
     if level_number > 4:
         size_adjustment = level_number % 5
         print("mod: " + str(size_adjustment))
-        return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
+        return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, False)
     else:
-        return make_maze(7 + level_number, 4 + level_number, level_number, boss_level)
+        return make_maze(7 + level_number, 4 + level_number, level_number, False)
 
 
 def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
