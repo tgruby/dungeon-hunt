@@ -17,6 +17,8 @@ class Monster:
         self.hit_points = monster_definition["hit_points"]
         self.gold = random.randint(3, monster_definition["max_gold"])
         self.weapon = monster_definition["weapon"]
+        self.is_boss = monster_definition["is_boss"]
+        self.special_drop = monster_definition["special_drop"]
 
     # Method to call when the monster attacks a character
     def attack(self, character):
@@ -68,137 +70,166 @@ def get_a_monster_for_dungeon_level(level_id):
 giant_rat = {
     "name": "Giant Rat",
     "type": "monster",
+    "is_boss": False,
     "image": images.rat,
     "hit_points": 8,
     "max_gold": 10,
-    "weapon": items.rat_teeth
+    "weapon": items.rat_teeth,
+    "special_drop": None
 }
 
 giant_ant = {
     "name": "Giant Ant",
     "type": "monster",
+    "is_boss": False,
     "image": images.giant_ant,
     "hit_points": 12,
     "max_gold": 12,
-    "weapon": items.ant_pincers
+    "weapon": items.ant_pincers,
+    "special_drop": None
 }
 
 angry_gnome = {
     "name": "Angry Gnome",
     "type": "monster",
+    "is_boss": False,
     "image": images.gnome,
     "hit_points": 14,
     "max_gold": 18,
-    "weapon": items.gnome_feet
+    "weapon": items.gnome_feet,
+    "special_drop": None
 }
 
 badger = {
     "name": "Badger",
     "type": "monster",
+    "is_boss": False,
     "image": images.badger,
     "hit_points": 16,
     "max_gold": 16,
-    "weapon": items.badger_teeth
+    "weapon": items.badger_teeth,
+    "special_drop": None
 }
 
 giant_spider = {
     "name": "Giant Spider",
     "type": "monster",
+    "is_boss": False,
     "image": images.giant_spider,
     "hit_points": 18,
     "max_gold": 14,
-    "weapon": items.spider_fangs
+    "weapon": items.spider_fangs,
+    "special_drop": None
 }
 
 wolf = {
     "name": "Wolf",
     "type": "monster",
+    "is_boss": False,
     "image": images.wolf,
     "hit_points": 32,
     "max_gold": 30,
-    "weapon": items.wolf_teeth
+    "weapon": items.wolf_teeth,
+    "special_drop": None
 }
 
 vampire_bat = {
     "name": "Vampire Bat",
     "type": "monster",
+    "is_boss": False,
     "image": images.vampire_bat,
     "hit_points": 32,
     "max_gold": 45,
-    "weapon": items.bat_fangs
+    "weapon": items.bat_fangs,
+    "special_drop": None
 }
 
 goblin = {
     "name": "Goblin",
     "type": "monster",
+    "is_boss": False,
     "image": images.goblin,
     "hit_points": 42,
     "max_gold": 60,
-    "weapon": items.broad_sword
+    "weapon": items.broad_sword,
+    "special_drop": None
 }
 
 skeleton = {
     "name": "Skeleton",
     "type": "monster",
+    "is_boss": False,
     "image": images.skeleton,
     "hit_points": 54,
     "max_gold": 100,
-    "weapon": items.bony_fingers
+    "weapon": items.bony_fingers,
+    "special_drop": None
 }
 
 skeleton_warrior = {
     "name": "Skeleton Warrior",
     "type": "monster",
+    "is_boss": False,
     "image": images.skeleton_warrior,
     "hit_points": 72,
     "max_gold": 150,
-    "weapon": items.battle_axe
+    "weapon": items.battle_axe,
+    "special_drop": None
 }
 
 half_orc = {
     "name": "Half Orc",
     "type": "monster",
+    "is_boss": False,
     "image": images.half_orc,
     "hit_points": 64,
     "max_gold": 128,
-    "weapon": items.broad_sword
+    "weapon": items.broad_sword,
+    "special_drop": None
 }
 
 minotaur = {
     "name": "Minotaur",
     "type": "monster",
+    "is_boss": False,
     "image": images.minotaur,
     "hit_points": 96,
     "max_gold": 196,
-    "weapon": items.two_handed_sword
+    "weapon": items.two_handed_sword,
+    "special_drop": None
 }
 
 cyclops = {
     "name": "Cyclops",
     "type": "monster",
+    "is_boss": True,
     "image": images.cyclops,
     "hit_points": 128,
     "max_gold": 256,
-    "weapon": items.two_handed_sword
+    "weapon": items.two_handed_sword,
+    "special_drop": items.elvin_sword
 }
 
 wraith = {
     "name": "Wraith",
     "type": "monster",
+    "is_boss": True,
     "image": images.wraith,
     "hit_points": 256,
     "max_gold": 250,
-    "weapon": items.wraith_touch
+    "weapon": items.wraith_touch,
+    "special_drop": items.shield_of_protection
 }
 
 red_dragon = {
     "name": "Red Dragon",
     "type": "monster",
-    "level": 512,
+    "is_boss": True,
     "image": images.dragon,
     "hit_points": 512,
     "max_gold": 2000,
-    "weapon": items.fireball
+    "weapon": items.fireball,
+    "special_drop": items.dragon_skin_armor
 }
 
 dungeon_monsters = [
@@ -216,8 +247,8 @@ dungeon_monsters = [
     minotaur
 ]
 
-monster_bosses = [
-    cyclops,
-    wraith,
-    red_dragon
-]
+monster_bosses = {
+    10: cyclops,
+    15: wraith,
+    20: red_dragon
+}

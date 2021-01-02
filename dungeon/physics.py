@@ -201,13 +201,15 @@ class PointOfView:
             x1 = block[direction]['x']
             y1 = block[direction]['y']
             value = self.current_level[y + y1][x + x1]
-            if value == self.doorway_down or value == self.doorway_up or value == self.door:
+            if value == self.doorway_down or \
+                    value == self.doorway_up or \
+                    value == self.door or \
+                    value == self.x_marks_the_spot:
                 if ignore_door:
                     return self.hallway
                 else:
                     return self.door
             if value == self.hallway_1 or \
-                    value == self.x_marks_the_spot or \
                     value == self.treasure or \
                     value == self.trap or \
                     value == self.monstr:

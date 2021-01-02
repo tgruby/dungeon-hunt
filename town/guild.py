@@ -29,7 +29,7 @@ def paint(hero):
                    screen.back_padding(str(i + 1), 3) + " | " + \
                    screen.back_padding(lb.leaders[i].character.name, 15) + " | " + \
                    str(lb.leaders[i].score) + '\n'
-    content += '\n\n  The most valuable warriors\n      in all of Thordon!'
+    content += '\n\nThe most powerful warriors in Thordon!'
 
     return screen.paint_two_panes(
         hero=hero,

@@ -2,23 +2,19 @@ import random
 from game_play import screen, images
 from typing import List
 from random import shuffle, randrange
-#
-# dungeon_levels = [
-#     {"width": 6, "height": 3, "monsters": monsters.l1_list, "boss_level": False},
-#     {"width": 6, "height": 3, "monsters": monsters.l1_list, "boss_level": False},
-#     {"width": 6, "height": 3, "monsters": monsters.l1_list, "boss_level": False}
-# ]
 
 
 def generate_dungeon_level(level_number):
     # limit 11 x 8 due to screen realistate
-    # boss_level = False
-    if level_number == 4 or level_number == 9 or level_number == 14:
+    print("Generating Level " + str(level_number))
+    boss_level = False
+    if level_number == 10 or level_number == 15 or level_number == 20:
+        print("Boss Level True")
         boss_level = True
     if level_number > 4:
         size_adjustment = level_number % 5
         print("mod: " + str(size_adjustment))
-        return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, False)
+        return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
     else:
         return make_maze(7 + level_number, 4 + level_number, level_number, False)
 
@@ -157,7 +153,7 @@ def create_clarivoyance_map(maze):
             if cell == 'D':
                 all_map += '  '
             if cell == 'M':
-                all_map += 'M '
+                all_map += '  '
             if cell == 'T':
                 all_map += 'T '
             if cell == '$':
@@ -250,7 +246,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = generate_dungeon_level(9)
+    m = generate_dungeon_level(5)
     view = screen.paint_two_panes(
         hero=None,
         commands="Commands Goes Here",

@@ -205,13 +205,20 @@ elvin_sword = {
     "attack_message": "The Elvin Sword glows bright blue as it guides %s's arm, cutting for %d damage!"
 }
 
-blade_of_thordon = {
+shield_of_protection = {
     "number": 0,
-    "type": "weapon",
-    "name": "Blade of Thordon",
-    "damage": 128,
-    "cost": 1000,
-    "attack_message": "The Thordon Blade bursts into flames as it guides %s's arm, slicing through your enemy for %d damage!"
+    "type": "shield",
+    "name": "Fire Shield of Protection",
+    "damage": -64,
+    "cost": 5000
+}
+
+dragon_skin_armor = {
+    "number": 0,
+    "type": "armor",
+    "name": "Dragon Skin Armor",
+    "damage": -64,
+    "cost": 5000
 }
 
 skeleton_key = {
@@ -252,8 +259,9 @@ equipment_shop_list = [
 ]
 
 magical_items = [
-    blade_of_thordon,
-    elvin_sword
+    shield_of_protection,
+    elvin_sword,
+    dragon_skin_armor
 ]
 
 

@@ -1,5 +1,5 @@
 import random
-from game_play import images, screen
+from game_play import images, screen, level_complete
 from town import items
 
 
@@ -37,8 +37,10 @@ def process(game, action):
             message = message + ' Digging through the %s remains you found %d gold!' % (our_hero.monster.name, our_hero.monster.gold)
             commands = "Press any key to continue..."
 
-            if our_hero.monster.name == "Red Dragon":
-                return dragon_killed(game)
+            if our_hero.monster.is_boss:
+                m = our_hero.monster
+                our_hero.monster = None
+                return level_complete.process(game, our_hero.view.current_level_id, True, m)
 
             our_hero.monster = None
             game.current_controller = 'dungeon'
@@ -88,27 +90,6 @@ def hero_is_slain(game):
         sound='death-dirge',
         delay=2000,
         interaction_type='key-press'
-    )
-
-
-# TODO: routine to run if your hero kills the dragon
-def dragon_killed(game):
-    game.game_over = True
-    game.status = 'Winner!'
-    our_hero = game.character
-    return screen.paint_two_panes(
-        hero=our_hero,
-        commands="YOU WON THE GAME!!! Enter your name for the leaderboard...",
-        messages="You have slain the dragon!!! " \
-                 "The village rejoices, the catacombs are emptied of monsters and life returns \n" \
-                 "to a peaceful existence. You are made lord over the " \
-                 "local lands and reign for \n" \
-                 "many peaceful years!!!",
-        left_pane_content=images.treasure_chest,
-        right_pane_content=images.castle,
-        sound='challenge-complete',
-        delay=1000,
-        interaction_type='enter_press'
     )
 
 

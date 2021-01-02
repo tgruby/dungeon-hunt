@@ -114,7 +114,7 @@ def process(game, action):
             return town.process(game, None)
         elif msg == "level-complete":
             game.dungeon.complete_level()
-            return level_complete.process(game, our_hero.view.current_level_id - 1)
+            return level_complete.process(game, our_hero.view.current_level_id, False, None)
         elif msg == "This door is locked.":
             print("Processing: This door is locked.")
             sound = 'door-locked'
@@ -125,10 +125,11 @@ def process(game, action):
                 our_hero.clairvoyance_count -= 1  # Subtract the count for every step.
 
         stepped_on = our_hero.view.get_position_info()
-        # Check to see if we have met the Dragon
+        # Check to see if we have met a boss.
         if stepped_on == our_hero.view.x_marks_the_spot:
-            print("You encounter the Dragon!")
-            our_hero.monster = monsters.Monster(monsters.red_dragon)
+            print("hero encounters a boss!")
+            boss = monsters.monster_bosses[len(game.dungeon.levels)]
+            our_hero.monster = monsters.Monster(boss)
             game.current_controller = 'dungeon.fight'
             return fight.process(game, None)
 
