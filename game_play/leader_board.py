@@ -40,12 +40,12 @@ def by_score(game):
 def process(game, action):
     db.init_db()
     lb = db.load_leaderboard()
-    content = "         Rank | Character       | Status                     | Score " + '\n'
-    content += '     <-------------------------------o-------------------------------> \n'
+    content = "        Rank | Character       | Status                     | Score " + '\n'
+    content += '     <-------o-----------------o----------------------------o--------> \n'
     # getting length of list
     length = len(lb.leaders)
     for i in range(length):
-        content += "          " + \
+        content += "         " + \
                    screen.back_padding(str(i + 1), 3) + " | " + \
                    screen.back_padding(lb.leaders[i].character.name, 15) + " | " + \
                    screen.back_padding(lb.leaders[i].status, 26) + " | " + \
