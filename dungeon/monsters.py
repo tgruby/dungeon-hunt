@@ -52,9 +52,9 @@ def get_a_monster_for_dungeon_level(level_id):
         for i in range(level_id):
             suitable_monsters.append(all_monsters[i])
 
-    # To keep it hard, remove the easy monsters if more than 5 monsters are assigned to the level.
-    while len(suitable_monsters) > 5:
-        del suitable_monsters[0]
+    # # To keep it hard, remove the easy monsters if more than 5 monsters are assigned to the level.
+    # while len(suitable_monsters) > 5:
+    #     del suitable_monsters[0]
 
     selected_monster = random.randint(0, len(suitable_monsters) - 1)
     monster = Monster(suitable_monsters[selected_monster])
@@ -183,14 +183,14 @@ cyclops = {
     "weapon": items.two_handed_sword
 }
 
-banshee = {
-    "name": "Banshee",
+wraith = {
+    "name": "Wraith",
     "type": "monster",
     "level": 128,
-    "image": images.banshee,
+    "image": images.wraith,
     "hit_points": 128,
     "max_gold": 400,
-    "weapon": items.banshee_scream
+    "weapon": items.wraith_touch
 }
 
 minotaur = {
@@ -225,7 +225,7 @@ all_monsters = [
     goblin,
     skeleton_warrior,
     half_orc,
-    banshee,
+    wraith,
     minotaur
 ]
 

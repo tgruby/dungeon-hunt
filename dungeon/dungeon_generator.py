@@ -2,14 +2,25 @@ import random
 from game_play import screen, images
 from typing import List
 from random import shuffle, randrange
+#
+# dungeon_levels = [
+#     {"width": 6, "height": 3, "monsters": monsters.l1_list, "boss_level": False},
+#     {"width": 6, "height": 3, "monsters": monsters.l1_list, "boss_level": False},
+#     {"width": 6, "height": 3, "monsters": monsters.l1_list, "boss_level": False}
+# ]
 
 
-def generate_dungeon_level(level_number, last_level):
-    # limit 11 x 9 due to screen realistate
-    if level_number < 7:
-        return make_maze(6 + level_number, 3 + level_number, level_number, last_level)
+def generate_dungeon_level(level_number):
+    # limit 11 x 8 due to screen realistate
+    boss_level = False
+    if level_number == 4 or level_number == 9 or level_number == 14:
+        boss_level = True
+    if level_number > 4:
+        size_adjustment = level_number % 5
+        print("mod: " + str(size_adjustment))
+        return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
     else:
-        return make_maze(12, 9, level_number, last_level)
+        return make_maze(7 + level_number, 4 + level_number, level_number, boss_level)
 
 
 def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
@@ -239,7 +250,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = generate_dungeon_level(1, False)
+    m = generate_dungeon_level(9)
     view = screen.paint_two_panes(
         hero=None,
         commands="Commands Goes Here",
@@ -258,4 +269,4 @@ if __name__ == "__main__":
     for row in m["maze"]:
         print(row)
 
-    print(make_maps(m["maze"]))
+    print(create_clarivoyance_map(m["maze"]))

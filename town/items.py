@@ -116,13 +116,13 @@ bee_stinger = {
     "attack_message": "%s dive and stab you with their stingers dealing %d damage!"
 }
 
-banshee_scream = {
+wraith_touch = {
     "type": "loot",
-    "name": "Banshee Vocal Cords",
+    "name": "Wraith Claw",
     "damage": 72,
     "cost": 80,
-    "attack_message": "%s opens it's mouth and screams... the sound chills you to the bone and rips at your " 
-                      "soul doing %d damage!"
+    "attack_message": "%s reaches toward you as the air goes ice cold... you feel your soul being sucked from your "
+                      "body causing %d damage! "
 }
 
 dagger = {

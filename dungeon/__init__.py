@@ -21,7 +21,7 @@ class Dungeon:
 
     def generate_next_level(self):
         level_id = len(self.levels)
-        self.current_level = dungeon_generator.generate_dungeon_level(level_id, False)
+        self.current_level = dungeon_generator.generate_dungeon_level(level_id)
         self.levels.append(self.current_level)
 
     def complete_challenge(self, x, y, challenge_type):
@@ -178,8 +178,7 @@ def show_map(our_hero):
         return our_hero.view.current_level_map
     else:
         return "                    Its dark down here... \n" \
-               "           Hopefully you are not eaten by a grue. \n" \
-               "(hint: use a Clairvoyance potion or Map to help get your bearings)"
+               "           Hopefully you are not eaten by a grue."
 
 
 # This function is called back from the physics module when the character steps on a treasure chest.
@@ -189,8 +188,11 @@ def found_treasure(game):
     if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
         our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'treasure')
         # Save picked_up_treasure to a pkl file so doesn't reset after a restart.
-        max_gold = (our_hero.view.current_level_id + 1) * 10
-        min_gold = (our_hero.view.current_level_id + 1) * 1
+        level_adjustment = our_hero.view.current_level_id
+        if level_adjustment > 5:
+            level_adjustment = 5
+        max_gold = (level_adjustment + 1) * 10
+        min_gold = (level_adjustment + 1) * 1
         treasure = random.randint(min_gold, max_gold)
         our_hero.gold += treasure
         game.increment_treasure_score()
