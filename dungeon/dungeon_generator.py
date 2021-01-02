@@ -157,9 +157,9 @@ def create_clarivoyance_map(maze):
             if cell == 'D':
                 all_map += '  '
             if cell == 'M':
-                all_map += '☠ '
+                all_map += 'M '
             if cell == 'T':
-                all_map += '☹ '
+                all_map += 'T '
             if cell == '$':
                 all_map += '$ '
 
