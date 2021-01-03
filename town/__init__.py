@@ -45,7 +45,7 @@ def process(game, action):
 
     # Cheat to help with testing.... yank after testing
     # if action.lower() == "$":
-    #     game.character.gold = 500
+    #     game.character.gold = 1500
 
     # Something else?
     return paint(game.character)

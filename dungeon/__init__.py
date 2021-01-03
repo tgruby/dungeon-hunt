@@ -19,6 +19,13 @@ class Dungeon:
         self.levels = []
         self.current_level = None
 
+        # FOR TESTING, SKIPPING LEVELS.
+        # for i in range(10):
+        #     skip_level = dungeon_generator.generate_dungeon_level(i)
+        #     self.levels.append(skip_level)
+        #     self.current_level = skip_level
+        #     self.current_level["level_completed"] = True
+
     def generate_next_level(self):
         level_id = len(self.levels)
         self.current_level = dungeon_generator.generate_dungeon_level(level_id)
@@ -133,9 +140,8 @@ def process(game, action):
         stepped_on = our_hero.view.get_position_info()
         # Check to see if we have met a boss.
         if stepped_on == our_hero.view.x_marks_the_spot:
-            print("hero encounters a boss!")
-            boss = monsters.monster_bosses[len(game.dungeon.levels)]
-            our_hero.monster = monsters.Monster(boss)
+            print("hero encounters a Boss!")
+            our_hero.monster = monsters.get_boss_for_dungeon_level(len(game.dungeon.levels))
             game.current_controller = 'dungeon.fight'
             return fight.process(game, None)
 
@@ -169,8 +175,7 @@ def process(game, action):
 def fight_monster(game):
     our_hero = game.character
     if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
-        monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
-        our_hero.monster = monster
+        our_hero.monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
         game.current_controller = 'dungeon.fight'
         return fight.process(game, None)
     # else we have already fought this monster...

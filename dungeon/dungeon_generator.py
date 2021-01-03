@@ -7,13 +7,10 @@ from random import shuffle, randrange
 def generate_dungeon_level(level_number):
     # limit 11 x 8 due to screen realistate
     print("Generating Level " + str(level_number))
-    boss_level = False
-    if level_number == 10 or level_number == 15 or level_number == 20:
-        print("Boss Level True")
-        boss_level = True
     if level_number > 4:
         size_adjustment = level_number % 5
-        print("mod: " + str(size_adjustment))
+        boss_level = size_adjustment == 0
+        print("level: " + str(level_number) + ", mod: " + str(size_adjustment) + ", Boss: " + str(boss_level))
         return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
     else:
         return make_maze(7 + level_number, 4 + level_number, level_number, False)
@@ -246,23 +243,24 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    m = generate_dungeon_level(5)
-    view = screen.paint_two_panes(
-        hero=None,
-        commands="Commands Goes Here",
-        messages="Nothing to see here...",
-        left_pane_content=images.tombstone,
-        right_pane_content=m["map"],
-        sound=None,
-        delay=None,
-        interaction_type='key_press'
-    )
+    for i in range(20):
+        m = generate_dungeon_level(i)
+    # view = screen.paint_two_panes(
+    #     hero=None,
+    #     commands="Commands Goes Here",
+    #     messages="Nothing to see here...",
+    #     left_pane_content=images.tombstone,
+    #     right_pane_content=m["map"],
+    #     sound=None,
+    #     delay=None,
+    #     interaction_type='key_press'
+    # )
 
-    print("Map: \n" + m.get("map"))
-    for row in view.get("canvas"):
-        print(row)
+        print("Map: \n" + m.get("map"))
+    # for row in view.get("canvas"):
+    #     print(row)
 
-    for row in m["maze"]:
-        print(row)
-
-    print(create_clarivoyance_map(m["maze"]))
+    # for row in m["maze"]:
+    #     print(row)
+    #
+    # print(create_clarivoyance_map(m["maze"]))

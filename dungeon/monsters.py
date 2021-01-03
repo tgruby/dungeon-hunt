@@ -47,7 +47,7 @@ class Monster:
 def get_a_monster_for_dungeon_level(level_id):
     # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
     if level_id == 0:
-        return dungeon_monsters[0]
+        return Monster(dungeon_monsters[0])
 
     suitable_monsters = []
     upper_bounds = level_id
@@ -63,6 +63,19 @@ def get_a_monster_for_dungeon_level(level_id):
 
     selected_monster = random.randint(0, len(suitable_monsters) - 1)
     return Monster(suitable_monsters[selected_monster])
+
+
+# This Function is to decide which monster boss to spawn in a given dungeon.
+def get_boss_for_dungeon_level(level_id):
+    # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
+    if level_id < 7:
+        return Monster(monster_bosses[0])
+    elif level_id < 12:
+        return Monster(monster_bosses[1])
+    elif level_id < 17:
+        return Monster(monster_bosses[2])
+    else:
+        return Monster(monster_bosses[3])
 
 
 # Dictionaries of all Monsters in the Game
@@ -98,6 +111,17 @@ angry_gnome = {
     "max_gold": 18,
     "weapon": items.gnome_feet,
     "special_drop": None
+}
+
+giant_snake = {
+    "name": "Giant Snake",
+    "type": "monster",
+    "is_boss": True,
+    "image": images.giant_snake,
+    "hit_points": 42,
+    "max_gold": 34,
+    "weapon": items.snake_bite,
+    "special_drop": items.lucky_rock
 }
 
 badger = {
@@ -247,8 +271,9 @@ dungeon_monsters = [
     minotaur
 ]
 
-monster_bosses = {
-    11: cyclops,
-    16: wraith,
-    21: red_dragon
-}
+monster_bosses = [
+    giant_snake,
+    cyclops,
+    wraith,
+    red_dragon
+]

@@ -51,6 +51,14 @@ gnome_feet = {
     "attack_message": "%s kicks at you doing %d damage!"
 }
 
+snake_bite = {
+    "type": "loot",
+    "name": "Snake Fangs",
+    "damage": 25,
+    "cost": 50,
+    "attack_message": "%s lunges at you, sinking its fangs into you doing %d damage!"
+}
+
 ant_pincers = {
     "type": "loot",
     "name": "Ant Pincers",
@@ -103,7 +111,7 @@ badger_teeth = {
 fireball = {
     "type": "weapon",
     "name": "Dragon Heart",
-    "damage": 128,
+    "damage": 164,
     "cost": 1000,
     "attack_message": "%s rears back and vomits a molten fireball at your head burning you for %d damage!"
 }
@@ -205,6 +213,14 @@ elvin_sword = {
     "attack_message": "The Elvin Sword glows bright blue as it guides %s's arm, cutting for %d damage!"
 }
 
+lucky_rock = {
+    "number": 0,
+    "type": "unknown",
+    "name": "Lucky Rock",
+    "damage": 0,
+    "cost": 500
+}
+
 shield_of_protection = {
     "number": 0,
     "type": "shield",
@@ -259,6 +275,7 @@ equipment_shop_list = [
 ]
 
 magical_items = [
+    lucky_rock,
     shield_of_protection,
     elvin_sword,
     dragon_skin_armor
