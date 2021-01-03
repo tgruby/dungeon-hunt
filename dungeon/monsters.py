@@ -248,7 +248,7 @@ dungeon_monsters = [
 ]
 
 monster_bosses = {
-    10: cyclops,
-    15: wraith,
-    20: red_dragon
+    11: cyclops,
+    16: wraith,
+    21: red_dragon
 }

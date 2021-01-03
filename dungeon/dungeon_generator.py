@@ -215,21 +215,22 @@ def add_doors_traps_and_treasures(maze_array):
 
 # Randomly add traps and monsters.
 def add_monsters(maze_array):
+    return
     # walk through every cell in the matrix.
     # Look empty spaces, if empty, randomly decide to put a trap or monster.
     # 10% chance for monster, 5% chance for trap.  You cannot have a trap and a monster on the same space.
-    monster_count = 0
-    for y in range(1, len(maze_array) - 1):
-        for x in range(1, len(maze_array[0]) - 1):
-            p = maze_array[y][x]
-            if is_opening(p):
-                is_monster = random.randint(0, 9)
-                if is_monster == 0:
-                    # print("Placing Monster: x=%d, y=%d" % (x, y))
-                    maze_array[y][x] = 'M'
-                    monster_count += 1
-                    continue
-    return monster_count
+    # monster_count = 0
+    # for y in range(1, len(maze_array) - 1):
+    #     for x in range(1, len(maze_array[0]) - 1):
+    #         p = maze_array[y][x]
+    #         if is_opening(p):
+    #             is_monster = random.randint(0, 9)
+    #             if is_monster == 0:
+    #                 # print("Placing Monster: x=%d, y=%d" % (x, y))
+    #                 maze_array[y][x] = 'M'
+    #                 monster_count += 1
+    #                 continue
+    # return monster_count
 
 
 def is_wall(position):
