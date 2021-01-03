@@ -93,10 +93,10 @@ def process(game, action):
         return paint(our_hero, None, None)
 
     # for testing, give skeleton key
-    if action.lower() == '$':
-        msg = "You stepped on a Skeleton Key!"
-        our_hero.inventory.append(items.skeleton_key)
-        return paint(our_hero, msg, None)
+    # if action.lower() == '$':
+    #     msg = "You stepped on a Skeleton Key!"
+    #     our_hero.inventory.append(items.skeleton_key)
+    #     return paint(our_hero, msg, None)
 
     # Turn Left
     if action.lower() == "a":

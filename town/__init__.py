@@ -44,8 +44,8 @@ def process(game, action):
         return guild.process(game, None)
 
     # Cheat to help with testing.... yank after testing
-    if action.lower() == "$":
-        game.character.gold = 500
+    # if action.lower() == "$":
+    #     game.character.gold = 500
 
     # Something else?
     return paint(game.character)
