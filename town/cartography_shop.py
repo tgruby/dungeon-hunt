@@ -12,7 +12,7 @@ image = images.scroll
 # This function controls our interactions at the weapons store
 def paint(game):
     return screen.paint_two_panes(
-        hero=game.character,
+        game=game,
         commands=commands,
         messages=message,
         left_pane_content=image,
@@ -51,7 +51,7 @@ def purchase_a_map(game, action):
         msg = "You have boughten the " + items.dungeon_map["name"] + "!"
 
     return screen.paint_two_panes(
-        hero=game.character,
+        game=game,
         commands=commands,
         messages=msg,
         left_pane_content=image,

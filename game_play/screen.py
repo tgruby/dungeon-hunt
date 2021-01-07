@@ -11,7 +11,7 @@ center_pane_height = 20
 
 # Function to draw the screen given the five panel inputs
 def paint_two_panes(
-        hero,
+        game,
         commands,
         messages,
         left_pane_content,
@@ -20,7 +20,7 @@ def paint_two_panes(
         delay,
         interaction_type
 ):
-    canvas = [border("Stats"), v_border + center_text(get_stats(hero), ' ', 78) + v_border, h_border]
+    canvas = [border("Stats"), v_border + center_text(get_stats(game), ' ', 78) + v_border, h_border]
     # Stats
     lines = create_center_pane(left_pane_content, right_pane_content, messages)
     for line in lines:
@@ -292,14 +292,18 @@ def padding(text, length):
     return buff
 
 
-def get_stats(our_hero):
-    if our_hero is None:
-        return "*** NO HERO INFO ***"
-    if not our_hero.is_alive():
+def get_stats(game):
+    level = game.dungeon.current_level_id
+    if level == 0:
+        level = 1  # For display purposes, just show 1 at the start.
+    if game is None:
+        return "*** NO STATS INFO ***"
+    if not game.character.is_alive():
         return "*** YOU ARE DEAD ***"
     else:
+        hero = game.character
         response = "HP: %d/%d, Level: %d, Gold: %d, Score: %d" % (
-            our_hero.hit_points, our_hero.max_hit_points, our_hero.level, our_hero.gold, our_hero.game.score)
-        if our_hero.view:
-            response += ", Facing: " + our_hero.view.get_direction()
+            hero.hit_points, hero.max_hit_points, level, hero.gold, game.score)
+        if hero.view:
+            response += ", Facing: " + hero.view.get_direction()
         return response

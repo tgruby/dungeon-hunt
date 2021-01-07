@@ -11,7 +11,7 @@ def process(game, action):
     if action is None:
         print("creating character!!!")
         game = game_play.Game(str(uuid.uuid4()))
-        game.character = characters.Character(game, characters.warrior)
+        game.character = characters.Character(characters.warrior)
         game.dungeon = dungeon.Dungeon()
         game.current_controller = 'game_play.start_game'
         db.save_game(game.game_id, game)
@@ -40,7 +40,7 @@ def process(game, action):
 
     else:
         # Record the name of the character and move forward.
-        game.character.name = action
+        game.gamer_tag = action
         db.save_game(game.game_id, game)
         game.current_controller = 'town'
         return town.process(game, None)

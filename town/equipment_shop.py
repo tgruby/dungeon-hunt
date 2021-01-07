@@ -10,9 +10,9 @@ image = images.weapons_shop_logo
 
 
 # This function controls our interactions at the weapons store
-def paint(our_hero, msg):
+def paint(game, msg):
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands=commands,
         messages=msg,
         left_pane_content=image,
@@ -26,7 +26,7 @@ def paint(our_hero, msg):
 def process(game, action):
     our_hero = game.character
     if action is None:
-        return paint(our_hero, message)
+        return paint(game, message)
 
     # Leave and go back to the town
     if action.lower() == "l":
@@ -39,34 +39,35 @@ def process(game, action):
         return equipment_shop_sell.process(game, None)
 
     if action.isdigit():
-        return purchase_an_item(our_hero, action)
+        return purchase_an_item(game, action)
 
     # If all else fails, just represent the current page.
-    return paint(our_hero, message)
+    return paint(game, message)
 
 
-def purchase_an_item(our_hero, action):
+def purchase_an_item(game, action):
+    hero = game.character
     item_number_picked = int(action)
     if item_number_picked < len(items.equipment_shop_list):
         item = items.equipment_shop_list[item_number_picked]
-        if item in our_hero.inventory:
+        if item in hero.inventory:
             msg = "You already own that item!"
-        elif our_hero.gold < item["cost"]:
+        elif hero.gold < item["cost"]:
             msg = "You don't have enough money for that!"
         else:
-            our_hero.gold -= item["cost"]
+            hero.gold -= item["cost"]
             if item["type"] == "weapon":
-                our_hero.equipped_weapon = item
+                hero.equipped_weapon = item
             elif item["type"] == "armor":
-                our_hero.equipped_armor = item
+                hero.equipped_armor = item
             elif item["type"] == "shield":
-                our_hero.equipped_shield = item
-            our_hero.inventory.append(item)
+                hero.equipped_shield = item
+            hero.inventory.append(item)
             msg = "You have purchased the %s." % item["name"]
     else:
         msg = "There is no weapon of that number!"
 
-    return paint(our_hero, msg)
+    return paint(game, msg)
 
 
 def draw_buy_list():

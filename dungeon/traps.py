@@ -17,20 +17,9 @@ class Trap:
     def triggered(self, character, level):
         #  Calculate Damage Inflicted
         damage = random.randint(0, (self.hit_points + 4 * level))  # make it harder as you go.
-        # Calculate Damage prevented by protection
-        protection = 0
-        if character.equipped_armor is not None:
-            protection += random.randint(4, -character.equipped_armor["damage"])
-        if character.equipped_shield is not None:
-            protection += random.randint(4, -character.equipped_shield["damage"])
-        damage = damage - protection
-        # Prevent damage from being negative (healing the hero)
-        if damage < 0:
-            damage = 0
-        # Subtract the damage from our hero's hit points
-        character.hit_points -= damage
+        adjusted_damage = character.take_damage(damage)
         return 'You triggered a trap in the room! A %s swings down from the ceiling smashing into you dealing ' \
-               '%d damage!' % (self.name, damage)
+               '%d damage!' % (self.name, adjusted_damage)
 
 
 # This Function is to decide which trap to spawn in a given dungeon level.

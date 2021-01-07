@@ -1,5 +1,4 @@
 import random
-from game_play import screen, images
 from typing import List
 from random import shuffle, randrange
 
@@ -7,21 +6,19 @@ from random import shuffle, randrange
 def generate_dungeon_level(level_number):
     # limit 11 x 8 due to screen realistate
     print("Generating Level " + str(level_number))
-    if level_number > 4:
+    if level_number < 4:
+        return make_maze(6 + level_number, 3 + level_number, level_number, False)
+    else:
         size_adjustment = level_number % 5
         boss_level = size_adjustment == 0
         print("level: " + str(level_number) + ", mod: " + str(size_adjustment) + ", Boss: " + str(boss_level))
-        return make_maze(7 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
-    else:
-        return make_maze(7 + level_number, 4 + level_number, level_number, False)
+        return make_maze(6 + size_adjustment, 3 + size_adjustment, level_number, boss_level)
 
 
-def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
+def make_maze(w=6, h=4, level_id=0, is_last=False):
     vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
     ver = [["| "] * w + ['|'] for _ in range(h)] + [[]]
-    ver2 = [["|   "] * w + ['|   '] for _ in range(h)] + [[]]
     hor = [["+-"] * w + ['+'] for _ in range(h + 1)]
-    hor2 = [["+---"] * w + ['+   '] for _ in range(h + 1)]
 
     def walk(x, y):
         vis[y][x] = 1
@@ -33,44 +30,27 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
                 continue
             if xx == x:
                 hor[max(y, yy)][x] = "+ "
-                hor2[max(y, yy)][x] = "+   "
             if yy == y:
                 ver[y][max(x, xx)] = "  "
-                ver2[y][max(x, xx)] = "    "
             walk(xx, yy)
 
     walk(randrange(w), randrange(h))
 
-    wdl2 = '| ▼ '
-    hdl2: str = '  ▼ '
-    if is_last:
-        wdl2 = '| ╳ '
-        hdl2 = '  ╳ '
-
-    # Insert the Up-Door and Down Door
-    if dungeon_id % 2 == 0:
-        ver2[0][0] = '| ▲ '
-        if ver[h - 1][w - 1] == '| ':
-            ver2[h - 1][w - 1] = wdl2
-        else:
-            ver2[h - 1][w - 1] = hdl2
-    else:
-        ver2[0][0] = wdl2
-        if ver[h - 1][w - 1] == '| ':
-            ver2[h - 1][w - 1] = '| ▲ '
-        else:
-            ver2[h - 1][w - 1] = '  ▲ '
-
     # Add Entrances and Exits to dungeon levels
-    upper_left = 'v '
-    if is_last:
-        upper_left = 'X '
-    lower_right = '^'
-    if dungeon_id % 2 == 0:
+    if level_id % 2 == 0:
+        if not is_last:
+            upper_left = 'v '
+        else:
+            upper_left = 'X '
+
+        lower_right = '^ '
+    else:
         upper_left = '^ '
-        lower_right = 'v'
-        if is_last:
+        if not is_last:
+            lower_right = 'v'
+        else:
             lower_right = 'X'
+
     ver[0][0] = upper_left
     ver[len(ver) - 2][len(ver[0]) - 1] = lower_right
 
@@ -88,7 +68,7 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
         else:
             buff.append(s[index])
 
-    print("Level: " + str(dungeon_id))
+    print("Level: " + str(level_id))
     traps_and_treasures = add_doors_traps_and_treasures(maze)
     treasure_count = traps_and_treasures[0]
     print("Treasure Count: " + str(treasure_count))
@@ -97,14 +77,10 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     monster_count = add_monsters(maze)
     print("Monster Count: " + str(monster_count))
 
-    mmap = ""
-    for (a, b) in zip(hor2, ver2):
-        mmap += ''.join(a + ['\n'] + b + ['\n'])
-
     return {
         "maze": maze,
-        "map": mmap,
-        "clairvoyance_map": create_clarivoyance_map(maze),
+        "map": create_map(maze=maze, clarivoyance=False),
+        "clairvoyance_map": create_map(maze=maze, clarivoyance=True),
         "treasure_count": treasure_count,
         "treasures_collected": 0,
         "trap_count": trap_count,
@@ -117,8 +93,8 @@ def make_maze(w=16, h=8, dungeon_id=0, is_last=False):
     }
 
 
-def create_clarivoyance_map(maze):
-    all_map = ""
+def create_map(maze=None, clarivoyance=False):
+    the_map = ""
     for y in range(len(maze)):
         for x in range(len(maze[0])):
             cell = maze[y][x]
@@ -129,36 +105,44 @@ def create_clarivoyance_map(maze):
 
             if cell == '+':
                 if next_cell is None:
-                    all_map += '+'
+                    the_map += '+'
                 elif next_cell == ' ':
-                    all_map += '+ '
+                    the_map += '+ '
                 elif next_cell == '-':
-                    all_map += '+-'
+                    the_map += '+-'
                 else:
-                    all_map += '+ '
+                    the_map += '+ '
 
             if cell == '-':
-                all_map += '--'
+                the_map += '--'
             if cell == 'v':
-                all_map += '▼ '
+                the_map += '▼ '
             if cell == '^':
-                all_map += '▲ '
+                the_map += '▲ '
+            if cell == 'X':
+                the_map += 'X '
             if cell == '|':
-                all_map += '| '
+                the_map += '| '
             if cell == ' ':
-                all_map += '  '
+                the_map += '  '
             if cell == 'D':
-                all_map += '  '
+                the_map += '  '
             if cell == 'M':
-                all_map += '  '
+                the_map += '  '
             if cell == 'T':
-                all_map += 'T '
+                if clarivoyance:
+                    the_map += 'T '
+                else:
+                    the_map += '  '
             if cell == '$':
-                all_map += '$ '
+                if clarivoyance:
+                    the_map += '$ '
+                else:
+                    the_map += '  '
 
-        all_map += '\n'
+        the_map += '\n'
 
-    return all_map
+    return the_map
 
 
 scan_for_door = [
@@ -243,7 +227,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    for i in range(20):
+    for i in range(2):
         m = generate_dungeon_level(i)
     # view = screen.paint_two_panes(
     #     hero=None,

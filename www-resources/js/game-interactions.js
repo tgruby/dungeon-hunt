@@ -64,3 +64,60 @@ function zoom(percentChange) {
     pageZoom = pageZoom + percentChange
     document.body.style.zoom = pageZoom + "%";
 }
+
+let itemsRendered = false;
+
+// Toggles the equipment viewer modal display
+function toggleModal() {
+
+    if (!itemsRendered) {
+        initializeModelingEngine();
+        itemsRendered = true;
+    }
+
+    let modal = document.getElementById("modal"); // Get the canvas element
+    if (modal.style.display === 'none') modal.style.display = 'block';
+    else modal.style.display = 'none';
+}
+
+function initializeModelingEngine() {
+    let canvas = document.getElementById("canvas"); // Get the canvas element
+    let engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+
+    /******* Add the create scene function ******/
+    let createScene = function () {
+
+        // Create the scene space
+        const scene = new BABYLON.Scene(engine);
+        scene.clearColor = BABYLON.Color3(0, 0, 0);
+
+        // Add a camera to the scene and attach it to the canvas
+        // Parameters: name, alpha, beta, radius, target position, scene
+        const camera = new BABYLON.ArcRotateCamera("camera", 0, 2, 2, new BABYLON.Vector3(0, 0, 0));
+        camera.attachControl(canvas, true);
+
+        // Add lights to the scene
+        // const light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0, 1));
+        const light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0));
+        // light1.intensity = 1;
+        light2.intensity = 20;
+
+        // Add and manipulate meshes in the scene
+        BABYLON.SceneLoader.ImportMeshAsync("", "/resources/models/", "broad_sword.glb");
+
+        // Rotate the camera slightly.  Scenes render 60 frames a second.
+        scene.registerBeforeRender(function () {
+            camera.alpha = camera.alpha + 0.01;
+        });
+
+        return scene;
+    };
+    /******* End of the create scene function ******/
+
+    let scene = createScene(); //Call the createScene function
+
+    // Register a render loop to repeatedly render the scene
+    engine.runRenderLoop(function () {
+        scene.render();
+    });
+}

@@ -47,7 +47,7 @@ def process(game, action):
     for i in range(length):
         content += "         " + \
                    screen.back_padding(str(i + 1), 3) + " | " + \
-                   screen.back_padding(lb.leaders[i].character.name, 15) + " | " + \
+                   screen.back_padding(lb.leaders[i].gamer_tag, 15) + " | " + \
                    screen.back_padding(lb.leaders[i].status, 26) + " | " + \
                    str(lb.leaders[i].score) + '\n'
 

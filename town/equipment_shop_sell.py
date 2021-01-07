@@ -9,13 +9,13 @@ image = images.weapons_shop_logo
 
 
 # This function controls our interactions at the weapons store
-def paint(our_hero, msg):
+def paint(game, msg):
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands=commands,
         messages=msg,
         left_pane_content=image,
-        right_pane_content=draw_sell_list(our_hero),
+        right_pane_content=draw_sell_list(game.character),
         sound=None,
         delay=0,
         interaction_type='key_press'
@@ -25,7 +25,7 @@ def paint(our_hero, msg):
 def process(game, action):
     our_hero = game.character
     if action is None:
-        return paint(our_hero, message)
+        return paint(game, message)
 
     # Leave and go back to the town
     if action.lower() == "l":
@@ -34,35 +34,36 @@ def process(game, action):
 
     # If Sell an item, enter another sub-controller
     if action.isdigit():
-        return sell_items(our_hero, action)
+        return sell_items(game, action)
 
     # If we don't know, just reshow page.
-    return paint(our_hero, message)
+    return paint(game, message)
 
 
-def sell_items(our_hero, action):
+def sell_items(game, action):
+    hero = game.character
     item_number_picked = int(action)
-    items_list = filtered_sell_list(our_hero)
+    items_list = filtered_sell_list(hero)
     if item_number_picked > len(items_list)-1 or item_number_picked < 0:
         msg = "You do not have an item of that number!"
     else:
         selected_item = items_list[item_number_picked][4]
         selected_item_quantity = items_list[item_number_picked][0]
         if selected_item["type"] == "weapon" or selected_item["type"] == "armor" or selected_item["type"] == "shield":
-            if selected_item["name"] == our_hero.equipped_weapon["name"] and selected_item_quantity == 1:
+            if selected_item["name"] == hero.equipped_weapon["name"] and selected_item_quantity == 1:
                 msg = "You cannot sell equipped items!"
-            elif our_hero.equipped_armor is not None and selected_item["name"] == our_hero.equipped_armor["name"] and selected_item_quantity == 1:
+            elif hero.equipped_armor is not None and selected_item["name"] == hero.equipped_armor["name"] and selected_item_quantity == 1:
                 msg = "You cannot sell equipped items!"
-            elif our_hero.equipped_shield is not None and selected_item["name"] == our_hero.equipped_shield["name"] and selected_item_quantity == 1:
+            elif hero.equipped_shield is not None and selected_item["name"] == hero.equipped_shield["name"] and selected_item_quantity == 1:
                 msg = "You cannot sell equipped items!"
             else:
-                our_hero.gold += selected_item["cost"] / 2
-                our_hero.inventory.remove(selected_item)
+                hero.gold += selected_item["cost"] / 2
+                hero.inventory.remove(selected_item)
                 msg = "You sold %s for %d gold." % (selected_item["name"], selected_item["cost"]/2)
         else:
             msg = "You cannot sell that item here!"
 
-    return paint(our_hero, msg)
+    return paint(game, msg)
 
 
 def draw_sell_list(our_hero):

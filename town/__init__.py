@@ -11,7 +11,7 @@ image = images.small_village
 
 def process(game, action):
     if action is None:
-        return paint(game.character)
+        return paint(game)
 
     # Visit the Shop to buy stuff
     if action.lower() == "e":
@@ -44,21 +44,21 @@ def process(game, action):
         return guild.process(game, None)
 
     # Cheat to help with testing.... yank after testing
-    # if action.lower() == "$":
-    #     game.character.gold = 1500
+    if action.lower() == "$":
+        game.character.gold = 1500
 
     # Something else?
-    return paint(game.character)
+    return paint(game)
 
 
-def paint(hero):
+def paint(game):
     # Print the Town Page if we don't know what the action is.
     return screen.paint_two_panes(
-        hero=hero,
+        game=game,
         commands=commands,
         messages=msg,
         left_pane_content=image,
-        right_pane_content=game_play.screen.list_inventory(hero),
+        right_pane_content=game_play.screen.list_inventory(game.character),
         sound=None,
         delay=0,
         interaction_type='key_press'

@@ -5,7 +5,7 @@ import town
 def process(game, action):
 
     if action is None:
-        return paint(game.character)
+        return paint(game)
 
     # Visit the Shop to buy stuff
     if action.lower() == "l":
@@ -13,10 +13,10 @@ def process(game, action):
         return town.process(game, None)
 
     # Something else?
-    return paint(game.character)
+    return paint(game)
 
 
-def paint(hero):
+def paint(game):
 
     db.init_db()
     lb = db.load_leaderboard()
@@ -27,12 +27,11 @@ def paint(hero):
     for i in range(len(lb.leaders)):
         content += "   " + \
                    screen.back_padding(str(i + 1), 3) + " | " + \
-                   screen.back_padding(lb.leaders[i].character.name, 15) + " | " + \
+                   screen.back_padding(lb.leaders[i].gamer_tag, 15) + " | " + \
                    str(lb.leaders[i].score) + '\n'
-    content += '\n\nThe most powerful warriors in Thordon!'
 
     return screen.paint_two_panes(
-        hero=hero,
+        game=game,
         commands="(L)eave",
         messages=None,
         left_pane_content=images.shield,

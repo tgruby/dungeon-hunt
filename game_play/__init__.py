@@ -6,20 +6,21 @@ class Game:
     # Constructor for our Game
     def __init__(self, game_id):
         self.game_id = game_id
+        self.gamer_tag = None
         self.character = None
         self.dungeon = None
-        self.current_controller = None
         self.score = 0
         self.game_over = False
         self.status = None
+        self.current_controller = None
 
-    def calc_score_level_bonus(self, level_id):
+    def calc_score_level_bonus(self):
         #  Calculate updated score:
-        level_goal = level_id * 100
-        if self.character.step_count > level_goal:
+        level_step_goal = self.dungeon.current_level_id * 100
+        if self.character.step_count > level_step_goal:
             level_bonus = 0
         else:
-            level_bonus = level_id * 500
+            level_bonus = self.dungeon.current_level_id * 100
         self.score += level_bonus
         self.character.step_count = 0
         return level_bonus
@@ -35,16 +36,16 @@ class Game:
 
     def calc_boss_bonus(self):
         #  Calculate updated hp:
-        boss_bonus = len(self.dungeon.levels) * 100
+        boss_bonus = self.dungeon.current_level_id * 100
         self.score += boss_bonus
         return boss_bonus
 
     def increment_treasure_score(self):
         self.score += 10  # Obtain 10 points per treasure
 
-    def increment_monster_score(self, dungeon):
+    def increment_monster_score(self):
         # Increase Score for killing monsters.  The higher the level, the more points.
-        self.score += len(dungeon.levels) * 10
+        self.score += self.dungeon.current_level_id * 10
 
 
 def route(game, action):

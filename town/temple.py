@@ -8,14 +8,14 @@ image = images.tall_temple
 
 
 #  This function controls the interactions at the temple.
-def paint(our_hero, msg):
+def paint(game, msg):
 
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands=commands,
         messages=msg,
         left_pane_content=image,
-        right_pane_content=draw_healing_list(our_hero),
+        right_pane_content=draw_healing_list(game.character),
         sound=None,
         delay=0,
         interaction_type='key_press'
@@ -26,7 +26,7 @@ def process(game, action):
     our_hero = game.character
 
     if action is None:
-        return paint(our_hero, message)
+        return paint(game, message)
 
     # Full Healing
     if action.lower() == "f":
@@ -40,7 +40,7 @@ def process(game, action):
         else:
             msg = "You are healthy! You don't need healing!"
 
-        return paint(our_hero, msg)
+        return paint(game, msg)
 
     # Half Healing
     if action.lower() == "p":
@@ -54,7 +54,7 @@ def process(game, action):
         else:
             msg = "You are healthy! You don't need healing!"
 
-        return paint(our_hero, msg)
+        return paint(game, msg)
 
     # Leave and go back to the town
     if action.lower() == "l":
@@ -62,7 +62,7 @@ def process(game, action):
         return town.process(game, None)
 
     # All else fails, just repost this page
-    return paint(our_hero, message)
+    return paint(game, message)
 
 
 def full_price(our_hero):

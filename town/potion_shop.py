@@ -12,9 +12,9 @@ image = images.shop
 
 
 # This function controls our interactions at the weapons store
-def paint(our_hero, msg):
+def paint(game, msg):
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands=commands,
         messages=msg,
         left_pane_content=image,
@@ -30,7 +30,7 @@ def process(game, action):
     our_hero = game.character
 
     if action is None:
-        return paint(our_hero, message)
+        return paint(game, message)
 
     # Leave and go back to the town
     if action.lower() == "l":
@@ -39,27 +39,27 @@ def process(game, action):
 
     # Attempt to buy an item
     if action.isdigit():
-        return purchase_items(our_hero, action)
+        return purchase_items(game, action)
 
     # If we don't know what this action is, just represent the page
-    return paint(our_hero, message)
+    return paint(game, message)
 
 
-def purchase_items(our_hero, action):
+def purchase_items(game, action):
     item_number_picked = int(action)
     if item_number_picked <= len(potions.all_enchantments)-1:
         item = potions.all_enchantments[item_number_picked]
 
-        if count_monster_parts(our_hero) < item["cost"]:
+        if count_monster_parts(game.character) < item["cost"]:
             msg = "You don't have enough monster parts for that!"
         else:
-            take_monster_parts(our_hero, item["cost"])
-            our_hero.inventory.append(item)
+            take_monster_parts(game.character, item["cost"])
+            game.character.inventory.append(item)
             msg = "You have purchased the %s." % item["name"]
     else:
         msg = "There is no item with that number!"
 
-    return paint(our_hero, msg)
+    return paint(game, msg)
 
 
 def draw_purchase_list():

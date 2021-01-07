@@ -6,49 +6,49 @@ from town import items
 # This Function is to attack the monster. This includes the loop to continue to attack until someone dies, or our hero
 # runs away.
 def process(game, action):
-    our_hero = game.character
+    hero = game.character
+    dungeon = game.dungeon
+    monster = dungeon.current_monster
 
     if action is None:
-        return paint(our_hero, our_hero.monster.image, "A " + our_hero.monster.name + "stands before you, blocking "
-                                                                                      "your path!")
+        return paint(game, monster.image, "A " + monster.name + "stands before you, blocking your path!")
 
     if action.lower() == "f":
-        message = our_hero.attack_the_monster()
-        if our_hero.monster.is_alive():
-            message = message + '\n ' + our_hero.monster.attack(our_hero)
-            if not our_hero.is_alive():
+        message = hero.attack_monster(monster)
+        if monster.is_alive():
+            message = message + '\n ' + monster.attack(hero)
+            if not hero.is_alive():
                 return hero_is_slain(game)
-            return paint(our_hero, our_hero.monster.image, message)
+            return paint(game, monster.image, message)
         else:
             # Monster has been killed
-            our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'monster')
+            dungeon.complete_challenge(hero.view.current_x, hero.view.current_y, 'monster')
             # Grab Gold
-            our_hero.gold += our_hero.monster.gold
-            game.increment_monster_score(game.dungeon)
+            hero.gold += monster.gold
+            game.increment_monster_score()
 
             # Check to see if the monster drops it's monster parts. If so, put it in the hero's inventory.
             drop_part = random.randint(0, 3)  # 25%
             if drop_part == 0:
-                if our_hero.monster.weapon["type"] == "loot":
-                    our_hero.inventory.append(items.monster_parts)
+                if monster.item_dropped["type"] == "loot":
+                    hero.inventory.append(items.monster_parts)
                 else:
-                    our_hero.inventory.append(our_hero.monster.weapon)
-                message = message + ' You recover a ' + our_hero.monster.weapon["name"] + " from the monster!"
-            message = message + ' Digging through the %s remains you found %d gold!' % (our_hero.monster.name, our_hero.monster.gold)
+                    hero.inventory.append(monster.item_dropped)
+                message = message + ' You recover a ' + monster.item_dropped["name"] + " from the monster!"
+            message = message + ' Digging through the %s remains you found %d gold!' % (monster.name, monster.gold)
             commands = "Press any key to continue..."
 
-            if our_hero.monster.is_boss:
-                m = our_hero.monster
-                our_hero.monster = None
-                return level_complete.process(game, our_hero.view.current_level_id, True, m)
+            if monster.is_boss:
+                dungeon.current_monster = None
+                return level_complete.process(game, True, monster)
 
-            our_hero.monster = None
+            game.dungeon.current_monster = None
             game.current_controller = 'dungeon'
             return screen.paint_two_panes(
-                hero=our_hero,
+                game=game,
                 commands=commands,
                 messages=message,
-                left_pane_content=our_hero.view.generate_perspective(),
+                left_pane_content=hero.view.generate_perspective(),
                 right_pane_content=images.treasure_chest,
                 sound='challenge-complete',
                 delay=500,
@@ -58,47 +58,46 @@ def process(game, action):
     # Run Away
     if action.lower() == "r":
         # The monster gets one last parting shot as you flee.
-        message = our_hero.monster.attack(our_hero)
-        if not our_hero.is_alive():
+        message = monster.attack(hero)
+        if not hero.is_alive():
             return hero_is_slain(game)
 
         message += '\n ' + "You run as fast as your little legs will carry you and... Get away!"
-        our_hero.monster = None
+        hero.monster = None
         #  Turn around and go one step back.
-        our_hero.view.turn_right()
-        our_hero.view.turn_right()
-        our_hero.view.step_forward()
+        hero.view.turn_right()
+        hero.view.turn_right()
+        hero.view.step_forward()
         game.current_controller = 'dungeon'
-        return paint(our_hero, "You've Escaped!", message)
+        return paint(game, "You've Escaped!", message)
 
     # Default message if they typed jibberish
-    return paint(our_hero, our_hero.monster.image, "A " + our_hero.monster.name + " stands before you, blocking your path!")
+    return paint(game, monster.image, "A " + monster.name + " stands before you, blocking your path!")
 
 
 # routine if your hero is slain
 def hero_is_slain(game):
     game.game_over = True
-    our_hero = game.character
-    game.status = 'KIA: ' + our_hero.monster.name + ', L' + str(our_hero.view.current_level_id)
+    game.status = 'KIA: ' + game.dungeon.current_monster.name + ', L' + str(game.dungeon.current_level_id)
 
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands='Press the Enter key to continue...',
         messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
         left_pane_content=images.tombstone,
-        right_pane_content=our_hero.monster.image,
+        right_pane_content=game.dungeon.current_monster.image,
         sound='death-dirge',
         delay=2000,
         interaction_type='key-press'
     )
 
 
-def paint(our_hero, image, msg):
+def paint(game, image, msg):
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands="(F)ight, (R)un away!",
         messages=msg,
-        left_pane_content=our_hero.view.generate_perspective(),
+        left_pane_content=game.character.view.generate_perspective(),
         right_pane_content=image,
         sound=None,
         delay=0,

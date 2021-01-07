@@ -18,6 +18,8 @@ class Dungeon:
     def __init__(self):
         self.levels = []
         self.current_level = None
+        self.current_level_id = 0
+        self.current_monster = None
 
         # FOR TESTING, SKIPPING LEVELS.
         # for i in range(10):
@@ -27,8 +29,8 @@ class Dungeon:
         #     self.current_level["level_completed"] = True
 
     def generate_next_level(self):
-        level_id = len(self.levels)
-        self.current_level = dungeon_generator.generate_dungeon_level(level_id)
+        self.current_level_id += 1
+        self.current_level = dungeon_generator.generate_dungeon_level(self.current_level_id)
         self.levels.append(self.current_level)
 
     def complete_challenge(self, x, y, challenge_type):
@@ -70,13 +72,13 @@ commands = "Left (A), Right (D), Forward (W), (I)nventory"
 message = "You crawl into the dark cave at the side of the mountain and enter the Catacombs!"
 
 
-def paint(our_hero, msg, sound):
+def paint(game, msg, sound):
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands=commands,
         messages=msg,
-        left_pane_content=our_hero.view.generate_perspective(),
-        right_pane_content=show_map(our_hero),
+        left_pane_content=game.character.view.generate_perspective(),
+        right_pane_content=show_map(game.character),
         sound=sound,
         delay=0,
         interaction_type='key_press'
@@ -86,81 +88,81 @@ def paint(our_hero, msg, sound):
 # This Function is to walk through the dungeon and display the results of moving through the dungeon on the screen. This
 # continues to loop until we leave the dungeon.
 def process(game, action):
-    our_hero = game.character
+    hero = game.character
 
     if action == 'enter':
         if game.dungeon.current_level is None:
             game.dungeon.generate_next_level()
         elif game.dungeon.current_level['level_completed'] is True:
             game.dungeon.generate_next_level()
-        our_hero.view = PointOfView(game)
-        return paint(our_hero, message, 'door-slammed')
+        hero.view = PointOfView(game)
+        return paint(game, message, 'door-slammed')
 
     if action is None:
-        return paint(our_hero, None, None)
+        return paint(game, None, None)
 
     # for testing, give skeleton key
-    # if action.lower() == '$':
-    #     msg = "You stepped on a Skeleton Key!"
-    #     our_hero.inventory.append(items.skeleton_key)
-    #     return paint(our_hero, msg, None)
+    if action.lower() == '$':
+        msg = "You stepped on a Skeleton Key!"
+        hero.inventory.append(items.skeleton_key)
+        return paint(game, msg, None)
 
     # Turn Left
     if action.lower() == "a":
-        msg = our_hero.view.turn_left()
-        return paint(our_hero, msg, None)
+        msg = hero.view.turn_left()
+        return paint(game, msg, None)
 
     # Turn Right
     if action.lower() == "d":
-        msg = our_hero.view.turn_right()
-        return paint(our_hero, msg, None)
+        msg = hero.view.turn_right()
+        return paint(game, msg, None)
 
     # Step Forward
     if action.lower() == "w":
-        msg = our_hero.view.step_forward()
+        msg = hero.view.step_forward()
         sound = None
 
         if msg == "town":
             # we have left the dungeon, return to town.
             game.current_controller = 'town'
-            our_hero.view = None
+            hero.view = None
             return town.process(game, None)
         elif msg == "level-complete":
-            game.dungeon.complete_level()
-            return level_complete.process(game, our_hero.view.current_level_id, False, None)
+            return level_complete.process(game, False, None)
         elif msg == "This door is locked.":
+            msg += " You need a skeleton key."
             print("Processing: This door is locked.")
             sound = 'door-locked'
         elif msg != "You can't walk through walls!":
             print("Processing: You can't walk through walls!")
-            our_hero.step_count += 1
-            if our_hero.clairvoyance_count > 0:
-                our_hero.clairvoyance_count -= 1  # Subtract the count for every step.
+            hero.step_count += 1
+            if hero.clairvoyance_count > 0:
+                hero.clairvoyance_count -= 1  # Subtract the count for every step.
 
-        stepped_on = our_hero.view.get_position_info()
+        stepped_on = hero.view.get_position_info()
         # Check to see if we have met a boss.
-        if stepped_on == our_hero.view.x_marks_the_spot:
+        if stepped_on == hero.view.x_marks_the_spot:
             print("hero encounters a Boss!")
-            our_hero.monster = monsters.get_boss_for_dungeon_level(len(game.dungeon.levels))
+            game.dungeon.current_monster = monsters.get_boss_for_dungeon_level(len(game.dungeon.levels))
             game.current_controller = 'dungeon.fight'
             return fight.process(game, None)
 
         # Check to see if we have stepped on Treasure
-        if stepped_on == our_hero.view.treasure:
+        if stepped_on == hero.view.treasure:
             print("Hero finds Treasure!")
             return found_treasure(game)
 
         # Check to see if we have stepped onto a Trap
-        if stepped_on == our_hero.view.trap:
+        if stepped_on == hero.view.trap:
             print("Hero steps on a Trap!")
             return stepped_on_trap(game)
 
         # Check to see if we have ran into a Monster
-        if stepped_on == our_hero.view.monstr:
+        if stepped_on == hero.view.monstr:
             print("Hero runs into a Monster!")
             return fight_monster(game)
 
-        return paint(our_hero, msg, sound)
+        return paint(game, msg, sound)
 
     # Look in backpack at the hero's inventory
     if action.lower() == "i":
@@ -168,18 +170,18 @@ def process(game, action):
         return inventory.process(game, None)
 
     # If the command is nonsense, just repeat current screen.
-    return paint(our_hero, None, None)
+    return paint(game, None, None)
 
 
 # spawn a monster and go to battle!
 def fight_monster(game):
     our_hero = game.character
-    if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
-        our_hero.monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
+    if not game.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
+        game.dungeon.current_monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
         game.current_controller = 'dungeon.fight'
         return fight.process(game, None)
     # else we have already fought this monster...
-    return paint(our_hero, "You see a body crumpled against the wall...", None)
+    return paint(game, "You see a body crumpled against the wall...", None)
 
 
 # Show the map if our hero has a map for this dungeon
@@ -197,8 +199,8 @@ def show_map(our_hero):
 def found_treasure(game):
     our_hero = game.character
 
-    if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
-        our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'treasure')
+    if not game.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
+        game.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'treasure')
         # Save picked_up_treasure to a pkl file so doesn't reset after a restart.
         level_adjustment = our_hero.view.current_level_id
         if level_adjustment > 5:
@@ -230,7 +232,7 @@ def found_treasure(game):
 
         cmd = "Press any key to continue..."
         return screen.paint_two_panes(
-            hero=our_hero,
+            game=game,
             commands=cmd,
             messages=msg,
             left_pane_content=our_hero.view.generate_perspective(),
@@ -241,7 +243,7 @@ def found_treasure(game):
         )
     # else you have already picked up this chest
     return screen.paint_two_panes(
-        hero=our_hero,
+        game=game,
         commands=commands,
         messages="You see an empty treasure chest...",
         left_pane_content=our_hero.view.generate_perspective(),
@@ -264,7 +266,7 @@ def stepped_on_trap(game):
             game.game_over = True
             game.status = 'KIA: Trap, L' + str(our_hero.view.current_level_id)
             return screen.paint_two_panes(
-                hero=our_hero,
+                game=game,
                 commands='Press the Enter key to continue...',
                 messages=msg + " You have been killed!",
                 left_pane_content=images.tombstone,
@@ -276,7 +278,7 @@ def stepped_on_trap(game):
 
         # return the damage summary you took from the trap
         return screen.paint_two_panes(
-            hero=our_hero,
+            game=game,
             commands=commands,
             messages=msg,
             left_pane_content=our_hero.view.generate_perspective(),
@@ -287,7 +289,7 @@ def stepped_on_trap(game):
         )
     else:
         return screen.paint_two_panes(
-            hero=our_hero,
+            game=game,
             commands=commands,
             messages="A morning star lays in the corner of the room...",
             left_pane_content=our_hero.view.generate_perspective(),

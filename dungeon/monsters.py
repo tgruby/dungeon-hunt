@@ -15,29 +15,18 @@ class Monster:
         self.name = monster_definition["name"]
         self.image = monster_definition["image"]
         self.hit_points = monster_definition["hit_points"]
-        self.gold = random.randint(3, monster_definition["max_gold"])
-        self.weapon = monster_definition["weapon"]
+        self.gold = random.randint(3, monster_definition["gold"])
+        self.attack_damage = monster_definition["attack_damage"]
+        self.attack_description = monster_definition["attack_description"]
         self.is_boss = monster_definition["is_boss"]
-        self.special_drop = monster_definition["special_drop"]
+        self.item_dropped = monster_definition["item_dropped"]
 
     # Method to call when the monster attacks a character
     def attack(self, character):
         # Calculate Damage Inflicted
-        weapon = self.weapon
-        damage = random.randint(0, weapon["damage"])
-        # Calculate Damage prevented by protection
-        protection = 0
-        if character.equipped_armor is not None:
-            protection += random.randint(4, -character.equipped_armor["damage"])
-        if character.equipped_shield is not None:
-            protection += random.randint(4, -character.equipped_shield["damage"])
-        damage = damage - protection
-        # Prevent damage from being negative (healing the hero)
-        if damage < 0:
-            damage = 0
-        # Subtract the damage from our hero's hit points
-        character.hit_points -= damage
-        return "The " + weapon["attack_message"] % (self.name, damage)
+        damage = random.randint(0, self.attack_damage)
+        adjusted_damage = character.take_damage(damage)
+        return "The " + self.attack_description % (self.name, adjusted_damage)
 
     def is_alive(self):
         return self.hit_points > 0
@@ -45,10 +34,8 @@ class Monster:
 
 # This Function is to decide which monster to spawn in a given dungeon.
 def get_a_monster_for_dungeon_level(level_id):
-    # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
-    if level_id == 0:
-        return Monster(dungeon_monsters[0])
-
+    # Select a monster appropriate for the level of this dungeon.
+    # Use a sliding scale of 4 monsters per level.
     suitable_monsters = []
     upper_bounds = level_id
     if upper_bounds >= len(dungeon_monsters):
@@ -68,192 +55,192 @@ def get_a_monster_for_dungeon_level(level_id):
 # This Function is to decide which monster boss to spawn in a given dungeon.
 def get_boss_for_dungeon_level(level_id):
     # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
-    if level_id < 7:
-        return Monster(monster_bosses[0])
-    elif level_id < 12:
-        return Monster(monster_bosses[1])
-    elif level_id < 17:
-        return Monster(monster_bosses[2])
+    if level_id == 5:
+        return Monster(giant_snake)
+    elif level_id == 10:
+        return Monster(cyclops)
+    elif level_id == 15:
+        return Monster(wraith)
     else:
-        return Monster(monster_bosses[3])
+        return Monster(red_dragon)
 
 
 # Dictionaries of all Monsters in the Game
 
 giant_rat = {
     "name": "Giant Rat",
-    "type": "monster",
     "is_boss": False,
     "image": images.rat,
     "hit_points": 8,
-    "max_gold": 10,
-    "weapon": items.rat_teeth,
-    "special_drop": None
+    "gold": 10,
+    "attack_damage": items.rat_teeth["damage"],
+    "attack_description": items.rat_teeth["attack_message"],
+    "item_dropped": items.rat_teeth
 }
 
 giant_ant = {
     "name": "Giant Ant",
-    "type": "monster",
     "is_boss": False,
     "image": images.giant_ant,
     "hit_points": 12,
-    "max_gold": 12,
-    "weapon": items.ant_pincers,
-    "special_drop": None
+    "gold": 12,
+    "attack_damage": items.ant_pincers["damage"],
+    "attack_description": items.ant_pincers["attack_message"],
+    "item_dropped": items.ant_pincers
 }
 
 angry_gnome = {
     "name": "Angry Gnome",
-    "type": "monster",
     "is_boss": False,
     "image": images.gnome,
     "hit_points": 14,
-    "max_gold": 18,
-    "weapon": items.gnome_feet,
-    "special_drop": None
+    "gold": 18,
+    "attack_damage": items.gnome_feet["damage"],
+    "attack_description": items.gnome_feet["attack_message"],
+    "item_dropped": items.gnome_feet
 }
 
 giant_snake = {
     "name": "Giant Snake",
-    "type": "monster",
     "is_boss": True,
     "image": images.giant_snake,
     "hit_points": 42,
-    "max_gold": 34,
-    "weapon": items.snake_bite,
-    "special_drop": items.lucky_rock
+    "gold": 34,
+    "attack_damage": items.snake_bite["damage"],
+    "attack_description": items.snake_bite["attack_message"],
+    "item_dropped": items.lucky_rock
 }
 
 badger = {
     "name": "Badger",
-    "type": "monster",
     "is_boss": False,
     "image": images.badger,
     "hit_points": 16,
-    "max_gold": 16,
-    "weapon": items.badger_teeth,
-    "special_drop": None
+    "gold": 16,
+    "attack_damage": items.badger_teeth["damage"],
+    "attack_description": items.badger_teeth["attack_message"],
+    "item_dropped": items.badger_teeth
 }
 
 giant_spider = {
     "name": "Giant Spider",
-    "type": "monster",
     "is_boss": False,
     "image": images.giant_spider,
     "hit_points": 18,
-    "max_gold": 14,
-    "weapon": items.spider_fangs,
-    "special_drop": None
+    "gold": 14,
+    "attack_damage": items.spider_fangs["damage"],
+    "attack_description": items.spider_fangs["attack_message"],
+    "item_dropped": items.spider_fangs
 }
 
 wolf = {
     "name": "Wolf",
-    "type": "monster",
     "is_boss": False,
     "image": images.wolf,
     "hit_points": 32,
-    "max_gold": 30,
-    "weapon": items.wolf_teeth,
-    "special_drop": None
+    "gold": 30,
+    "attack_damage": items.wolf_teeth["damage"],
+    "attack_description": items.wolf_teeth["attack_message"],
+    "item_dropped": items.wolf_teeth
 }
 
 vampire_bat = {
     "name": "Vampire Bat",
-    "type": "monster",
     "is_boss": False,
     "image": images.vampire_bat,
     "hit_points": 32,
-    "max_gold": 45,
-    "weapon": items.bat_fangs,
-    "special_drop": None
+    "gold": 45,
+    "attack_damage": items.bat_fangs["damage"],
+    "attack_description": items.bat_fangs["attack_message"],
+    "item_dropped": items.bat_fangs
 }
 
 goblin = {
     "name": "Goblin",
-    "type": "monster",
     "is_boss": False,
     "image": images.goblin,
     "hit_points": 42,
-    "max_gold": 60,
-    "weapon": items.broad_sword,
-    "special_drop": None
+    "gold": 60,
+    "attack_damage": items.broad_sword["damage"],
+    "attack_description": items.broad_sword["attack_message"],
+    "item_dropped": items.broad_sword
 }
 
 skeleton = {
     "name": "Skeleton",
-    "type": "monster",
     "is_boss": False,
     "image": images.skeleton,
     "hit_points": 54,
-    "max_gold": 100,
-    "weapon": items.bony_fingers,
-    "special_drop": None
+    "gold": 100,
+    "attack_damage": items.bony_fingers["damage"],
+    "attack_description": items.bony_fingers["attack_message"],
+    "item_dropped": items.bony_fingers
 }
 
 skeleton_warrior = {
     "name": "Skeleton Warrior",
-    "type": "monster",
     "is_boss": False,
     "image": images.skeleton_warrior,
     "hit_points": 72,
-    "max_gold": 150,
-    "weapon": items.battle_axe,
-    "special_drop": None
+    "gold": 150,
+    "attack_damage": items.battle_axe["damage"],
+    "attack_description": items.battle_axe["attack_message"],
+    "item_dropped": items.battle_axe
 }
 
 half_orc = {
     "name": "Half Orc",
-    "type": "monster",
     "is_boss": False,
     "image": images.half_orc,
     "hit_points": 64,
-    "max_gold": 128,
-    "weapon": items.broad_sword,
-    "special_drop": None
+    "gold": 128,
+    "attack_damage": items.broad_sword["damage"],
+    "attack_description": items.broad_sword["attack_message"],
+    "item_dropped": items.two_handed_sword
 }
 
 minotaur = {
     "name": "Minotaur",
-    "type": "monster",
     "is_boss": False,
     "image": images.minotaur,
     "hit_points": 96,
-    "max_gold": 196,
-    "weapon": items.two_handed_sword,
-    "special_drop": None
+    "gold": 196,
+    "attack_damage": items.two_handed_sword["damage"],
+    "attack_description": items.two_handed_sword["attack_message"],
+    "item_dropped": items.two_handed_sword
 }
 
 cyclops = {
     "name": "Cyclops",
-    "type": "monster",
     "is_boss": True,
     "image": images.cyclops,
     "hit_points": 128,
-    "max_gold": 256,
-    "weapon": items.two_handed_sword,
-    "special_drop": items.elvin_sword
+    "gold": 256,
+    "attack_damage": items.two_handed_sword["damage"],
+    "attack_description": items.two_handed_sword["attack_message"],
+    "item_dropped": items.elvin_sword
 }
 
 wraith = {
     "name": "Wraith",
-    "type": "monster",
     "is_boss": True,
     "image": images.wraith,
     "hit_points": 256,
-    "max_gold": 250,
-    "weapon": items.wraith_touch,
-    "special_drop": items.shield_of_protection
+    "gold": 250,
+    "attack_damage": items.wraith_touch["damage"],
+    "attack_description": items.wraith_touch["attack_message"],
+    "item_dropped": items.shield_of_protection
 }
 
 red_dragon = {
     "name": "Red Dragon",
-    "type": "monster",
     "is_boss": True,
     "image": images.dragon,
     "hit_points": 512,
-    "max_gold": 2000,
-    "weapon": items.fireball,
-    "special_drop": items.dragon_skin_armor
+    "gold": 2000,
+    "attack_damage": items.fireball["damage"],
+    "attack_description": items.fireball["attack_message"],
+    "item_dropped": items.dragon_skin_armor
 }
 
 dungeon_monsters = [
@@ -277,3 +264,4 @@ monster_bosses = [
     wraith,
     red_dragon
 ]
+
