@@ -215,9 +215,9 @@ cyclops = {
     "is_boss": True,
     "image": images.cyclops,
     "hit_points": 128,
-    "gold": 256,
-    "attack_damage": items.two_handed_sword["damage"],
-    "attack_description": items.two_handed_sword["attack_message"],
+    "gold": 128,
+    "attack_damage": items.broad_sword["damage"],
+    "attack_description": items.broad_sword["attack_message"],
     "item_dropped": items.elvin_sword
 }
 
