@@ -102,23 +102,23 @@ def process(game, action):
         return paint(game, None, None)
 
     # for testing, give skeleton key
-    if action.lower() == '$':
-        msg = "You stepped on a Skeleton Key!"
-        hero.inventory.append(items.skeleton_key)
-        return paint(game, msg, None)
+    # if action.lower() == '$':
+        # msg = "You stepped on a Skeleton Key!"
+        # hero.inventory.append(items.skeleton_key)
+        # return paint(game, msg, None)
 
     # Turn Left
-    if action.lower() == "a":
+    if action.lower() == "a" or action == "ArrowLeft":
         msg = hero.view.turn_left()
         return paint(game, msg, None)
 
     # Turn Right
-    if action.lower() == "d":
+    if action.lower() == "d" or action == "ArrowRight":
         msg = hero.view.turn_right()
         return paint(game, msg, None)
 
     # Step Forward
-    if action.lower() == "w":
+    if action.lower() == "w" or action == "ArrowUp":
         msg = hero.view.step_forward()
         sound = None
 
