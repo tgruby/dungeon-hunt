@@ -1,7 +1,7 @@
 import game_play.screen
 from game_play import images, screen
 import dungeon
-from town import cartography_shop, equipment_shop, guild, potion_shop, temple
+from town import map_shop, equipment_shop, guild, potion_shop, temple
 
 commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (D)ungeon, (G)uild"
 msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
@@ -20,8 +20,8 @@ def process(game, action):
 
     # Go into the Map Shop
     if action.lower() == "m":
-        game.current_controller = 'town.cartography_shop'
-        return cartography_shop.process(game, None)
+        game.current_controller = 'town.map_shop'
+        return map_shop.process(game, None)
 
     # Visit the Magic shop
     if action.lower() == "p":

@@ -81,37 +81,57 @@ function toggleModal() {
 }
 
 function initializeModelingEngine() {
+
     let canvas = document.getElementById("canvas"); // Get the canvas element
     let engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
 
-    /******* Add the create scene function ******/
     let createScene = function () {
+        // Create a scene.
+        var scene = new BABYLON.Scene(engine);
 
-        // Create the scene space
-        const scene = new BABYLON.Scene(engine);
-        scene.clearColor = BABYLON.Color3(0, 0, 0);
+        // Create a default arc rotate camera and light.
+        scene.createDefaultCameraOrLight(true, true, true);
+        // Create a default with an environment.
+        // scene.createDefaultEnvironment();
 
-        // Add a camera to the scene and attach it to the canvas
-        // Parameters: name, alpha, beta, radius, target position, scene
-        const camera = new BABYLON.ArcRotateCamera("camera", 0, 2, 2, new BABYLON.Vector3(0, 0, 0));
-        camera.attachControl(canvas, true);
-
-        // Add lights to the scene
-        // const light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0, 1));
-        const light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0));
-        // light1.intensity = 1;
-        light2.intensity = 20;
-
-        // Add and manipulate meshes in the scene
-        BABYLON.SceneLoader.ImportMeshAsync("", "/resources/models/", "broad_sword.glb");
-
-        // Rotate the camera slightly.  Scenes render 60 frames a second.
-        scene.registerBeforeRender(function () {
-            camera.alpha = camera.alpha + 0.01;
+        // Append glTF model to scene.
+        BABYLON.SceneLoader.Append("/resources/models/", "broad_sword.glb", scene, function (scene) {
+            // The default camera looks at the back of the asset.
+            // Rotate the camera by 180 degrees to the front of the asset.
+            rotate(scene.activeCamera);
         });
 
         return scene;
-    };
+    }
+
+    /******* Add the create scene function ******/
+    // let createScene = function () {
+    //
+    //     // Create the scene space
+    //     const scene = new BABYLON.Scene(engine);
+    //     scene.clearColor = BABYLON.Color3(0, 0, 0);
+    //
+    //     // Add a camera to the scene and attach it to the canvas
+    //     // Parameters: name, alpha, beta, radius, target position, scene
+    //     const camera = new BABYLON.ArcRotateCamera("camera", 0, 2, 2, new BABYLON.Vector3(0, 0, 0));
+    //     camera.attachControl(canvas, true);
+    //
+    //     // Add lights to the scene
+    //     // const light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0, 1));
+    //     const light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0));
+    //     // light1.intensity = 1;
+    //     light2.intensity = 20;
+    //
+    //     // Add and manipulate meshes in the scene
+    //     BABYLON.SceneLoader.ImportMeshAsync("", "/resources/models/", "dagger.glb");
+    //
+    //     // Rotate the camera slightly.  Scenes render 60 frames a second.
+    //     scene.registerBeforeRender(function () {
+    //         camera.alpha = camera.alpha + 0.01;
+    //     });
+    //
+    //     return scene;
+    // };
     /******* End of the create scene function ******/
 
     let scene = createScene(); //Call the createScene function
@@ -120,4 +140,9 @@ function initializeModelingEngine() {
     engine.runRenderLoop(function () {
         scene.render();
     });
+}
+
+function rotate(camera) {
+    camera.alpha = camera.alpha + 0.1;
+    setTimeout(function() { rotate(camera) }, 100)
 }

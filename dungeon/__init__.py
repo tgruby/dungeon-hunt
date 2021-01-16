@@ -20,13 +20,10 @@ class Dungeon:
         self.current_level = None
         self.current_level_id = 0
         self.current_monster = None
-
-        # FOR TESTING, SKIPPING LEVELS.
-        # for i in range(10):
-        #     skip_level = dungeon_generator.generate_dungeon_level(i)
-        #     self.levels.append(skip_level)
-        #     self.current_level = skip_level
-        #     self.current_level["level_completed"] = True
+        self.snake_boss = monsters.Monster(monsters.giant_snake)
+        self.cyclops_boss = monsters.Monster(monsters.cyclops)
+        self.wraith_boss = monsters.Monster(monsters.wraith)
+        self.dragon_boss = monsters.Monster(monsters.red_dragon)
 
     def generate_next_level(self):
         self.current_level_id += 1
@@ -66,6 +63,18 @@ class Dungeon:
 
     def complete_level(self):
         self.current_level['level_completed'] = True
+
+    # This Function is to decide which monster boss to spawn in a given dungeon.
+    def get_boss_for_dungeon_level(self):
+        # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
+        if self.current_level_id == 5:
+            return self.snake_boss
+        elif self.current_level_id == 10:
+            return self.cyclops_boss
+        elif self.current_level_id == 15:
+            return self.wraith_boss
+        else:
+            return self.dragon_boss
 
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
@@ -143,7 +152,7 @@ def process(game, action):
         # Check to see if we have met a boss.
         if stepped_on == hero.view.x_marks_the_spot:
             print("hero encounters a Boss!")
-            game.dungeon.current_monster = monsters.get_boss_for_dungeon_level(len(game.dungeon.levels))
+            game.dungeon.current_monster = game.dungeon.get_boss_for_dungeon_level()
             game.current_controller = 'dungeon.fight'
             return fight.process(game, None)
 
@@ -212,12 +221,12 @@ def found_treasure(game):
         game.increment_treasure_score()
         msg: str = ' You found a treasure chest with %d gold in it!' % treasure
         # Check to see if there is a magic item in the treasure chest. If so, put it in the hero's inventory.
-        if len(game.dungeon.levels) > 8:  # After level 8, allow for the drop of a magical item.
-            drop_weapon = random.randint(0, 19)  # 5%
-            if drop_weapon == 0:
-                weapon = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
-                our_hero.inventory.append(weapon)
-                msg += ' You find a %s in the chest!' % weapon["name"]
+        # if len(game.dungeon.levels) > 10:  # After level 8, allow for the drop of a magical item.
+        #     drop_magic_item = random.randint(0, 19)  # 5%
+        #     if drop_magic_item == 0:
+        #         item = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
+        #         our_hero.inventory.append(item)
+        #         msg += ' You find a %s in the chest!' % item["name"]
         # Check to see if the chest contains a map.
         drop_map = random.randint(0, 3)  # 25%
         if drop_map == 0:

@@ -12,18 +12,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="resources/img/favicon-16x16.png">
     <link rel="manifest" href="resources/img/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="resources/style.css">
-    <style>
-        #renderCanvas {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-    </style>
 	<script src="resources/js/terminal.js"></script>
 	<script src="resources/js/game-interactions.js"></script>
 	<script src="resources/js/confetti.min.js"></script>
-    <script src="https://preview.babylonjs.com/babylon.js"></script>
-    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+{#    <script src="https://preview.babylonjs.com/babylon.js"></script>#}
+{#    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>#}
 </head>
 <body id='body'>
 	<audio id="door-locked"><source src="resources/snd/door-locked.mp3" type="audio/mpeg"></audio>
@@ -58,7 +51,7 @@
 
     <div id="modal">
         <button style="float: right;" class="control" onclick="toggleModal();">Close</button>
-        <canvas id="canvas" touch-action="none" style="height: 400px; width: 600px;"></canvas>
+        <canvas id="canvas" touch-action="none"></canvas>
         <div style="text-align:center; font-weight: bold; margin:auto; width: 100%;">Broad Sword.  Top Damage: 42 Hit Points</div>
     </div>
 

@@ -1,5 +1,7 @@
 import logging
 import random
+
+import dungeon
 from game_play import images
 from town import items
 
@@ -50,19 +52,6 @@ def get_a_monster_for_dungeon_level(level_id):
 
     selected_monster = random.randint(0, len(suitable_monsters) - 1)
     return Monster(suitable_monsters[selected_monster])
-
-
-# This Function is to decide which monster boss to spawn in a given dungeon.
-def get_boss_for_dungeon_level(level_id):
-    # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
-    if level_id == 5:
-        return Monster(giant_snake)
-    elif level_id == 10:
-        return Monster(cyclops)
-    elif level_id == 15:
-        return Monster(wraith)
-    else:
-        return Monster(red_dragon)
 
 
 # Dictionaries of all Monsters in the Game

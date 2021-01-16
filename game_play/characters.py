@@ -20,6 +20,9 @@ class Character:
         self.clairvoyance_count = 0
         self.step_count = 0
 
+    def add_to_inventory(self, item):
+        pass
+
     # Return True if the character is alive, False if not.
     def is_alive(self):
         return self.hit_points > 0

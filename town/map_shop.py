@@ -75,5 +75,5 @@ def draw_map_list(game):
 
 
 def map_cost(game):
-    level = len(game.dungeon.levels) + 1
+    level = game.dungeon.current_level_id + 1
     return (16 * level), level

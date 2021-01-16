@@ -17,8 +17,8 @@ body {
 
 #modal {
     display: none;
-    height: 450px;
-    width: 600px;
+    height: 460px;
+    width: 400px;
     border-radius: 15px;
     border: 2px solid green;
     padding: 6px;
@@ -28,6 +28,11 @@ body {
     left: 20%;
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,1); /* Black w/ opacity */
+}
+
+#canvas {
+    height: 400px;
+    width: 400px;
 }
 
 .control {

@@ -1,6 +1,6 @@
 import random
-from game_play import images, screen, level_complete
 from town import items
+from game_play import images, screen, level_complete
 
 
 # This Function is to attack the monster. This includes the loop to continue to attack until someone dies, or our hero
@@ -77,19 +77,49 @@ def process(game, action):
 
 # routine if your hero is slain
 def hero_is_slain(game):
-    game.game_over = True
-    game.status = 'KIA: ' + game.dungeon.current_monster.name + ', L' + str(game.dungeon.current_level_id)
+    monster = game.dungeon.current_monster
+    hero = game.character
+    if items.lucky_rock in hero.inventory:
+        # The lucky rock saves the character from dying!
+        msg = "   You are struck down by the " + monster.name + "!" \
+              "\nAs you lay dying, " \
+              "\nyour L U C K Y  R O C K begins to glow...\n" \
+              "your strength returns and\n" \
+              "you scramble away from the monster.\n" \
+              "The rock crumbles into dust!"
+        game.dungeon.current_monster = None
+        hero.hit_points = hero.max_hit_points / 2
+        hero.inventory.remove(items.lucky_rock)
+        #  Turn around and crawl one step back.
+        hero.view.turn_right()
+        hero.view.turn_right()
+        hero.view.step_forward()
+        game.current_controller = 'dungeon'
 
-    return screen.paint_two_panes(
-        game=game,
-        commands='Press the Enter key to continue...',
-        messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
-        left_pane_content=images.tombstone,
-        right_pane_content=game.dungeon.current_monster.image,
-        sound='death-dirge',
-        delay=2000,
-        interaction_type='key-press'
-    )
+        return screen.paint_two_panes(
+            game=game,
+            commands='Press any key to continue...',
+            messages='Your still Alive!',
+            left_pane_content=images.lucky_rock_glow,
+            right_pane_content=msg,
+            sound='magic',
+            delay=2000,
+            interaction_type='key_press'
+        )
+    else:
+        game.game_over = True
+        game.status = 'KIA: ' + game.dungeon.current_monster.name + ', L' + str(game.dungeon.current_level_id)
+
+        return screen.paint_two_panes(
+            game=game,
+            commands='Press the Enter key to continue...',
+            messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
+            left_pane_content=images.tombstone,
+            right_pane_content=game.dungeon.current_monster.image,
+            sound='death-dirge',
+            delay=2000,
+            interaction_type='key-press'
+        )
 
 
 def paint(game, image, msg):
