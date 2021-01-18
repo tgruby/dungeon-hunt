@@ -14,17 +14,12 @@ class Trap:
         self.level = trap_definition["level"]
 
     # Method to call when the trap is triggered
-    def triggered(self, character, level):
-        #  Calculate Damage Inflicted
-        damage = random.randint(0, (self.hit_points + 4 * level))  # make it harder as you go.
-        adjusted_damage = character.take_damage(damage)
+    def triggered(self, character):
+        #  Calculate Damage Inflicted... changing this to be 20% of the character's HP.
+        damage = round(character.max_hit_points * 0.2)
+        character.hit_points -= damage
         return 'You triggered a trap in the room! A %s swings down from the ceiling smashing into you dealing ' \
-               '%d damage!' % (self.name, adjusted_damage)
-
-
-# This Function is to decide which trap to spawn in a given dungeon level.
-def get_a_trap_for_dungeon_level(level_id):
-    return Trap(mace_trap)
+               '%d damage!' % (self.name, damage)
 
 
 # Dictionaries of all Traps in the Game

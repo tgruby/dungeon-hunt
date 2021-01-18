@@ -267,8 +267,8 @@ def stepped_on_trap(game):
     our_hero = game.character
     if not our_hero.view.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
         our_hero.view.dungeon.complete_challenge(our_hero.view.current_x, our_hero.view.current_y, 'trap')
-        trap = traps.get_a_trap_for_dungeon_level(our_hero.view.current_level_id)
-        msg = trap.triggered(our_hero, our_hero.view.current_level_id)
+        trap = traps.Trap(traps.mace_trap)
+        msg = trap.triggered(our_hero)
 
         if not our_hero.is_alive():
             # Hero has been killed
