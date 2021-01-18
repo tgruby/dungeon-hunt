@@ -220,13 +220,7 @@ def found_treasure(game):
         our_hero.gold += treasure
         game.increment_treasure_score()
         msg: str = ' You found a treasure chest with %d gold in it!' % treasure
-        # Check to see if there is a magic item in the treasure chest. If so, put it in the hero's inventory.
-        # if len(game.dungeon.levels) > 10:  # After level 8, allow for the drop of a magical item.
-        #     drop_magic_item = random.randint(0, 19)  # 5%
-        #     if drop_magic_item == 0:
-        #         item = items.magical_items[random.randint(0, len(items.magical_items) - 1)]
-        #         our_hero.inventory.append(item)
-        #         msg += ' You find a %s in the chest!' % item["name"]
+
         # Check to see if the chest contains a map.
         drop_map = random.randint(0, 3)  # 25%
         if drop_map == 0:

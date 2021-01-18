@@ -1,18 +1,19 @@
 import random
 from typing import List
 from random import shuffle, randrange
+from game_play import screen, images
 
 
 def generate_dungeon_level(level_number):
-    # limit 11 x 8 due to screen realistate
+    # limit 11 x 8 due to screen real-i-state
     print("Generating Level " + str(level_number))
     if level_number < 4:
-        return make_maze(6 + level_number, 3 + level_number, level_number, False)
+        return make_maze(6 + level_number, 4 + level_number, level_number, False)
     else:
         size_adjustment = level_number % 5
         boss_level = size_adjustment == 0
         print("level: " + str(level_number) + ", mod: " + str(size_adjustment) + ", Boss: " + str(boss_level))
-        return make_maze(6 + size_adjustment, 3 + size_adjustment, level_number, boss_level)
+        return make_maze(6 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
 
 
 def make_maze(w=6, h=4, level_id=0, is_last=False):
@@ -68,14 +69,14 @@ def make_maze(w=6, h=4, level_id=0, is_last=False):
         else:
             buff.append(s[index])
 
-    print("Level: " + str(level_id))
+    # print("Level: " + str(level_id))
     traps_and_treasures = add_doors_traps_and_treasures(maze)
     treasure_count = traps_and_treasures[0]
-    print("Treasure Count: " + str(treasure_count))
+    # print("Treasure Count: " + str(treasure_count))
     trap_count = traps_and_treasures[1]
-    print("Trap Count: " + str(trap_count))
+    # print("Trap Count: " + str(trap_count))
     monster_count = add_monsters(maze)
-    print("Monster Count: " + str(monster_count))
+    # print("Monster Count: " + str(monster_count))
 
     return {
         "maze": maze,
@@ -227,24 +228,18 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    for i in range(2):
+    for i in range(11):
         m = generate_dungeon_level(i)
-    # view = screen.paint_two_panes(
-    #     hero=None,
-    #     commands="Commands Goes Here",
-    #     messages="Nothing to see here...",
-    #     left_pane_content=images.tombstone,
-    #     right_pane_content=m["map"],
-    #     sound=None,
-    #     delay=None,
-    #     interaction_type='key_press'
-    # )
+        view = screen.paint_two_panes(
+            game=None,
+            commands="Commands Goes Here",
+            messages="Nothing to see here...",
+            left_pane_content=images.tombstone,
+            right_pane_content=m["map"],
+            sound=None,
+            delay=None,
+            interaction_type='key_press'
+        )
 
-        print("Map: \n" + m.get("map"))
-    # for row in view.get("canvas"):
-    #     print(row)
-
-    # for row in m["maze"]:
-    #     print(row)
-    #
-    # print(create_clarivoyance_map(m["maze"]))
+        for row in view.get("canvas"):
+            print(row)

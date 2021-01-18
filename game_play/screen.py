@@ -293,14 +293,14 @@ def padding(text, length):
 
 
 def get_stats(game):
-    level = game.dungeon.current_level_id
-    if level == 0:
-        level = 1  # For display purposes, just show 1 at the start.
     if game is None:
         return "*** NO STATS INFO ***"
     if not game.character.is_alive():
         return "*** YOU ARE DEAD ***"
     else:
+        level = game.dungeon.current_level_id
+        if level == 0:
+            level = 1  # For display purposes, just show 1 at the start.
         hero = game.character
         response = "HP: %d/%d, Level: %d, Gold: %d, Score: %d" % (
             hero.hit_points, hero.max_hit_points, level, hero.gold, game.score)

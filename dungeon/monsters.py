@@ -205,8 +205,8 @@ cyclops = {
     "image": images.cyclops,
     "hit_points": 128,
     "gold": 128,
-    "attack_damage": items.broad_sword["damage"],
-    "attack_description": items.broad_sword["attack_message"],
+    "attack_damage": items.two_handed_sword["damage"],
+    "attack_description": items.elvin_sword["attack_message"],
     "item_dropped": items.elvin_sword
 }
 
