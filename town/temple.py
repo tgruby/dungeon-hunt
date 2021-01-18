@@ -65,8 +65,12 @@ def process(game, action):
     return paint(game, message)
 
 
-def full_price(our_hero):
-    return round((our_hero.max_hit_points - our_hero.hit_points) * 2)
+def full_price(hero):
+    # Have the price cost 20% of hero's gold or 6 gold, whichever is more.
+    cost = hero.gold * 0.2
+    if cost > 6:
+        return round(cost)
+    return 6
 
 
 def half_price(our_hero):

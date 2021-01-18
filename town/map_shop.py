@@ -75,5 +75,8 @@ def draw_map_list(game):
 
 
 def map_cost(game):
-    level = game.dungeon.current_level_id + 1
-    return (16 * level), level
+    # Have the map cost 20% of hero's gold or 32 gold, whichever is more.
+    cost = game.character.gold * 0.2
+    if cost > 32:
+        return cost
+    return 32, game.dungeon.current_level_id + 1
