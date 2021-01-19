@@ -24,12 +24,6 @@ def root():
     return render_template('game.html', last_updated=last_modified)
 
 
-# Return our root page (terminal)
-@app.route('/test')
-def test():
-    return render_template('test.html')
-
-
 # Receive a blank game command... respond with a response.
 @app.route('/api/v1/game/action/')
 def process_no_action():

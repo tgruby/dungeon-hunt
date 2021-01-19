@@ -1,12 +1,15 @@
-from game_play import db
-from game_play import screen
 from town import items
+from dungeon import monsters
+from game_play import db, screen
 
 
 def process(game, boss_defeated, monster):
     level_id = game.dungeon.current_level_id
     game.dungeon.complete_level()
-    title_image = 'L E V E L   ' + str(level_id) + '   C O M P L E T E !'
+    if monster == monsters.red_dragon:
+        title_image = 'Y O U   W O N   T H E   G A M E ! ! !'
+    else:
+        title_image = 'L E V E L   ' + str(level_id) + '   C O M P L E T E !'
 
     # Remove the map so the hero has to buy the next map.
     if items.dungeon_map in game.character.inventory:
@@ -31,7 +34,10 @@ def process(game, boss_defeated, monster):
     lb.update_leader(game)
     db.save_leaderboard(lb)
 
-    game.current_controller = 'town'
+    if monster == monsters.red_dragon:
+        game.current_controller = 'game_won'
+    else:
+        game.current_controller = 'town'
 
     return screen.paint_one_pane(
         title_image=title_image,
