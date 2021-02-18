@@ -8,15 +8,15 @@ def generate_dungeon_level(level_number):
     # limit 11 x 8 due to screen real-i-state
     print("Generating Level " + str(level_number))
     if level_number < 4:
-        return make_maze(6 + level_number, 4 + level_number, level_number, False)
+        return make_maze(7 + level_number, 5 + level_number, level_number, False)
     else:
-        size_adjustment = level_number % 5
+        size_adjustment = level_number % 4
         boss_level = size_adjustment == 0
         print("level: " + str(level_number) + ", mod: " + str(size_adjustment) + ", Boss: " + str(boss_level))
-        return make_maze(6 + size_adjustment, 4 + size_adjustment, level_number, boss_level)
+        return make_maze(7 + size_adjustment, 5 + size_adjustment, level_number, boss_level)
 
 
-def make_maze(w=6, h=4, level_id=0, is_last=False):
+def make_maze(w=7, h=5, level_id=0, is_last=False):
     vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
     ver = [["| "] * w + ['|'] for _ in range(h)] + [[]]
     hor = [["+-"] * w + ['+'] for _ in range(h + 1)]
@@ -228,7 +228,7 @@ def is_opening(floor_space):
 
 if __name__ == "__main__":
     # Testing
-    for i in range(11):
+    for i in range(16):
         m = generate_dungeon_level(i)
         view = screen.paint_two_panes(
             game=None,

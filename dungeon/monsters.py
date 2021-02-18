@@ -1,7 +1,6 @@
 import logging
 import random
 
-import dungeon
 from game_play import images
 from town import items
 
@@ -245,12 +244,5 @@ dungeon_monsters = [
     skeleton_warrior,
     half_orc,
     minotaur
-]
-
-monster_bosses = [
-    giant_snake,
-    cyclops,
-    wraith,
-    red_dragon
 ]
 

@@ -65,13 +65,13 @@ class Dungeon:
         self.current_level['level_completed'] = True
 
     # This Function is to decide which monster boss to spawn in a given dungeon.
-    def get_boss_for_dungeon_level(self):
+    def get_boss(self):
         # Select a monster appropriate for the level of this dungeon. If this is the first dungeon, just return the rat.
-        if self.current_level_id == 5:
+        if self.current_level_id == 4:
             return self.snake_boss
-        elif self.current_level_id == 10:
+        elif self.current_level_id == 8:
             return self.cyclops_boss
-        elif self.current_level_id == 15:
+        elif self.current_level_id == 12:
             return self.wraith_boss
         else:
             return self.dragon_boss
@@ -152,7 +152,7 @@ def process(game, action):
         # Check to see if we have met a boss.
         if stepped_on == hero.view.x_marks_the_spot:
             print("hero encounters a Boss!")
-            game.dungeon.current_monster = game.dungeon.get_boss_for_dungeon_level()
+            game.dungeon.current_monster = game.dungeon.get_boss()
             game.current_controller = 'dungeon.fight'
             return fight.process(game, None)
 
