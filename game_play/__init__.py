@@ -21,7 +21,10 @@ class Game:
         if self.character.step_count > level_step_goal:
             level_bonus = 0
         else:
-            level_bonus = self.dungeon.current_level_id * 100
+            if self.game_mode == 'hard':
+                level_bonus = self.dungeon.current_level_id * 200
+            else:
+                level_bonus = self.dungeon.current_level_id * 100
         self.score += level_bonus
         self.character.step_count = 0
         return level_bonus
@@ -46,7 +49,11 @@ class Game:
 
     def increment_monster_score(self):
         # Increase Score for killing monsters.  The higher the level, the more points.
-        self.score += self.dungeon.current_level_id * 10
+        if self.game_mode == 'hard':
+            # Add extra points for being in hard mode
+            self.score += self.dungeon.current_level_id * 20
+        else:
+            self.score += self.dungeon.current_level_id * 10
 
 
 def route(game, action):
