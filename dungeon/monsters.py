@@ -12,10 +12,12 @@ class Monster:
     # Class Level Variables
 
     # Monster Constructor
-    def __init__(self, monster_definition):
+    def __init__(self, monster_definition, game_mode):
         self.name = monster_definition["name"]
         self.image = monster_definition["image"]
         self.hit_points = monster_definition["hit_points"]
+        if game_mode == 'hard':
+            self.hit_points += (monster_definition["hit_points"] / 2)
         self.gold = random.randint(3, monster_definition["gold"])
         self.attack_damage = monster_definition["attack_damage"]
         self.attack_description = monster_definition["attack_description"]
@@ -34,7 +36,7 @@ class Monster:
 
 
 # This Function is to decide which monster to spawn in a given dungeon.
-def get_a_monster_for_dungeon_level(level_id):
+def get_a_monster_for_dungeon_level(level_id, game_mode):
     # Select a monster appropriate for the level of this dungeon.
     # Use a sliding scale of 4 monsters per level.
     suitable_monsters = []
@@ -50,7 +52,7 @@ def get_a_monster_for_dungeon_level(level_id):
         lower_bounds += 1
 
     selected_monster = random.randint(0, len(suitable_monsters) - 1)
-    return Monster(suitable_monsters[selected_monster])
+    return Monster(suitable_monsters[selected_monster], game_mode)
 
 
 # Dictionaries of all Monsters in the Game

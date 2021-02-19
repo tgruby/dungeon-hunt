@@ -1,7 +1,6 @@
 import uuid
-import town
 import game_play
-from game_play import images, screen, db, characters
+from game_play import images, screen, db, characters, set_game_mode
 import dungeon
 
 
@@ -28,7 +27,7 @@ def process(game, action):
 
         return screen.paint_one_pane(
             title_image=images.intro_scroll,
-            contents= contents,
+            contents=contents,
             contents_image=None,
             commands="Please provide your gamer-tag (for display on the leaderboard):",
             sound=None,
@@ -42,5 +41,5 @@ def process(game, action):
         # Record the name of the character and move forward.
         game.gamer_tag = action
         db.save_game(game.game_id, game)
-        game.current_controller = 'town'
-        return town.process(game, None)
+        game.current_controller = 'game_play.set_game_mode'
+        return set_game_mode.process(game, None)

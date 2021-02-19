@@ -253,7 +253,10 @@ class PointOfView:
 
         # After you enter the dungeon, you cannot go back (unless you teleport, of course).
         if value == self.doorway_up:
-            return "town"
+            if self.game.game_mode == 'hard':
+                return "This door is locked."
+            else:
+                return "town"
         # If getting to the end door, and you have the key, you finish the level.
         if value == self.doorway_down:
             # Check to see if it is locked
@@ -289,15 +292,6 @@ class PointOfView:
             self.current_direction = self.east
         else:
             self.current_direction = self.west
-
-    def climb_up(self):
-        # First check if they are on a up_ladder
-        if self.current_level[self.current_y][self.current_x] == self.doorway_up:
-            # Since all previous levels have had all challenges completed, we can skip right to town.
-            self.current_level_id = -1
-            return
-        else:
-            return "You can't do that here!"
 
     def update_map(self, map):
         map_array = str.splitlines(map)

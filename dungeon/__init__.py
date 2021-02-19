@@ -20,10 +20,10 @@ class Dungeon:
         self.current_level = None
         self.current_level_id = 0
         self.current_monster = None
-        self.snake_boss = monsters.Monster(monsters.giant_snake)
-        self.cyclops_boss = monsters.Monster(monsters.cyclops)
-        self.wraith_boss = monsters.Monster(monsters.wraith)
-        self.dragon_boss = monsters.Monster(monsters.red_dragon)
+        self.snake_boss = monsters.Monster(monsters.giant_snake, 'easy')
+        self.cyclops_boss = monsters.Monster(monsters.cyclops, 'easy')
+        self.wraith_boss = monsters.Monster(monsters.wraith, 'easy')
+        self.dragon_boss = monsters.Monster(monsters.red_dragon, 'easy')
 
     def generate_next_level(self):
         self.current_level_id += 1
@@ -186,7 +186,7 @@ def process(game, action):
 def fight_monster(game):
     our_hero = game.character
     if not game.dungeon.is_challenge_completed(our_hero.view.current_x, our_hero.view.current_y):
-        game.dungeon.current_monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id)
+        game.dungeon.current_monster = monsters.get_a_monster_for_dungeon_level(our_hero.view.current_level_id, game.game_mode)
         game.current_controller = 'dungeon.fight'
         return fight.process(game, None)
     # else we have already fought this monster...

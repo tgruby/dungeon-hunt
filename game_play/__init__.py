@@ -7,6 +7,7 @@ class Game:
     def __init__(self, game_id):
         self.game_id = game_id
         self.gamer_tag = None
+        self.game_mode = 'easy'
         self.character = None
         self.dungeon = None
         self.score = 0
