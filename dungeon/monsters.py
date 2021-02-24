@@ -1,10 +1,7 @@
-import logging
 import random
 
 from game_play import images
 from town import items
-
-log = logging.getLogger('dragonsville')
 
 
 # Class object to represent any active monster
@@ -16,7 +13,7 @@ class Monster:
         self.name = monster_definition["name"]
         self.image = monster_definition["image"]
         self.hit_points = monster_definition["hit_points"]
-        if game_mode == 'hard':
+        if game_mode == 'hard' and monster_definition["name"] != "Giant Ant":
             self.hit_points += (monster_definition["hit_points"] / 2)
         self.gold = random.randint(3, monster_definition["gold"])
         self.attack_damage = monster_definition["attack_damage"]
@@ -247,4 +244,3 @@ dungeon_monsters = [
     half_orc,
     minotaur
 ]
-
