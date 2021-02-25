@@ -4,7 +4,7 @@ import game_play.screen
 from game_play import images, screen
 
 commands = "(B)uy the next level map, or (L)eave the Shop"
-message = "Welcome to Tina's Cartography, mighty warrior! Would you like to buy a map of the catacombs? They are " \
+message = "Welcome to Tina's Cartography, mighty warrior! Would you like to buy a map of the labyrinth? They are " \
           "incredibly useful, and many warriors died to produce them! "
 image = images.scroll
 

@@ -78,7 +78,7 @@ class Dungeon:
 
 
 commands = "Left (A), Right (D), Forward (W), (I)nventory"
-message = "You crawl into the dark cave at the side of the mountain and enter the Catacombs!"
+message = "You crawl into the dark cave at the side of the mountain and enter the Labyrinth!"
 
 
 def paint(game, msg, sound):

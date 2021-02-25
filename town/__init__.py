@@ -4,7 +4,7 @@ import dungeon
 from town import map_shop, equipment_shop, guild, potion_shop, temple
 
 commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (D)ungeon, (G)uild"
-msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. The catacomb " \
+msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. The labyrinth " \
       "entrance is carved into the side of the mountain nearby. "
 image = images.small_village
 

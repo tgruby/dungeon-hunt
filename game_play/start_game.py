@@ -15,15 +15,13 @@ def process(game, action):
         game.current_controller = 'game_play.start_game'
         db.save_game(game.game_id, game)
 
-        contents = "“Yeah, well someday, I’ll be something big!!!” you yell as you slam the door to " \
-                   "your parents peasant hovel.  So sick of everyone... let me be me. When is that going to start? " \
-                   "Mum and da are always saying, \"Be like uncle Erb...\", well uncle Erb died a lonely peasant. Not for " \
-                   "me bro, not for me. You run into the town square where a scroll catches " \
-                   "your eye.  Nailed to the town post, usually reserved for hanging notices, this one has a gold flare " \
-                   "to it.  Dang, wish you knew how to read.  After a few minutes of intense concentration, " \
-                   "you make out: “Thordon... Adventures!”.  That's It!  I’ll show them! I’ll become a famous " \
-                   "adventurer in the town of Thordon!  Where there is always another dungeon, gold, and a place to make " \
-                   "your name!"
+        contents = "The city of Thordon was once a great city, with unimaginable wealth and riches. So much so that " \
+                   "to protect their piles of gold they cut deep into the mountain a labyrinth. This maze of " \
+                   "corridors and rooms were heavily guarded and laden with traps discouraging the best of thieves. " \
+                   "And all was well… until the dragon came. She came screeching from the sky, her fire laid waste " \
+                   "and death was everywhere. She made the labyrinth her home, and as the years went by, " \
+                   "wild and evil things moved in. Only a small shell of a town now remains, waiting... hoping… " \
+                   "for a hero to free Thordon from its curse and return it to its glory. "
 
         return screen.paint_one_pane(
             title_image=images.intro_scroll,
