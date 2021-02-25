@@ -77,7 +77,7 @@ class Dungeon:
             return self.dragon_boss
 
 
-commands = "Left (A), Right (D), Forward (W), (I)nventory"
+commands = "Turn Left (A), Turn Right (D), Step Forward (W), (I)nventory"
 message = "You crawl into the dark cave at the side of the mountain and enter the Labyrinth!"
 
 

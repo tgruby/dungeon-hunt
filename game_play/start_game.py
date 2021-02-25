@@ -18,8 +18,8 @@ def process(game, action):
         contents = "The city of Thordon was once a great city, with unimaginable wealth and riches. So much so that " \
                    "to protect their piles of gold they cut deep into the mountain a labyrinth. This maze of " \
                    "corridors and rooms were heavily guarded and laden with traps discouraging the best of thieves. " \
-                   "And all was well… until the dragon came. She came screeching from the sky, her fire laid waste " \
-                   "and death was everywhere. She made the labyrinth her home, and as the years went by, " \
+                   "All was well until the dragon came. She came screeching from the sky, her fire laid waste to the " \
+                   "town and death was everywhere. She made the labyrinth her home, and as the years went by, " \
                    "wild and evil things moved in. Only a small shell of a town now remains, waiting... hoping… " \
                    "for a hero to free Thordon from its curse and return it to its glory. "
 

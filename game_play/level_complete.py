@@ -34,8 +34,8 @@ def process(game, boss_defeated, monster):
     lb.update_leader(game)
     db.save_leaderboard(lb)
 
-    if monster == monsters.red_dragon:
-        game.current_controller = 'game_won'
+    if monster.name == monsters.red_dragon["name"]:
+        game.current_controller = 'game_play.game_won'
     else:
         game.current_controller = 'town'
 

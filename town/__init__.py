@@ -3,9 +3,10 @@ from game_play import images, screen
 import dungeon
 from town import map_shop, equipment_shop, guild, potion_shop, temple
 
-commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (D)ungeon, (G)uild"
-msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. The labyrinth " \
-      "entrance is carved into the side of the mountain nearby. "
+commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (L)abyrinth, (G)uild"
+msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. " \
+      "The labyrinth entrance is carved into the side of the mountain nearby. Select the " \
+      "corresponding letter to enter a shop or the labyrinth."
 image = images.small_village
 
 
@@ -34,7 +35,7 @@ def process(game, action):
         return temple.process(game, None)
 
     # Enter Dungeon
-    if action.lower() == "d":
+    if action.lower() == "l":
         game.current_controller = 'dungeon'
         return dungeon.process(game, 'enter')
 
@@ -44,8 +45,8 @@ def process(game, action):
         return guild.process(game, None)
 
     # Cheat to help with testing.... yank after testing
-    if action.lower() == "$":
-        game.character.gold = 1500
+    # if action.lower() == "$":
+    #     game.character.gold = 1500
 
     # Something else?
     return paint(game)

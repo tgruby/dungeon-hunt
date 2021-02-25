@@ -1,4 +1,5 @@
 import textwrap
+from game_play import images
 
 medium_border = "<----------------------o---------------------->"
 short_border = "<--------o-------->"
@@ -103,6 +104,31 @@ def paint_one_pane(
         "animation": animation,
         # whether the next move should happen on any key press or the enter key (key_press | enter_press)
         "interaction_type": interaction_type,
+        "game_id": game_id
+    }
+
+    return response
+
+
+# Function to draw the winning screen
+def paint_winning_screen(game_id):
+    canvas = []
+
+    formatted_image = square_image(images.castle, 27, 80)
+    for line in formatted_image:
+        canvas.append(line)
+
+    response = {
+        # Updated page for the browser to paint,
+        "canvas": canvas,
+        # Play a sound for this screen
+        "sound": 'level-complete',
+        # Time to wait before allowing the player to make the next move
+        "delay": 2000,
+        # Whether an animation should be played
+        "animation": 'confetti',
+        # whether the next move should happen on any key press or the enter key (key_press | enter_press)
+        "interaction_type": 'enter_press',
         "game_id": game_id
     }
 
