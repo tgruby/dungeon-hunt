@@ -8,7 +8,7 @@ def process(game, action):
         return paint(game)
 
     # Visit the Shop to buy stuff
-    if action.lower() == "l":
+    if action.lower() == "x":
         game.current_controller = 'town'
         return town.process(game, None)
 
@@ -32,7 +32,7 @@ def paint(game):
 
     return screen.paint_two_panes(
         game=game,
-        commands="(L)eave",
+        commands="E(x)it",
         messages=None,
         left_pane_content=images.shield,
         right_pane_content=content,
