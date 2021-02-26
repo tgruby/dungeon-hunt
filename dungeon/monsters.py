@@ -37,9 +37,11 @@ def get_a_monster_for_dungeon_level(level_id, game_mode):
     # Select a monster appropriate for the level of this dungeon.
     # Use a sliding scale of 4 monsters per level.
     suitable_monsters = []
+    # The toughest the monster can be is equal to the level of the dungeon you are on.
     upper_bounds = level_id
     if upper_bounds >= len(dungeon_monsters):
         upper_bounds = len(dungeon_monsters)-1
+    # The weakest a monster can be is 4 levels lower than the level you are on.
     lower_bounds = upper_bounds - 4
     if lower_bounds < 0:
         lower_bounds = 0

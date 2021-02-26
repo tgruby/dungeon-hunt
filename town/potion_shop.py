@@ -63,7 +63,8 @@ def purchase_items(game, action):
 
 
 def draw_purchase_list():
-    response = game_play.screen.medium_border + '\n'
+    response = '                                 Monster Parts\n'
+    response += game_play.screen.medium_border + '\n'
     response += "  # | Item                           | Cost " + '\n'
     response += game_play.screen.medium_border + '\n'
     for number, e in enumerate(potions.all_enchantments):

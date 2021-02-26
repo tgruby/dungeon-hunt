@@ -56,7 +56,7 @@ teleport_potion = {
     "type": "potion",
     "max_hit_points": 1,
     "affects": "character",
-    "cost": 3
+    "cost": 2
 }
 
 clairvoyance_potion = {
@@ -65,7 +65,7 @@ clairvoyance_potion = {
     "description": "This potion will enable your mind to see the entire labyrinth for a short time",
     "type": "potion",
     "affects": "character",
-    "cost": 4
+    "cost": 2
 }
 
 all_enchantments = [
