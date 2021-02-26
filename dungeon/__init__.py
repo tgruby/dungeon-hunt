@@ -25,9 +25,9 @@ class Dungeon:
         self.wraith_boss = monsters.Monster(monsters.wraith, 'easy')
         self.dragon_boss = monsters.Monster(monsters.red_dragon, 'easy')
 
-    def generate_next_level(self):
+    def generate_next_level(self, game_mode):
         self.current_level_id += 1
-        self.current_level = dungeon_generator.generate_dungeon_level(self.current_level_id)
+        self.current_level = dungeon_generator.generate_dungeon_level(self.current_level_id, game_mode)
         self.levels.append(self.current_level)
 
     def complete_challenge(self, x, y, challenge_type):
@@ -101,9 +101,9 @@ def process(game, action):
 
     if action == 'enter':
         if game.dungeon.current_level is None:
-            game.dungeon.generate_next_level()
+            game.dungeon.generate_next_level(game.game_mode)
         elif game.dungeon.current_level['level_completed'] is True:
-            game.dungeon.generate_next_level()
+            game.dungeon.generate_next_level(game.game_mode)
         hero.view = PointOfView(game)
         return paint(game, message, 'door-slammed')
 

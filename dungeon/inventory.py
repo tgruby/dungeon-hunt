@@ -1,9 +1,9 @@
-import game_play.screen
-from game_play import images, screen
 import dungeon
+import game_play.screen
 from town import potions
+from game_play import images, screen
 
-commands = "Enter a (#) to equip an item, or (L)eave"
+commands = "Enter a (#) to equip or use an item, or E(x)it Inventory"
 message = "You open you pack and check your inventory..."
 image = images.backpack_small
 
@@ -26,7 +26,7 @@ def process(game, action):
     if action is None:
         return paint(game, message, None)
 
-    if action.lower() == 'l':
+    if action.lower() == 'x':
         game.current_controller = 'dungeon'
         return dungeon.process(game, None)
 

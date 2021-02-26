@@ -3,7 +3,7 @@ from game_play import images, screen
 import dungeon
 from town import map_shop, equipment_shop, guild, potion_shop, temple
 
-commands = "(E)quipment Shop, (P)otion Shop, (M)ap Shop, (T)emple, (L)abyrinth, (G)uild"
+commands = "(E)quipment Shop, (A)pothecary, (C)artographer, (T)emple, (L)abyrinth, (G)uild"
 msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. " \
       "The labyrinth entrance is carved into the side of the mountain nearby. Select the " \
       "corresponding letter to enter a shop or the labyrinth."
@@ -20,12 +20,12 @@ def process(game, action):
         return equipment_shop.process(game, None)
 
     # Go into the Map Shop
-    if action.lower() == "m":
+    if action.lower() == "c":
         game.current_controller = 'town.map_shop'
         return map_shop.process(game, None)
 
     # Visit the Magic shop
-    if action.lower() == "p":
+    if action.lower() == "a":
         game.current_controller = 'town.potion_shop'
         return potion_shop.process(game, None)
 

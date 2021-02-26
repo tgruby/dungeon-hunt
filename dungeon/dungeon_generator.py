@@ -4,11 +4,11 @@ from random import shuffle, randrange
 from game_play import screen, images
 
 
-def generate_dungeon_level(level_number):
+def generate_dungeon_level(level_number, game_mode):
     # limit 11 x 8 due to screen real-i-state
     print("Generating Level " + str(level_number))
     if level_number < 4:
-        return make_maze(7 + level_number, 5 + level_number, level_number, False)
+        return make_maze(7 + level_number, 5 + level_number, level_number, False, game_mode)
     else:
         size_adjustment = level_number % 4
         boss_level = size_adjustment == 0
@@ -16,7 +16,7 @@ def generate_dungeon_level(level_number):
         return make_maze(7 + size_adjustment, 5 + size_adjustment, level_number, boss_level)
 
 
-def make_maze(w=7, h=5, level_id=0, is_last=False):
+def make_maze(w=7, h=5, level_id=0, is_last=False, game_mode='easy'):
     vis = [[0] * w + [1] for _ in range(h)] + [[1] * (w + 1)]
     ver = [["| "] * w + ['|'] for _ in range(h)] + [[]]
     hor = [["+-"] * w + ['+'] for _ in range(h + 1)]
@@ -70,7 +70,7 @@ def make_maze(w=7, h=5, level_id=0, is_last=False):
             buff.append(s[index])
 
     # print("Level: " + str(level_id))
-    traps_and_treasures = add_doors_traps_and_treasures(maze)
+    traps_and_treasures = add_doors_traps_and_treasures(maze, game_mode)
     treasure_count = traps_and_treasures[0]
     # print("Treasure Count: " + str(treasure_count))
     trap_count = traps_and_treasures[1]
@@ -159,7 +159,7 @@ scan_for_door = [
 
 
 # Find dead-ends and put a door in front of them, and a chest in them.  Return the count of treasure chests created.
-def add_doors_traps_and_treasures(maze_array):
+def add_doors_traps_and_treasures(maze_array, game_mode):
     treasure_chest_count = 0
     trap_count = 0
     # walk through every cell in the matrix.
@@ -184,6 +184,8 @@ def add_doors_traps_and_treasures(maze_array):
                 # print("Placing Door: x=%d, y=%d" % (door_x, door_y))
                 maze_array[door_y][door_x] = 'D'
                 is_trap = random.randint(0, 3)  # 25% chance it is a trap instead of treasure
+                if game_mode == 'hard':
+                    is_trap = random.randint(0, 2)  # 33% chance it is a trap instead of treasure
                 if is_trap == 0:
                     # print("Placing Trap: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = 'T'
@@ -192,6 +194,8 @@ def add_doors_traps_and_treasures(maze_array):
                     # print("Placing Chest: x=%d, y=%d" % (x, y))
                     maze_array[y][x] = '$'
                     treasure_chest_count += 1
+    print('Treasure Count... ' + str(treasure_chest_count))
+    print('Trap Count....... ' + str(trap_count))
     return treasure_chest_count, trap_count
 
 
@@ -229,7 +233,7 @@ def is_opening(floor_space):
 if __name__ == "__main__":
     # Testing
     for i in range(16):
-        m = generate_dungeon_level(i)
+        m = generate_dungeon_level(i, 'easy')
         view = screen.paint_two_panes(
             game=None,
             commands="Commands Goes Here",

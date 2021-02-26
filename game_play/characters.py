@@ -60,6 +60,6 @@ warrior = {
     "equipped_weapon": items.dagger,
     "equipped_armor": None,
     "equipped_shield": None,
-    "inventory": [items.dagger, potions.health_potion, potions.clairvoyance_potion],
+    "inventory": [items.dagger, potions.health_potion, potions.health_potion],
     "level_up_hit_points": 15
 }
