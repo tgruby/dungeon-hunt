@@ -22,22 +22,21 @@ def process(game, boss_defeated, monster):
                "Level Step Bonus....... " + str(game.calc_score_level_bonus()) + "\n\n" \
                "HP Bonus Received...... " + str(game.calc_hp_bonus())
 
+    game.current_controller = 'town'
+
     if boss_defeated:
         contents += "\n\nDefeat Boss Bonus... " + str(game.calc_boss_bonus())
         game.character.inventory.append(monster.item_dropped)
         contents += "\n" + monster.name + " Dropped... " + monster.item_dropped["name"] + "!!!"
         contents += "\n" + monster.name + " Dropped... an extra Skeleton Key!!!"
+        if monster.name == monsters.red_dragon["name"]:
+            game.current_controller = 'game_play.game_won'
 
     # Update the Leaderboard
     game.status = "Completed: L" + str(level_id)
     lb = db.load_leaderboard()
     lb.update_leader(game)
     db.save_leaderboard(lb)
-
-    if monster.name == monsters.red_dragon["name"]:
-        game.current_controller = 'game_play.game_won'
-    else:
-        game.current_controller = 'town'
 
     return screen.paint_one_pane(
         title_image=title_image,
