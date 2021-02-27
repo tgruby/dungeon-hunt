@@ -152,7 +152,7 @@ goblin = {
     "gold": 60,
     "attack_damage": items.broad_sword["damage"],
     "attack_description": items.broad_sword["attack_message"],
-    "item_dropped": items.broad_sword
+    "item_dropped": items.goblin_ears
 }
 
 skeleton = {
@@ -185,7 +185,7 @@ half_orc = {
     "gold": 128,
     "attack_damage": items.broad_sword["damage"],
     "attack_description": items.broad_sword["attack_message"],
-    "item_dropped": items.two_handed_sword
+    "item_dropped": items.orc_hide
 }
 
 minotaur = {
@@ -196,7 +196,7 @@ minotaur = {
     "gold": 196,
     "attack_damage": items.two_handed_sword["damage"],
     "attack_description": items.two_handed_sword["attack_message"],
-    "item_dropped": items.two_handed_sword
+    "item_dropped": items.minotaur_horns
 }
 
 cyclops = {

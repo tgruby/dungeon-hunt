@@ -47,13 +47,13 @@ def process(game, action):
 
 def purchase_items(game, action):
     item_number_picked = int(action)
-    if item_number_picked <= len(potions.all_enchantments)-1:
+    if item_number_picked <= game.character.monster_parts:
         item = potions.all_enchantments[item_number_picked]
 
-        if count_monster_parts(game.character) < item["cost"]:
+        if game.character.monster_parts < item["cost"]:
             msg = "You don't have enough monster parts for that!"
         else:
-            take_monster_parts(game.character, item["cost"])
+            game.character.monster_parts -= item["cost"]
             game.character.inventory.append(item)
             msg = "You have purchased the %s." % item["name"]
     else:
@@ -74,20 +74,3 @@ def draw_purchase_list():
     response += game_play.screen.medium_border + '\n'
     return response
 
-
-def count_monster_parts(hero):
-    count = 0
-    for item in hero.inventory:
-        if item['type'] == 'loot':
-            count += 1
-    return count
-
-
-def take_monster_parts(hero, number):
-    count = number
-    for item in hero.inventory:
-        if item['type'] == 'loot':
-            hero.inventory.remove(item)
-            count -= 1
-            if count == 0:
-                return

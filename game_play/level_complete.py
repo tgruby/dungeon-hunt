@@ -1,13 +1,15 @@
 from town import items
 from dungeon import monsters
-from game_play import db, screen
+from game_play import db, screen, game_won
 
 
 def process(game, boss_defeated, monster):
     level_id = game.dungeon.current_level_id
     game.dungeon.complete_level()
-    if monster == monsters.red_dragon:
-        title_image = 'Y O U   W O N   T H E   G A M E ! ! !'
+    if monster.name == monsters.red_dragon["name"]:
+        game.calc_score_level_bonus()
+        game.calc_boss_bonus()
+        return game_won.process(game, None)
     else:
         title_image = 'L E V E L   ' + str(level_id) + '   C O M P L E T E !'
 
@@ -29,8 +31,6 @@ def process(game, boss_defeated, monster):
         game.character.inventory.append(monster.item_dropped)
         contents += "\n" + monster.name + " Dropped... " + monster.item_dropped["name"] + "!!!"
         contents += "\n" + monster.name + " Dropped... an extra Skeleton Key!!!"
-        if monster.name == monsters.red_dragon["name"]:
-            game.current_controller = 'game_play.game_won'
 
     # Update the Leaderboard
     game.status = "Completed: L" + str(level_id)

@@ -18,7 +18,7 @@ def process(game, action):
         if monster.is_alive():
             message = message + '\n ' + monster.attack(hero)
             if not hero.is_alive():
-                return hero_is_slain(game)
+                return hero_is_slain(game, message)
             return paint(game, monster.image, message)
         else:
             # Monster has been killed
@@ -28,13 +28,11 @@ def process(game, action):
             game.increment_monster_score()
 
             # Check to see if the monster drops it's monster parts. If so, put it in the hero's inventory.
-            drop_part = random.randint(0, 3)  # 25%
+            # Have monsters drop less the deeper the hero goes into the dungeon.
+            drop_part = random.randint(0, game.dungeon.current_level_id)
             if drop_part == 0:
-                if monster.item_dropped["type"] == "loot":
-                    hero.inventory.append(items.monster_parts)
-                else:
-                    hero.inventory.append(monster.item_dropped)
-                message = message + ' You recover a ' + monster.item_dropped["name"] + " from the monster!"
+                hero.monster_parts += 1
+                message = message + ' You recover %s from the %s!' % (monster.item_dropped["name"], monster["name"])
             message = message + ' Digging through the %s remains you found %d gold!' % (monster.name, monster.gold)
             commands = "Press any key to continue..."
 
@@ -76,7 +74,7 @@ def process(game, action):
 
 
 # routine if your hero is slain
-def hero_is_slain(game):
+def hero_is_slain(game, message):
     monster = game.dungeon.current_monster
     hero = game.character
     if items.lucky_rock in hero.inventory:
@@ -113,7 +111,7 @@ def hero_is_slain(game):
         return screen.paint_two_panes(
             game=game,
             commands='Press the Enter key to continue...',
-            messages="You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
+            messages=message + " You have been slain! Your game score is " + str(game.score) + ". Better luck next time...",
             left_pane_content=images.tombstone,
             right_pane_content=game.dungeon.current_monster.image,
             sound='death-dirge',

@@ -1,9 +1,7 @@
-from game_play import db, screen, images
+from game_play import db, screen
 
 
 def process(game, action):
-
-    title_image = 'T H E   T O W N   R E J O I C E S ! ! !'
 
     # Update the Leaderboard
     game.status = "Won the Game!!!!"

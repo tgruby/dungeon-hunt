@@ -11,6 +11,7 @@ class Character:
         self.max_hit_points = character_definition["hit_points"]
         self.hit_points = self.max_hit_points
         self.gold = character_definition["gold"]
+        self.monster_parts = 0
         self.equipped_weapon = character_definition["equipped_weapon"]
         self.equipped_armor = character_definition["equipped_armor"]
         self.equipped_shield = character_definition["equipped_shield"]

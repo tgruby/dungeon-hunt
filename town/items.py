@@ -37,15 +37,39 @@ plate_mail_armor = {
 
 bony_fingers = {
     "type": "loot",
-    "name": "Bony Fingers",
+    "name": "bony fingers",
     "damage": 30,
     "cost": 20,
     "attack_message": "%s wraps it's fingers around your throat squeezing and doing %d damage!"
 }
 
+goblin_ears = {
+    "type": "loot",
+    "name": "goblin ears",
+    "damage": 0,
+    "cost": 0,
+    "attack_message": "%s %d "
+}
+
+minotaur_horns = {
+    "type": "loot",
+    "name": "minotaur horns",
+    "damage": 0,
+    "cost": 0,
+    "attack_message": "%s %d "
+}
+
+orc_hide = {
+    "type": "loot",
+    "name": "orc hide",
+    "damage": 0,
+    "cost": 0,
+    "attack_message": "%s %d "
+}
+
 gnome_feet = {
     "type": "loot",
-    "name": "Gnome Foot",
+    "name": "gnome feet",
     "damage": 10,
     "cost": 5,
     "attack_message": "%s kicks at you doing %d damage!"
@@ -53,7 +77,7 @@ gnome_feet = {
 
 snake_bite = {
     "type": "loot",
-    "name": "Snake Fangs",
+    "name": "snake fangs",
     "damage": 25,
     "cost": 50,
     "attack_message": "%s lunges at you, sinking its fangs into you doing %d damage!"
@@ -61,7 +85,7 @@ snake_bite = {
 
 ant_pincers = {
     "type": "loot",
-    "name": "Ant Pincers",
+    "name": "ant pincers",
     "damage": 10,
     "cost": 8,
     "attack_message": "%s bites and saws with its pincers doing %d damage!"
@@ -69,7 +93,7 @@ ant_pincers = {
 
 spider_fangs = {
     "type": "loot",
-    "name": "Spider Fangs",
+    "name": "spider fangs",
     "damage": 10,
     "cost": 4,
     "attack_message": "%s sinks it's fangs into you doing %d damage!"
@@ -77,7 +101,7 @@ spider_fangs = {
 
 bat_fangs = {
     "type": "loot",
-    "name": "Bat Fangs",
+    "name": "bat wings",
     "damage": 24,
     "cost": 12,
     "attack_message": "%s sinks it's fangs into you doing %d damage!"
@@ -85,7 +109,7 @@ bat_fangs = {
 
 rat_teeth = {
     "type": "loot",
-    "name": "Rat Teeth",
+    "name": "rat teeth",
     "damage": 6,
     "cost": 2,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
@@ -94,7 +118,7 @@ rat_teeth = {
 
 wolf_teeth = {
     "type": "loot",
-    "name": "Wolf Teeth",
+    "name": "wolf pelt",
     "damage": 24,
     "cost": 7,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
@@ -102,7 +126,7 @@ wolf_teeth = {
 
 badger_teeth = {
     "type": "loot",
-    "name": "Badger Teeth",
+    "name": "badger teeth",
     "damage": 10,
     "cost": 14,
     "attack_message": "%s sinks it's teeth into you doing %d damage!"
@@ -126,7 +150,7 @@ bee_stinger = {
 
 wraith_touch = {
     "type": "loot",
-    "name": "Wraith Claw",
+    "name": "wraith touch",
     "damage": 72,
     "cost": 80,
     "attack_message": "%s reaches toward you as the air goes ice cold... you feel your soul being sucked from your "

@@ -328,8 +328,6 @@ def get_stats(game):
         if level == 0:
             level = 1  # For display purposes, just show 1 at the start.
         hero = game.character
-        response = "HP: %d/%d, Level: %d, Gold: %d, Score: %d" % (
-            hero.hit_points, hero.max_hit_points, level, hero.gold, game.score)
-        if hero.view:
-            response += ", Facing: " + hero.view.get_direction()
+        response = "Health: %d/%d, Level: %d, Gold: %d, Monster Parts: %d, Score: %d" % (
+            hero.hit_points, hero.max_hit_points, level, hero.gold, hero.monster_parts, game.score)
         return response

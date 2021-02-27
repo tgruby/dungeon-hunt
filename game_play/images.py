@@ -137,7 +137,7 @@ minotaur = \
  |$%^||   $%#$%   |  VK/cf     |L|"
 
 castle = \
-"            T H E   T O W N   R E J O I C E S ! ! ! \n\
+"             T H E   T O W N   R E J O I C E S ! ! ! \n\
                     |~        www \n\
                    /.\       /#^^\_     /\ \n\
                   /#  \     /#%    \   /# \ \n\
