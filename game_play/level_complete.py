@@ -30,7 +30,7 @@ def process(game, boss_defeated, monster):
         contents += "\n\nDefeat Boss Bonus... " + str(game.calc_boss_bonus())
         game.character.inventory.append(monster.item_dropped)
         contents += "\n" + monster.name + " Dropped... " + monster.item_dropped["name"] + "!!!"
-        contents += "\n" + monster.name + " Dropped... an extra Skeleton Key!!!"
+        # contents += "\n" + monster.name + " Dropped... an extra Skeleton Key!!!"
 
     # Update the Leaderboard
     game.status = "Completed: L" + str(level_id)
