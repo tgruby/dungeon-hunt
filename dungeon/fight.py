@@ -32,7 +32,7 @@ def process(game, action):
             drop_part = random.randint(0, game.dungeon.current_level_id)
             if drop_part == 0:
                 hero.monster_parts += 1
-                message = message + ' You recover %s from the %s!' % (monster.item_dropped["name"], monster["name"])
+                message = message + ' You recover %s from the %s!' % (monster.item_dropped["name"], monster.name)
             message = message + ' Digging through the %s remains you found %d gold!' % (monster.name, monster.gold)
             commands = "Press any key to continue..."
 
