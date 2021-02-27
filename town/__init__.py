@@ -1,9 +1,9 @@
 import game_play.screen
 from game_play import images, screen
 import dungeon
-from town import map_shop, equipment_shop, guild, potion_shop, temple
+from town import map_shop, equipment_shop, guild, potion_shop, temple, help
 
-commands = "(E)quipment, (P)otions, (M)aps, (T)emple, (L)abyrinth, (G)uild"
+commands = "(E)quipment, (P)otions, (M)aps, (T)emple, (L)abyrinth, (G)uild, (H)elp"
 msg = "Thordon Town Center: There are a number of shops where you can buy supplies for your adventure. " \
       "The labyrinth entrance is carved into the side of the mountain nearby. Select the " \
       "corresponding letter to enter a shop or the labyrinth."
@@ -43,6 +43,11 @@ def process(game, action):
     if action.lower() == "g":
         game.current_controller = 'town.guild'
         return guild.process(game, None)
+
+    # Help
+    if action.lower() == "h":
+        game.current_controller = 'town.help'
+        return help.process(game, None)
 
     # Cheat to help with testing.... yank after testing
     # if action.lower() == "$":

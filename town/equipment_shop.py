@@ -3,7 +3,7 @@ from game_play import images, screen
 from town import equipment_shop_sell, items
 import town
 
-commands = "Enter a (#) to purchase an item, (S)ell an item, or (L)eave Shop"
+commands = "Enter a (#) to purchase an item, (S)ell an item, or E(x)it Shop"
 message = "Welcome to Bill's Equipment Emporium, mighty warrior!  Would you like to upgrade your shoddy " \
                   "equipment?"
 image = images.weapons_shop_logo
@@ -29,7 +29,7 @@ def process(game, action):
         return paint(game, message)
 
     # Leave and go back to the town
-    if action.lower() == "l":
+    if action.lower() == "x":
         game.current_controller = 'town'
         return town.process(game, None)
 

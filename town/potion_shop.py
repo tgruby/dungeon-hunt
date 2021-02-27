@@ -3,7 +3,7 @@ from game_play import images, screen
 from town import potions
 import town
 
-commands = "Enter a (#) to purchase an item, (L)eave Shop"
+commands = "Enter a (#) to purchase an item, E(x)it Shop"
 message = "Welcome to Janet's Potions!  Your gold is no good here, but for a few of your monster " \
               "'treasures' I can make you a potent elixir for your journeys.  The Healing potion will fully heal you, " \
           "while the Teleportation potion will immediately whisk you back to the town center.  Clairvoyance will let " \
@@ -33,7 +33,7 @@ def process(game, action):
         return paint(game, message)
 
     # Leave and go back to the town
-    if action.lower() == "l":
+    if action.lower() == "x":
         game.current_controller = 'town'
         return town.process(game, None)
 

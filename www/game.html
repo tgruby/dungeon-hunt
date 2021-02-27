@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=0.5" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.5"/>
     <meta content="no-cache, no-store, must-revalidate">
     <meta content="no-cache">
     <meta content="0">
@@ -12,60 +12,75 @@
     <link rel="icon" type="image/png" sizes="16x16" href="resources/img/favicon-16x16.png">
     <link rel="manifest" href="resources/img/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="resources/style.css">
-	<script src="resources/js/terminal.js"></script>
-	<script src="resources/js/game-interactions.js"></script>
-	<script src="resources/js/confetti.min.js"></script>
-{#    <script src="https://preview.babylonjs.com/babylon.js"></script>#}
-{#    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>#}
+{#    <link rel="stylesheet" type="text/css" href="resources/js/fireworks-css.css">#}
+    <script src="resources/js/terminal.js"></script>
+    <script src="resources/js/game-interactions.js"></script>
+    <script src="resources/js/confetti.min.js"></script>
 </head>
 <body id='body'>
-	<audio id="door-locked"><source src="resources/snd/door-locked.mp3" type="audio/mpeg"></audio>
-	<audio id="door-slammed"><source src="resources/snd/door-slammed.mp3" type="audio/mpeg"></audio>
-	<audio id="challenge-complete"><source src="resources/snd/challenge-complete.mp3" type="audio/mpeg"></audio>
-	<audio id="magic"><source src="resources/snd/magic.mp3" type="audio/mpeg"></audio>
-	<audio id="open-door"><source src="resources/snd/open-door.mp3" type="audio/mpeg"></audio>
-	<audio id="death-dirge"><source src="resources/snd/death-dirge.mp3" type="audio/mpeg"></audio>
-	<audio id="morning-star-trap"><source src="resources/snd/morning-star-trap.mp3" type="audio/mpeg"></audio>
-	<audio id="punch"><source src="resources/snd/punch.mp3" type="audio/mpeg"></audio>
-	<audio id="level-complete"><source src="resources/snd/level-complete.mp3" type="audio/mpeg"></audio>
+<audio id="door-locked">
+    <source src="resources/snd/door-locked.mp3" type="audio/mpeg">
+</audio>
+<audio id="door-slammed">
+    <source src="resources/snd/door-slammed.mp3" type="audio/mpeg">
+</audio>
+<audio id="challenge-complete">
+    <source src="resources/snd/challenge-complete.mp3" type="audio/mpeg">
+</audio>
+<audio id="magic">
+    <source src="resources/snd/magic.mp3" type="audio/mpeg">
+</audio>
+<audio id="open-door">
+    <source src="resources/snd/open-door.mp3" type="audio/mpeg">
+</audio>
+<audio id="death-dirge">
+    <source src="resources/snd/death-dirge.mp3" type="audio/mpeg">
+</audio>
+<audio id="morning-star-trap">
+    <source src="resources/snd/morning-star-trap.mp3" type="audio/mpeg">
+</audio>
+<audio id="punch">
+    <source src="resources/snd/punch.mp3" type="audio/mpeg">
+</audio>
+<audio id="level-complete">
+    <source src="resources/snd/level-complete.mp3" type="audio/mpeg">
+</audio>
 
-    <div style="width: 680px; display: grid; grid-template-columns: min-content" class="center">
-        {# Title #}
-        <div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 100%;">
-            DЦИGΞФИ ФF ΓHФЯDФИ
-        </div>
-        {# Header #}
-        <div style="width: 680px;">
-{#            <button style="float: right;" class="control" onclick="toggleModal();">Equipment</button>#}
-            <button style="float: right;" class="control" onclick="zoom(-10);">Zoom Out</button>
-            <button style="float: right;" class="control" onclick="zoom(10);">Zoom In</button>
-        </div>
-        {# Main Console #}
-        <pre id="console"></pre>
-        {# Footer #}
-        <div style="width: 680px;">
-            <button class="control" onclick="endGame();">Quit Game</button>
-            <span style="font-size: 1.5em; float: right;">v0.9</span>
-        </div>
+{#<canvas id="backgroundCanvas"></canvas>#}
+{#<canvas id="blurCanvas"></canvas>#}
+{#<canvas id="renderingCanvas"></canvas>#}
+{#<script type="text/javascript" src="resources/js/fireworks.js"></script>#}
+
+<div style="width: 680px; display: grid; grid-template-columns: min-content" class="center">
+    {# Title #}
+    <div id="title" style="text-align:center; font-size: 1.875em; font-weight: bold; margin:auto; width: 100%;">
+        DЦИGΞФИ ФF ΓHФЯDФИ
     </div>
-
-    <div id="modal">
-        <button style="float: right;" class="control" onclick="toggleModal();">Close</button>
-        <canvas id="canvas" touch-action="none"></canvas>
-        <div style="text-align:center; font-weight: bold; margin:auto; width: 100%;">Broad Sword.  Top Damage: 42 Hit Points</div>
+    {# Header #}
+    <div style="width: 680px;">
+        <button style="float: right;" class="control" onclick="zoom(-10);">Zoom Out</button>
+        <button style="float: right;" class="control" onclick="zoom(10);">Zoom In</button>
     </div>
+    {# Main Console #}
+    <pre id="console"></pre>
+    {# Footer #}
+    <div style="width: 680px;">
+        <button class="control" onclick="endGame();">Quit Game</button>
+        <span style="font-size: 1.5em; float: right;">v0.9</span>
+    </div>
+</div>
 
-	<script>
-		const term = new Terminal('terminal');
-		term.setHeight("450px");
-		term.setWidth('680px');
-		term.setBackgroundColor('black');
-		term.setTextColor('green');
-		term.blinkingCursor(false);
-		document.getElementById('console').appendChild(term.html);
+<script>
+    const term = new Terminal('terminal');
+    term.setHeight("450px");
+    term.setWidth('680px');
+    term.setBackgroundColor('black');
+    term.setTextColor('green');
+    term.blinkingCursor(false);
+    document.getElementById('console').appendChild(term.html);
 
-		connect(term, '/api/v1/game/action/start')
-	</script>
+    connect(term, '/api/v1/game/action/start')
+</script>
 
 </body>
 </html>

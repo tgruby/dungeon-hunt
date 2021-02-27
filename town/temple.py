@@ -2,7 +2,7 @@ import game_play.screen
 from game_play import images, screen
 import town
 
-commands = "(F)ull Healing, (P)artial Healing, (L)eave Temple"
+commands = "(F)ull Healing, (P)artial Healing, E(x)it Temple"
 message = "Welcome to Wudang Five Immortals Temple, weary traveler. How can we help you?"
 image = images.tall_temple
 
@@ -57,7 +57,7 @@ def process(game, action):
         return paint(game, msg)
 
     # Leave and go back to the town
-    if action.lower() == "l":
+    if action.lower() == "x":
         game.current_controller = 'town'
         return town.process(game, None)
 

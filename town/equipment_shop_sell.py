@@ -2,7 +2,7 @@ import game_play.screen
 from game_play import images, screen
 from town import equipment_shop
 
-commands = "Enter a (#) to sell an item, or (L)eave."
+commands = "Enter a (#) to sell an item, or E(x)it."
 message = "Wonderful, we have been running low on good hardware!  What are you " \
           "willing to part with? "
 image = images.weapons_shop_logo
@@ -28,7 +28,7 @@ def process(game, action):
         return paint(game, message)
 
     # Leave and go back to the town
-    if action.lower() == "l":
+    if action.lower() == "x":
         game.current_controller = 'town.equipment_shop'
         return equipment_shop.process(game, None)
 
