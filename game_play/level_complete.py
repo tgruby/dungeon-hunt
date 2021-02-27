@@ -6,7 +6,7 @@ from game_play import db, screen, game_won
 def process(game, boss_defeated, monster):
     level_id = game.dungeon.current_level_id
     game.dungeon.complete_level()
-    if monster.name == monsters.red_dragon["name"]:
+    if monster is not None and monster.name == monsters.red_dragon["name"]:
         game.calc_score_level_bonus()
         game.calc_boss_bonus()
         return game_won.process(game, None)
