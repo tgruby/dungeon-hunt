@@ -174,7 +174,7 @@ skeleton_warrior = {
     "gold": 150,
     "attack_damage": items.battle_axe["damage"],
     "attack_description": items.battle_axe["attack_message"],
-    "item_dropped": items.battle_axe
+    "item_dropped": items.bony_fingers
 }
 
 half_orc = {
