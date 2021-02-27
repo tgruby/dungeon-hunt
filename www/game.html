@@ -12,12 +12,16 @@
     <link rel="icon" type="image/png" sizes="16x16" href="resources/img/favicon-16x16.png">
     <link rel="manifest" href="resources/img/site.webmanifest">
     <link rel="stylesheet" type="text/css" href="resources/style.css">
-{#    <link rel="stylesheet" type="text/css" href="resources/js/fireworks-css.css">#}
     <script src="resources/js/terminal.js"></script>
-    <script src="resources/js/game-interactions.js"></script>
     <script src="resources/js/confetti.min.js"></script>
+    <script src="resources/js/game-interactions.js"></script>
 </head>
 <body id='body'>
+
+<canvas id="blurCanvas"></canvas>
+<canvas id="renderingCanvas"></canvas>
+<script src="resources/js/fireworks.js"></script>
+
 <audio id="door-locked">
     <source src="resources/snd/door-locked.mp3" type="audio/mpeg">
 </audio>
@@ -45,11 +49,9 @@
 <audio id="level-complete">
     <source src="resources/snd/level-complete.mp3" type="audio/mpeg">
 </audio>
-
-{#<canvas id="backgroundCanvas"></canvas>#}
-{#<canvas id="blurCanvas"></canvas>#}
-{#<canvas id="renderingCanvas"></canvas>#}
-{#<script type="text/javascript" src="resources/js/fireworks.js"></script>#}
+<audio id="game-won">
+    <source src="resources/snd/game-won.mp3" type="audio/mpeg">
+</audio>
 
 <div style="width: 680px; display: grid; grid-template-columns: min-content" class="center">
     {# Title #}
@@ -58,6 +60,8 @@
     </div>
     {# Header #}
     <div style="width: 680px;">
+{#        <button style="float: right;" class="control" onclick="fireworks();">Fireworks</button>#}
+{#        <button style="float: right;" class="control" onclick="confetti.start(3000);">Confetti</button>#}
         <button style="float: right;" class="control" onclick="zoom(-10);">Zoom Out</button>
         <button style="float: right;" class="control" onclick="zoom(10);">Zoom In</button>
     </div>

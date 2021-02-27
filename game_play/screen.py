@@ -122,11 +122,11 @@ def paint_winning_screen(game_id):
         # Updated page for the browser to paint,
         "canvas": canvas,
         # Play a sound for this screen
-        "sound": 'level-complete',
+        "sound": 'game-won',
         # Time to wait before allowing the player to make the next move
-        "delay": 2000,
+        "delay": 4000,
         # Whether an animation should be played
-        "animation": 'confetti',
+        "animation": 'fireworks',
         # whether the next move should happen on any key press or the enter key (key_press | enter_press)
         "interaction_type": 'enter_press',
         "game_id": game_id

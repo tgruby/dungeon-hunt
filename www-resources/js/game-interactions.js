@@ -21,7 +21,11 @@ async function process(term, canvas, sound, delay, animation, interactionType) {
     for (let i = 0; i < canvas.length; i++) term.print(canvas[i]);
     if (sound) document.getElementById(sound).play();
 
-    if (animation) confetti.start(3000);
+    if (animation) {
+        if (animation === "confetti") confetti.start(3000);
+        if (animation === "fireworks") await fireworks();
+    }
+
 
     // Pause the functioning thread
     await sleepNow(delay)
@@ -30,14 +34,6 @@ async function process(term, canvas, sound, delay, animation, interactionType) {
         term.key('', function (action) { connect(term, '/api/v1/game/action/' + action) })
     } else {
         term.input('', function (action) { connect(term, '/api/v1/game/action/' + action) })
-    }
-}
-
-// Buttons on game page to emulate key presses, making it easier to play on a mobile device.
-function mobileButtonPushed(emulatedKeyPress) {
-    let nodes = document.querySelectorAll('input');
-    for (let i = 0; i < nodes.length; i++) {
-        nodes[i].onkeyup(new KeyboardEvent('keyup',{'key': emulatedKeyPress}));
     }
 }
 
@@ -65,84 +61,19 @@ function zoom(percentChange) {
     document.body.style.zoom = pageZoom + "%";
 }
 
-let itemsRendered = false;
+async function fireworks() {
 
-// Toggles the equipment viewer modal display
-function toggleModal() {
+    let fireworksBlur = document.getElementById("blurCanvas");
+    let fireworksRender = document.getElementById("renderingCanvas");
+    fireworksBlur.style.zIndex = "1";
+    fireworksRender.style.zIndex = "1";
 
-    if (!itemsRendered) {
-        initializeModelingEngine();
-        itemsRendered = true;
+    for (let i = 0; i < 10; i++) {
+        launchFuse(i);
+        await sleepNow(200);
     }
 
-    let modal = document.getElementById("modal"); // Get the canvas element
-    if (modal.style.display === 'none') modal.style.display = 'block';
-    else modal.style.display = 'none';
-}
-
-function initializeModelingEngine() {
-
-    let canvas = document.getElementById("canvas"); // Get the canvas element
-    let engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-
-    let createScene = function () {
-        // Create a scene.
-        var scene = new BABYLON.Scene(engine);
-
-        // Create a default arc rotate camera and light.
-        scene.createDefaultCameraOrLight(true, true, true);
-        // Create a default with an environment.
-        // scene.createDefaultEnvironment();
-
-        // Append glTF model to scene.
-        BABYLON.SceneLoader.Append("/resources/models/", "broad_sword.glb", scene, function (scene) {
-            // The default camera looks at the back of the asset.
-            // Rotate the camera by 180 degrees to the front of the asset.
-            rotate(scene.activeCamera);
-        });
-
-        return scene;
-    }
-
-    /******* Add the create scene function ******/
-    // let createScene = function () {
-    //
-    //     // Create the scene space
-    //     const scene = new BABYLON.Scene(engine);
-    //     scene.clearColor = BABYLON.Color3(0, 0, 0);
-    //
-    //     // Add a camera to the scene and attach it to the canvas
-    //     // Parameters: name, alpha, beta, radius, target position, scene
-    //     const camera = new BABYLON.ArcRotateCamera("camera", 0, 2, 2, new BABYLON.Vector3(0, 0, 0));
-    //     camera.attachControl(canvas, true);
-    //
-    //     // Add lights to the scene
-    //     // const light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 0, 1));
-    //     const light2 = new BABYLON.HemisphericLight("light2", new BABYLON.Vector3(0, 1, 0));
-    //     // light1.intensity = 1;
-    //     light2.intensity = 20;
-    //
-    //     // Add and manipulate meshes in the scene
-    //     BABYLON.SceneLoader.ImportMeshAsync("", "/resources/models/", "dagger.glb");
-    //
-    //     // Rotate the camera slightly.  Scenes render 60 frames a second.
-    //     scene.registerBeforeRender(function () {
-    //         camera.alpha = camera.alpha + 0.01;
-    //     });
-    //
-    //     return scene;
-    // };
-    /******* End of the create scene function ******/
-
-    let scene = createScene(); //Call the createScene function
-
-    // Register a render loop to repeatedly render the scene
-    engine.runRenderLoop(function () {
-        scene.render();
-    });
-}
-
-function rotate(camera) {
-    camera.alpha = camera.alpha + 0.1;
-    setTimeout(function() { rotate(camera) }, 100)
+    await sleepNow(10000);
+    fireworksBlur.style.zIndex = "-1";
+    fireworksRender.style.zIndex = "-1";
 }

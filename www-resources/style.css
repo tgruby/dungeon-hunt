@@ -58,3 +58,14 @@ body {
     width: 60%;
     padding: 10px;
 }
+
+#renderingCanvas{
+    background-color: transparent;
+    z-index:-1;
+
+}
+#blurCanvas{
+    background-color: transparent;
+    filter: blur(3px);
+    z-index:-1;
+}
