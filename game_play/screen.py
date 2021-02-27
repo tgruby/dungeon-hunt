@@ -275,6 +275,8 @@ def list_inventory(our_hero):
     # List the items on the screen
     for num, i in enumerate(collapsed_items):
         response += "    %d. %d %s" % (num + 1, i[0], i[1])
+        if i[5]:
+            response += 's'
         response += '\n'
     return response
 
@@ -287,10 +289,11 @@ def collapse_inventory_items(our_hero):
         for collapsed_item in collapsed_items:
             if collapsed_item[1] == item["name"]:
                 collapsed_item[0] += 1  # Increment Count
+                collapsed_item[5] = True
                 item_found = True
         if not item_found:
-            # Format of list items are: count, name, type, value, item
-            collapsed_item = [1, item["name"], item["type"], item["cost"], item]
+            # Format of list items are: count, name, type, value, item, plural
+            collapsed_item = [1, item["name"], item["type"], item["cost"], item, False]
             collapsed_items.append(collapsed_item)
 
     return collapsed_items
