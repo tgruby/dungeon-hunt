@@ -8,10 +8,10 @@ if __name__ == '__main__':
 
     if command == 'delete':
         leader_no = int(sys.argv[2])
-        print("Deleting: " + str(lb.leaders[leader_no].character.name))
+        print("Deleting: " + str(lb.leaders[leader_no].name))
         del lb.leaders[leader_no]
         print("LB Entry Deleted.")
         db.save_leaderboard(lb)
     if command == "list":
         for idx, game in enumerate(lb.leaders):
-            print("Index:" + str(idx) + ", Name: " + game.character.name + ", Score:" + str(game.score) + ", Game ID: " + game.game_id)
+            print("Index:" + str(idx) + ", Name: " + game.name + ", Score:" + str(game.score) + ", Game ID: " + game.game_id)
