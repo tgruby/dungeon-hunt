@@ -4,7 +4,7 @@ from game_play import db, screen
 def process(game, action):
 
     # Update the Leaderboard
-    game.status = "Won the Game!!!!"
+    game.status = "Winner!!!"
     game.game_over = True
     lb = db.load_leaderboard()
     lb.update_leader(game)

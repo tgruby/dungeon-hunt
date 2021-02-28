@@ -101,7 +101,7 @@ giant_snake = {
 }
 
 badger = {
-    "name": "Badger",
+    "name": "Honey Badger",
     "is_boss": False,
     "image": images.badger,
     "hit_points": 16,
