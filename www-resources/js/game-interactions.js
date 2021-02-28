@@ -63,6 +63,9 @@ function zoom(percentChange) {
 
 async function fireworks() {
 
+    animate();
+    launchInterval();
+
     let fireworksBlur = document.getElementById("blurCanvas");
     let fireworksRender = document.getElementById("renderingCanvas");
     fireworksBlur.style.zIndex = "1";

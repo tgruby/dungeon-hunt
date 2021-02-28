@@ -468,5 +468,3 @@ function launchInterval(){
   }, pCreationInterval);
 }
 
-animate();
-launchInterval();
