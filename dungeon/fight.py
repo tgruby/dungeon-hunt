@@ -11,7 +11,7 @@ def process(game, action):
     monster = dungeon.current_monster
 
     if action is None:
-        return paint(game, monster.image, "A " + monster.name + "stands before you, blocking your path!")
+        return paint(game, monster, "A " + monster.name + " stands before you, blocking your path!")
 
     if action.lower() == "f":
         message = hero.attack_monster(monster)
@@ -19,7 +19,7 @@ def process(game, action):
             message = message + '\n ' + monster.attack(hero)
             if not hero.is_alive():
                 return hero_is_slain(game, message)
-            return paint(game, monster.image, message)
+            return paint(game, monster, message)
         else:
             # Monster has been killed
             dungeon.complete_challenge(hero.view.current_x, hero.view.current_y, 'monster')
@@ -53,24 +53,42 @@ def process(game, action):
                 interaction_type='key_press'
             )
 
+    # Attempt to Tame the wolf
+    if action.lower() == "t":
+        # If you have monster parts you can feed to the wolf, you have a chance of taming it.
+        if hero.monster_parts > 0:
+            hero.monster_parts -= 1
+            # You have tamed the wolf!
+            # hero.inventory.append(monster)
+            msg = 'You have Tamed the %s!!!' % monster.name
+            dungeon.complete_challenge(hero.view.current_x, hero.view.current_y, 'monster')
+            game.current_controller = 'dungeon'
+            return paint(game, None, msg)
+        else:
+            # The wolf rips the food away from you and bites at you
+            message = "You have no food! The monster continues to attack you! "
+            message += monster.attack(hero)
+            if not hero.is_alive():
+                return hero_is_slain(game)
+            return paint(game, monster, message)
+
     # Run Away
     if action.lower() == "r":
         # The monster gets one last parting shot as you flee.
-        message = monster.attack(hero)
+        monster.attack(hero)
         if not hero.is_alive():
             return hero_is_slain(game)
 
-        message += '\n ' + "You run as fast as your little legs will carry you and... Get away!"
-        hero.monster = None
+        message = "You get away!!"
         #  Turn around and go one step back.
         hero.view.turn_right()
         hero.view.turn_right()
         hero.view.step_forward()
         game.current_controller = 'dungeon'
-        return paint(game, "You've Escaped!", message)
+        return paint(game, None, message)
 
     # Default message if they typed jibberish
-    return paint(game, monster.image, "A " + monster.name + " stands before you, blocking your path!")
+    return paint(game, monster, "A " + monster.name + " stands before you, blocking your path!")
 
 
 # routine if your hero is slain
@@ -120,10 +138,16 @@ def hero_is_slain(game, message):
         )
 
 
-def paint(game, image, msg):
+def paint(game, monster, msg):
+    commands = "(F)ight, (T)ame, (R)un away!"
+    if monster is None:
+        image = msg
+    else:
+        image = monster.image
+
     return screen.paint_two_panes(
         game=game,
-        commands="(F)ight, (R)un away!",
+        commands=commands,
         messages=msg,
         left_pane_content=game.character.view.generate_perspective(),
         right_pane_content=image,
